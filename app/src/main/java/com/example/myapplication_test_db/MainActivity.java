@@ -21,7 +21,6 @@ import java.util.LinkedList;
 import java.util.List;
 
  public class MainActivity extends AppCompatActivity {
-     /*
      private ListView mListView;
     private List<Product> mProduct = new LinkedList<>();
     private ListAdapter mAdapter;
@@ -31,7 +30,8 @@ import java.util.List;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.simple_first_local_data);
-        mListView = (ListView)findViewById(R.id.listView);
+        mListView = (ListView)findViewById(R.id.listViewT);
+
         mAdapter = new BaseAdapter() {
             @Override
             public int getCount() { return mProduct.size(); }
@@ -52,10 +52,14 @@ import java.util.List;
                 if(view == null){
                     view = getLayoutInflater().inflate(R.layout.custom_list_item, null);
                 }
-                final TextView nameToView = (TextView) view.findViewById(R.id.name);
+                final TextView nameToView = (TextView) view.findViewById(R.id.nameT);
+                final ImageView imageToView = (ImageView)view.findViewById(R.id.imgT);
+
                 final Product product = (Product) getItem(position);
 
                 nameToView.setText(product.name);
+                Picasso.get().load(""+product.img).into(imageToView);
+                Log.e("TEST",""+nameToView.toString());
                 return view;
             }
         };
@@ -77,22 +81,5 @@ import java.util.List;
         mProduct.clear();
         mProduct.addAll(products);
         mListView.setAdapter(mAdapter);
-    }*/
-
-    ImageView imageView;
-     protected void onCreate(Bundle savedInstanceState) {
-         super.onCreate(savedInstanceState);
-         DatabaseAccess dbA = null;
-         try {
-             dbA = DatabaseAccess.getInstance(this);
-         } catch (IOException e) {
-             e.printStackTrace();
-         }
-         List<Product> products = dbA.getAllProduct();
-         setContentView(R.layout.activity_main);
-         imageView = findViewById(R.id.iv1);
-         Log.e("url",""+products.get(0).img);
-         Picasso.get().load(""+products.get(0).img).into(imageView);
-
-     }
+    }
 }

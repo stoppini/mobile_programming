@@ -51,7 +51,6 @@ public class DatabaseAccess {
         c.moveToFirst();
         while (!c.isAfterLast()){
             Product p = cursorToProdut(c);
-            Log.e("BOOOOOOOOOOOO","PIANGO "+p.name);
             products.add(p);
             c.moveToNext();
         }

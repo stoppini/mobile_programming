@@ -23,7 +23,6 @@ public class MagicDBHelper extends SQLiteOpenHelper {
             super(context, MagicDB.DATABASE_NAME, null, 3);
             this.context = context;
             this.DB_PATH = context.getDatabasePath(MagicDB.DATABASE_NAME).toString();
-            Log.e("DBPATH", "Path "+DB_PATH);
         }
 
         public boolean isDataBaseExists() {

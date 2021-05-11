@@ -13,9 +13,8 @@
         <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/listView"
-            android:layout_gravity="center_vertical">
-        </ListView>
+            android:id="@+id/listViewT"
+            android:layout_gravity="center_vertical"/>
 
     </FrameLayout>
 

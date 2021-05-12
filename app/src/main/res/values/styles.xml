@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="main_button_style">
+        <item name="android:layout_marginBottom">@dimen/button_margin_bottom</item>
+        <item name="android:padding">@dimen/padding_measure</item>
+        <item name="android:background">@drawable/button_bg</item>
+        <item name="android:textColor">@drawable/button_text_color</item>
+    </style>
+
+    <style name="main_edittext_style">
+        <item name="android:layout_marginBottom">@dimen/activity_vertical_margin</item>
+        <item name="android:padding">@dimen/padding_measure</item>
+        <item name="android:background">@drawable/edittext_bg_gradient</item>
+        <item name="android:textSize">@dimen/edittext_text_size</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="main_label_style">
+        <item name="android:padding">@dimen/padding_measure</item>
+        <item name="android:background">@drawable/edittext_bg_gradient</item>
+        <item name="android:textColor">@color/red</item>
+        <item name="android:textSize">@dimen/edittext_text_size</item>
+    </style>
+</resources>

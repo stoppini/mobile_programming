@@ -1,3 +1,28 @@
 <resources>
-    <string name="app_name">My Application_test_db</string>
+    <string name="app_name">CardMarket</string>
+
+    <!-- MESSAGGI REGISTRAZIONE -->
+    <string name="register_button_label">Register</string>
+    <string name="username_to_register">Username:</string>
+    <string name="password_to_register">Password:</string>
+    <string name="email_to_register">Email:</string>
+    <string name="birthdate_to_register">Birthdate:</string>
+    <string name="location_to_register">Location:</string>
+
+    <!-- LABELS -->
+    <string name="anonymous_button_label">Anonymous</string>
+    <string name="registration_button_label">Register</string>
+    <string name="login_button_label">Log in</string>
+    <string name="confirm_button_label">Confirm</string>
+    <string name="old_data_button_label">Old Data</string>
+    <string name="new_data_button_label">New Data</string>
+    <string name="remote_data_button_label">Remote Data</string>
+    <string name="test_db">TEST DATABASE</string>
+
+    <!-- MESSAGGI D'ERRORE -->
+    <string name="mandatory_field_error">The field %1$s is mandatory</string>
+    <string name="wrong_credentials_error">Wrong credentials</string>
+    <string name="different_passwords_error">The passwords should be the same</string>
+    <string name="all_mandatory_fields_error">All the fields are mandatory</string>
+
 </resources>

@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
- public class MainActivity extends AppCompatActivity {
+ public class ShowDb extends AppCompatActivity {
      private ListView mListView;
     private List<Product> mProduct = new LinkedList<>();
     private ListAdapter mAdapter;

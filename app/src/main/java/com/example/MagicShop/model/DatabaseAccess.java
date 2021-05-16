@@ -115,6 +115,17 @@ public class DatabaseAccess {
         return products_on_sale;
     }
     */
+    /*
+    public void registerUser(User user){
+        open();
+        String query = String.format("INSERT INTO user (username, password, email, city, " +
+                "address, cap) VALUES ('%s','%s','%s','%s','%s',%d", user.getUsername(),
+                user.getPassword(), user.getEmail(), user.getCity, user.getAddress, user.getCap);
+        Cursor c = db.rawQuery(query,null);
+        c.close();
+        close();
+    }
+    */
 
     public Product getProdutFromProductOnSale(ProductOnSale productOnSale){
         open();
@@ -129,6 +140,19 @@ public class DatabaseAccess {
         close();
         return product;
     }
+
+    /*TODO fix dell'user
+    private User cursorToUser(Cursor c){
+        long id = c.getLong(0);
+        String username = c.getString(1);
+        String password = c.getString(2);
+        String email = c.getString(3);
+        String city = c.getString(4);
+        String address = c.getString(5);
+        long cap = c.getLong(6);
+        return User.create(id, username, password, email, city, address, cap);
+    }
+     */
 
     private Product cursorToProdut(Cursor c) {
         long id = c.getLong(0);

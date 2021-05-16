@@ -73,8 +73,6 @@ public class DatabaseAccess {
         return products;
     }
 
-    //TODO: from product on sale product, from user all product on sale
-
     public List<ProductOnSale> getAllProductOnSaleFromProduct(Product product){
         open();
         List<ProductOnSale> products_on_sale = new ArrayList<>();

@@ -1,4 +1,4 @@
-package com.example.myapplication_test_db;
+package com.example.MagicShop;
 
 
 import android.content.Intent;
@@ -14,7 +14,7 @@ import java.util.Date;
 
 public class SummaryActivity extends AppCompatActivity {
 
-    private UserModel mUserModel;
+    private User mUser;
     private TextView mUsername;
     private TextView mEmail;
     private TextView mBirthDate;
@@ -29,22 +29,22 @@ public class SummaryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_summary);
 
         Intent data = getIntent();
-        this.mUserModel = (UserModel) data.getParcelableExtra(UserModel.USER_DATA_EXTRA);
+        this.mUser = (User) data.getParcelableExtra(User.USER_DATA_EXTRA);
 
         this.mUsername = (TextView)findViewById(R.id.show_username_data);
-        mUsername.setText(mUserModel.getUsername());
+        mUsername.setText(mUser.getUsername());
 
         this.mEmail = (TextView)findViewById(R.id.show_email_data);
-        mEmail.setText(mUserModel.getEmail());
+        mEmail.setText(mUser.getEmail());
 
         this.mBirthDate = (TextView)findViewById(R.id.show_birthdate_data);
-        Date date=new Date(mUserModel.getBirthDate());
+        Date date=new Date(mUser.getBirthDate());
         SimpleDateFormat df2 = new SimpleDateFormat("dd/MM/yy");
         String dateText = df2.format(date);
         mBirthDate.setText(dateText);
 
         this.mLocation = (TextView)findViewById(R.id.show_location_data);
-        mLocation.setText(mUserModel.getLocation());
+        mLocation.setText(mUser.getLocation());
 
 
         Log.d(TAG_LOG,mUsername.getText().toString());
@@ -54,7 +54,7 @@ public class SummaryActivity extends AppCompatActivity {
     public void doConfirm(View confirmButton)
     {
         final Intent mainIntent = new Intent(SummaryActivity.this,MenuActivity.class);
-        mainIntent.putExtra(UserModel.USER_DATA_EXTRA,this.mUserModel);
+        mainIntent.putExtra(User.USER_DATA_EXTRA,this.mUser);
         startActivity(mainIntent);
     }
 }

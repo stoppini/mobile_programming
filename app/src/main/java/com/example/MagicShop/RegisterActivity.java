@@ -1,4 +1,4 @@
-package com.example.myapplication_test_db;
+package com.example.MagicShop;
 
 
 import android.content.Intent;
@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.MagicShop.model.User;
 
 import java.util.Calendar;
 
@@ -69,13 +71,13 @@ public class RegisterActivity extends AppCompatActivity {
         Calendar cal = Calendar.getInstance();
         cal.set(this.mBirthDateEditText.getYear(),this.mBirthDateEditText.getMonth(),this.mBirthDateEditText.getDayOfMonth());
         final long birthDateEdit = cal.getTimeInMillis();
-        final UserModel user = UserModel.create(birthDateEdit).withUsername(usernameEdit).withPassword(passwordEdit).withEmail(emailEdit).withLocation(locationEdit);
+        final User user = User.create(birthDateEdit).withUsername(usernameEdit).withPassword(passwordEdit).withEmail(emailEdit).withLocation(locationEdit);
 
         Intent resultIntent = new Intent();
 
         if(user != null) {
             Log.d(TAG_LOG,"Send registration!");
-            resultIntent.putExtra(UserModel.USER_DATA_EXTRA,user);
+            resultIntent.putExtra(User.USER_DATA_EXTRA,user);
             setResult(RESULT_OK,resultIntent);
             finish();
         }

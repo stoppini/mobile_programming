@@ -1,4 +1,4 @@
-package com.example.myapplication_test_db;
+package com.example.MagicShop;
 
 import android.content.Context;
 

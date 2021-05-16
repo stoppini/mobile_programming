@@ -1,4 +1,4 @@
-package com.example.myapplication_test_db;
+package com.example.MagicShop;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,9 +8,11 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.MagicShop.model.User;
+
 public class MenuActivity extends AppCompatActivity {
 
-    private UserModel mUserModel;
+    private User mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,4 +1,4 @@
- package com.example.myapplication_test_db;
+ package com.example.MagicShop;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,8 +12,9 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.myapplication_test_db.model.DatabaseAccess;
-import com.example.myapplication_test_db.model.Product;
+import com.example.MagicShop.model.DatabaseAccess;
+import com.example.MagicShop.model.Product;
+import com.example.MagicShop.model.ProductOnSale;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -44,7 +45,7 @@ import java.util.List;
             @Override
             public long getItemId(int position) {
                 Product product = (Product) getItem(position);
-                return product.id;
+                return product.getId();
             }
 
             @Override
@@ -57,9 +58,8 @@ import java.util.List;
 
                 final Product product = (Product) getItem(position);
 
-                nameToView.setText(product.name);
-                Picasso.get().load(""+product.img).into(imageToView);
-                Log.e("TEST",""+nameToView.toString());
+                nameToView.setText(product.getName());
+                Picasso.get().load(""+product.getImg()).into(imageToView);
                 return view;
             }
         };
@@ -77,9 +77,13 @@ import java.util.List;
         } catch (IOException e) {
             e.printStackTrace();
         }
-        List<Product> products = dbA.getAllProduct();
+        List<Product> products = dbA.getAllProducts();
         mProduct.clear();
         mProduct.addAll(products);
         mListView.setAdapter(mAdapter);
+        List<ProductOnSale> prodss  = dbA.getAllProductOnSaleFromProduct(products.get(0));
+
+        Log.e("PRODUCT_ON_SALE_0", ""+ dbA.getProdutFromProductOnSale(prodss.get(0)).getName());
+
     }
 }

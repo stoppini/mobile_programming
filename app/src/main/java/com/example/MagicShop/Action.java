@@ -1,4 +1,4 @@
-package com.example.myapplication_test_db;
+package com.example.MagicShop;
 
 public class Action {
     public static final String REGISTRATION_ACTION = "com.example.cardmarket.action.REGISTRATION_ACTION";

@@ -1,4 +1,4 @@
-package com.example.myapplication_test_db;
+package com.example.MagicShop;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.MagicShop.model.User;
 
 public class FirstAccessActivity extends AppCompatActivity {
 
@@ -41,8 +43,8 @@ public class FirstAccessActivity extends AppCompatActivity {
     private void enterAsAnonymous(){
         Log.d(TAG_LOG, "Anonymous access");
         final Intent anonymousIntent = new Intent(FirstAccessActivity.this, MenuActivity.class);
-        final UserModel userModel = UserModel.create(System.currentTimeMillis());
-        anonymousIntent.putExtra(UserModel.USER_DATA_EXTRA,userModel);
+        final User user = User.create(System.currentTimeMillis());
+        anonymousIntent.putExtra(User.USER_DATA_EXTRA, user);
         //userModel.save(this); // non usiamo più gli extra in questo caso, ma le SharedPreferences
         startActivity(anonymousIntent);
     }
@@ -69,9 +71,9 @@ public class FirstAccessActivity extends AppCompatActivity {
             {
                 case RESULT_OK:
                     // now using SharePreferences, quindi commenti le prossime righe
-                    final UserModel userModel = data.getParcelableExtra(UserModel.USER_DATA_EXTRA);
+                    final User user = data.getParcelableExtra(User.USER_DATA_EXTRA);
                     final Intent mainIntent = new Intent(FirstAccessActivity.this,MenuActivity.class);
-                    mainIntent.putExtra(UserModel.USER_DATA_EXTRA,userModel);
+                    mainIntent.putExtra(User.USER_DATA_EXTRA, user);
                     startActivity(mainIntent);
                     finish();
                     break;
@@ -84,11 +86,11 @@ public class FirstAccessActivity extends AppCompatActivity {
             {
                 case RESULT_OK:
                     // now using SharePreferences, quindi commenti le prossime righe
-                    final UserModel userModel = (UserModel)data.getParcelableExtra(UserModel.USER_DATA_EXTRA);
+                    final User user = (User)data.getParcelableExtra(User.USER_DATA_EXTRA);
                     //final Intent detailIntent = new Intent(Action.SHOW_USER_ACTION);
                     final Intent summaryIntent = new Intent(FirstAccessActivity.this, SummaryActivity.class);
                     Log.d(TAG_LOG,"Registration completed!");
-                    summaryIntent.putExtra(UserModel.USER_DATA_EXTRA,userModel);
+                    summaryIntent.putExtra(User.USER_DATA_EXTRA, user);
                     startActivity(summaryIntent);
                     finish();
                     break;

@@ -1,4 +1,4 @@
-package com.example.myapplication_test_db;
+package com.example.MagicShop;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.MagicShop.model.User;
 
 import java.util.Calendar;
 
@@ -50,7 +52,7 @@ public class LogInActivity extends AppCompatActivity {
         final String DUMMY_USERNAME = "diego";
         final String DUMMY_PASSWORD = "password";
 
-        UserModel userModel = null;
+        User user = null;
 
         if(DUMMY_USERNAME.equals(usernameEdit) && DUMMY_PASSWORD.equals(passwordEdit))
         {
@@ -59,13 +61,13 @@ public class LogInActivity extends AppCompatActivity {
             cal.set(Calendar.MONTH,6);
             cal.set(Calendar.YEAR,1977);
             final long birthDate = cal.getTimeInMillis();
-            userModel = UserModel.create(birthDate).withUsername(usernameEdit).withPassword(passwordEdit).withEmail("diego.berardi@unibs.it").withLocation("Brescia");
+            user = User.create(birthDate).withUsername(usernameEdit).withPassword(passwordEdit).withEmail("diego.berardi@unibs.it").withLocation("Brescia");
         }
 
-        if(userModel != null)
+        if(user != null)
         {
             Intent resultIntent = new Intent();
-            resultIntent.putExtra(UserModel.USER_DATA_EXTRA,userModel);
+            resultIntent.putExtra(User.USER_DATA_EXTRA, user);
             setResult(RESULT_OK,resultIntent);
             finish();
         }

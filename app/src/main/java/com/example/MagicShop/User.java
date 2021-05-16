@@ -1,11 +1,11 @@
-package com.example.myapplication_test_db;
+package com.example.MagicShop;
 
 
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
-public class UserModel implements Parcelable {
+public class User implements Parcelable {
     private String mUserName;
     private String mPassword;
     private String mEmail;
@@ -17,19 +17,19 @@ public class UserModel implements Parcelable {
     private static final byte NOT_PRESENT = 0;
 
 
-    public static final Parcelable.Creator<UserModel> CREATOR = new Parcelable.Creator<UserModel>() {
+    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
         @Override
-        public UserModel createFromParcel(Parcel parcel) {
-            return new UserModel(parcel);
+        public User createFromParcel(Parcel parcel) {
+            return new User(parcel);
         }
 
         @Override
-        public UserModel[] newArray(int i) {
-            return new UserModel[0];
+        public User[] newArray(int i) {
+            return new User[0];
         }
     };
 
-    public UserModel(Parcel in) {
+    public User(Parcel in) {
         this.mBirthDate = in.readLong();
         if(in.readByte() == PRESENT)
         {
@@ -94,31 +94,31 @@ public class UserModel implements Parcelable {
         }
     }
 
-    private UserModel(final long birthDate) {
+    private User(final long birthDate) {
         this.mBirthDate = birthDate;
     }
 
-    public static UserModel create(final long birthDate) {
-        final UserModel userModel = new UserModel(birthDate);
-        return userModel;
+    public static User create(final long birthDate) {
+        final User user = new User(birthDate);
+        return user;
     }
 
-    public UserModel withUsername(String newUserUsername) {
+    public User withUsername(String newUserUsername) {
         this.mUserName = newUserUsername;
         return this;
     }
 
-    public UserModel withPassword(String newPassword) {
+    public User withPassword(String newPassword) {
         this.mPassword = newPassword;
         return this;
     }
 
-    public UserModel withEmail(String newEmail) {
+    public User withEmail(String newEmail) {
         this.mEmail = newEmail;
         return this;
     }
 
-    public UserModel withLocation(String newLocation) {
+    public User withLocation(String newLocation) {
         this.mLocation = newLocation;
         return this;
     }

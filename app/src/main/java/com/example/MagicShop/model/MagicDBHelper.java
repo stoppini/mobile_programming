@@ -1,12 +1,11 @@
-package com.example.myapplication_test_db.model;
+package com.example.MagicShop.model;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.example.myapplication_test_db.utils.MagicDB;
+import com.example.MagicShop.utils.MagicDB;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -39,7 +38,8 @@ public class MagicDBHelper extends SQLiteOpenHelper {
             while ((length = myInput.read(buffer)) > 0) {
                 myOutput.write(buffer, 0, length);
             }
-            Toast.makeText(context.getApplicationContext(), "Successfully Imported", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context.getApplicationContext(), "Successfully Imported",
+                    Toast.LENGTH_SHORT).show();
             // Close the streams
             myOutput.flush();
             myOutput.close();

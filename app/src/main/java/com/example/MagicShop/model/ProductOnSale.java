@@ -1,12 +1,10 @@
-package com.example.myapplication_test_db.model;
-
-import android.media.midi.MidiManager;
+package com.example.MagicShop.model;
 
 public class ProductOnSale {
-    public final long id;
-    public final long product_id;
-    public final long user_id;
-    public final long price;
+    private final long id;
+    private final long product_id;
+    private final long user_id;
+    private final long price;
 
 
     public ProductOnSale(final long id, final long product_id,
@@ -22,5 +20,11 @@ public class ProductOnSale {
         return new ProductOnSale(id, product_id, user_id, price);
     }
 
+    public long getId() {return id;}
 
+    public long getProduct_id() {return product_id;}
+
+    public long getUser_id() {return user_id; }
+
+    public long getPrice() {return price; }
 }

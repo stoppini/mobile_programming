@@ -41,6 +41,7 @@ public class DatabaseAccess {
         }
     }
 
+
     public List<ProductOnSale> getAllProductsOnSale() {
         open();
         List<ProductOnSale> products_on_sale = new ArrayList<>();
@@ -57,21 +58,6 @@ public class DatabaseAccess {
         return products_on_sale;
     }
 
-    public List<Product> getAllProducts() {
-        open();
-        List<Product> products = new ArrayList<>();
-        Log.println(Log.DEBUG,"DB",db.toString());
-        Cursor c = db.rawQuery("SELECT * from product",null);
-        c.moveToFirst();
-        while (!c.isAfterLast()){
-            Product p = cursorToProdut(c);
-            products.add(p);
-            c.moveToNext();
-        }
-        c.close();
-        close();
-        return products;
-    }
 
     public List<ProductOnSale> getAllProductOnSaleFromProduct(Product product){
         open();
@@ -94,6 +80,74 @@ public class DatabaseAccess {
     }
 
 
+    public List<Product> getAllProducts() {
+        open();
+        List<Product> products = new ArrayList<>();
+        Log.println(Log.DEBUG,"DB",db.toString());
+        Cursor c = db.rawQuery("SELECT * from product",null);
+        c.moveToFirst();
+        while (!c.isAfterLast()){
+            Product p = cursorToProdut(c);
+            products.add(p);
+            c.moveToNext();
+        }
+        c.close();
+        close();
+        return products;
+    }
+
+
+    public List<Product> getSearchProducts(final String name, final String expansion,
+                                           final String rarity, final String type){
+        String mExpansion = expansion;
+        String mRarity = rarity;
+        String mType = type;
+        open();
+        List<Product> products = new ArrayList<>();
+        Log.println(Log.DEBUG,"DB","NEL METODO");
+        if (mExpansion.equals("All")) {
+            mExpansion = "";
+        }
+        if (mRarity.equals("All")) {
+            mRarity = "";
+        }
+        if (mType.equals("All")) {
+            mType = "";
+        }
+
+        String query = String.format("SELECT * FROM product WHERE name LIKE '%s' " +
+                        "AND expansion LIKE '%s' AND rarity LIKE '%s' AND type LIKE '%s' ",
+                name.concat("%"), mExpansion.concat("%"), mRarity.concat("%"), mType.concat("%"));
+        Log.println(Log.DEBUG,"QUERY", ""+query);
+        Cursor c = db.rawQuery(query,null);
+        c.moveToFirst();
+        while (!c.isAfterLast()){
+            Product p = cursorToProdut(c);
+            Log.println(Log.DEBUG,"PRODUCT",p.getName());
+            products.add(p);
+            c.moveToNext();
+        }
+        c.close();
+        close();
+        return products;
+    }
+
+
+    public Product getProdutFromProductOnSale(ProductOnSale productOnSale){
+        open();
+        String query = String.format("SELECT product.id, product.name, product.expansion, " +
+                "product.rarity, product.type, product.img FROM product INNER JOIN " +
+                "product_on_sale ON product_on_sale.product_id = product.id WHERE " +
+                "product_on_sale.id = %d", productOnSale.getId());
+        Cursor c = db.rawQuery(query,null);
+        c.moveToFirst();
+        Product product = cursorToProdut(c);
+        c.close();
+        close();
+        return product;
+    }
+
+
     public List<String> getAllExpansion(){
         open();
         List<String> expansions = new ArrayList<>();
@@ -102,50 +156,49 @@ public class DatabaseAccess {
 
         Cursor c = db.rawQuery(query,null);
         c.moveToFirst();
+        expansions.add("All");
         while (!c.isAfterLast()){
             expansions.add(c.getString(0));
             c.moveToNext();
         }
-        expansions.add("All");
         c.close();
         close();
         return expansions;
     }
+
 
     public List<String> getAllTypes(){
         open();
         List<String> types = new ArrayList<>();
         Log.println(Log.DEBUG,"DB",db.toString());
         String query = String.format("SELECT DISTINCT product.type FROM product ");
-
         Cursor c = db.rawQuery(query,null);
         c.moveToFirst();
+        types.add("All");
         while (!c.isAfterLast()){
             types.add(c.getString(0));
             c.moveToNext();
         }
-        types.add("All");
         c.close();
         close();
         return types;
     }
+
 
     public List<String> getAllRaritys(){
         open();
         List<String> raritys = new ArrayList<>();
         Log.println(Log.DEBUG,"DB",db.toString());
         String query = String.format("SELECT DISTINCT product.rarity FROM product ");
-
         Cursor c = db.rawQuery(query,null);
         c.moveToFirst();
+        raritys.add("All");
         while (!c.isAfterLast()){
             raritys.add(c.getString(0));
             c.moveToNext();
         }
-        raritys.add("All");
         c.close();
         close();
-        Log.println(Log.DEBUG,"DB","HEEEEEEEEEEEEEEEEEEEEELP");
         return raritys;
     }
 
@@ -183,54 +236,6 @@ public class DatabaseAccess {
     }
     */
 
-    public List<Product> getSearchProducts(final String name, final String expansion,
-                                           final String rarity, final String type){
-        String mExpansion = expansion;
-        String mRarity = rarity;
-        String mType = type;
-        open();
-        List<Product> products = new ArrayList<>();
-        Log.println(Log.DEBUG,"DB","NEL METODO");
-        if (mExpansion.equals("All")) {
-            mExpansion = "";
-        }
-        if (mRarity.equals("All")) {
-            mRarity = "";
-        }
-        if (mType.equals("All")) {
-            mType = "";
-        }
-
-        String query = String.format("SELECT * FROM product WHERE name LIKE '%s' " +
-                        "AND expansion LIKE '%s' AND rarity LIKE '%s' AND type LIKE '%s' ",
-                        name.concat("%"), mExpansion.concat("%"), mRarity.concat("%"), mType.concat("%"));
-        Log.println(Log.DEBUG,"QUERY", ""+query);
-        Cursor c = db.rawQuery(query,null);
-        c.moveToFirst();
-        while (!c.isAfterLast()){
-            Product p = cursorToProdut(c);
-            Log.println(Log.DEBUG,"PRODUCT",p.getName());
-            products.add(p);
-            c.moveToNext();
-        }
-        c.close();
-        close();
-        return products;
-    }
-
-    public Product getProdutFromProductOnSale(ProductOnSale productOnSale){
-        open();
-        String query = String.format("SELECT product.id, product.name, product.expansion, " +
-                "product.rarity, product.type, product.img FROM product INNER JOIN " +
-                "product_on_sale ON product_on_sale.product_id = product.id WHERE " +
-                "product_on_sale.id = %d", productOnSale.getId());
-        Cursor c = db.rawQuery(query,null);
-        c.moveToFirst();
-        Product product = cursorToProdut(c);
-        c.close();
-        close();
-        return product;
-    }
 
     /*TODO fix dell'user
     private User cursorToUser(Cursor c){
@@ -245,6 +250,7 @@ public class DatabaseAccess {
     }
      */
 
+
     private Product cursorToProdut(Cursor c) {
         long id = c.getLong(0);
         String name = c.getString(1);
@@ -254,6 +260,7 @@ public class DatabaseAccess {
         String img = c.getString(5);
         return Product.create(id, name, expansion, rarity, type,img);
     }
+
 
     private ProductOnSale cursorToProdutOnSale(Cursor c) {
         long id = c.getLong(0);

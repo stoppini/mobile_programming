@@ -1,29 +1,31 @@
 package com.example.MagicShop;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.MagicShop.model.DatabaseAccess;
 import com.example.MagicShop.model.Product;
-import com.example.MagicShop.model.ProductOnSale;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ShowProducts extends AppCompatActivity {
+public class ShowProductsOnSale extends AppCompatActivity {
 
     private ListView mListView;
     private List<Product> mProduct = new LinkedList<>();
@@ -32,8 +34,10 @@ public class ShowProducts extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.simple_first_local_data);
+        setContentView(R.layout.simple_first_local_data_show);
         mListView = (ListView)findViewById(R.id.listViewT);
+
+
 
         mAdapter = new BaseAdapter() {
             @Override
@@ -53,7 +57,7 @@ public class ShowProducts extends AppCompatActivity {
             @Override
             public View getView(int position, View view, ViewGroup parent) {
                 if(view == null){
-                    view = getLayoutInflater().inflate(R.layout.custom_list_item, null);
+                    view = getLayoutInflater().inflate(R.layout.custom_list_item_show, null);
                 }
                 final TextView nameToView = (TextView) view.findViewById(R.id.nameT);
                 final ImageView imageToView = (ImageView)view.findViewById(R.id.imgT);
@@ -68,7 +72,23 @@ public class ShowProducts extends AppCompatActivity {
 
         mListView.setAdapter(mAdapter);
 
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Product product = (Product) mAdapter.getItem(position);
+
+                final Intent showProductOnSaleIntent = new Intent(
+                        ShowProductsOnSale.this,ShowProductOnSaleSeller.class);
+                showProductOnSaleIntent.putExtra(Product.PRODUCT_LIST_EXTRA, (Serializable) product);
+                startActivity(showProductOnSaleIntent);
+                Log.println(Log.DEBUG,"DB",product.getName());
+            }
+        });
+
     }
+
+
 
     @Override
     protected void onStart(){
@@ -77,7 +97,5 @@ public class ShowProducts extends AppCompatActivity {
         mProduct.clear();
         mProduct.addAll(products);
         mListView.setAdapter(mAdapter);
-
-
     }
 }

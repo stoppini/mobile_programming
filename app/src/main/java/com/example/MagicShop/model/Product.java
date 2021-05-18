@@ -1,7 +1,7 @@
 package com.example.MagicShop.model;
 
 import java.io.Serializable;
-
+//TODO bisonga farla parcializable
 public class Product implements Serializable {
     private final long id;
     private final String name;

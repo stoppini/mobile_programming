@@ -183,12 +183,47 @@ public class DatabaseAccess {
     }
     */
 
+    public List<Product> getSearchProducts(final String name, final String expansion,
+                                           final String rarity, final String type){
+        String mExpansion = expansion;
+        String mRarity = rarity;
+        String mType = type;
+        open();
+        List<Product> products = new ArrayList<>();
+        Log.println(Log.DEBUG,"DB","NEL METODO");
+        if (mExpansion.equals("All")) {
+            mExpansion = "";
+        }
+        if (mRarity.equals("All")) {
+            mRarity = "";
+        }
+        if (mType.equals("All")) {
+            mType = "";
+        }
+
+        String query = String.format("SELECT * FROM product WHERE name LIKE '%s' " +
+                        "AND expansion LIKE '%s' AND rarity LIKE '%s' AND type LIKE '%s' ",
+                        name.concat("%"), mExpansion.concat("%"), mRarity.concat("%"), mType.concat("%"));
+        Log.println(Log.DEBUG,"QUERY", ""+query);
+        Cursor c = db.rawQuery(query,null);
+        c.moveToFirst();
+        while (!c.isAfterLast()){
+            Product p = cursorToProdut(c);
+            Log.println(Log.DEBUG,"PRODUCT",p.getName());
+            products.add(p);
+            c.moveToNext();
+        }
+        c.close();
+        close();
+        return products;
+    }
+
     public Product getProdutFromProductOnSale(ProductOnSale productOnSale){
         open();
         String query = String.format("SELECT product.id, product.name, product.expansion, " +
-                        "product.rarity, product.type, product.img FROM product INNER JOIN " +
-                        "product_on_sale ON product_on_sale.product_id = product.id WHERE " +
-                        "product_on_sale.id = %d", productOnSale.getId());
+                "product.rarity, product.type, product.img FROM product INNER JOIN " +
+                "product_on_sale ON product_on_sale.product_id = product.id WHERE " +
+                "product_on_sale.id = %d", productOnSale.getId());
         Cursor c = db.rawQuery(query,null);
         c.moveToFirst();
         Product product = cursorToProdut(c);

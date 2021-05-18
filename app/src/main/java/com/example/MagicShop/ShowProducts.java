@@ -1,7 +1,8 @@
- package com.example.MagicShop;
+package com.example.MagicShop;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,16 +22,17 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
- public class ShowDb extends AppCompatActivity {
-     private ListView mListView;
+public class ShowProducts extends AppCompatActivity {
+
+    private ListView mListView;
     private List<Product> mProduct = new LinkedList<>();
     private ListAdapter mAdapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.simple_first_local_data);
+
         mListView = (ListView)findViewById(R.id.listViewT);
 
         mAdapter = new BaseAdapter() {
@@ -69,21 +71,13 @@ import java.util.List;
     }
 
     @Override
-     protected void onStart(){
+    protected void onStart(){
         super.onStart();
-        DatabaseAccess dbA = null;
-        try {
-            dbA = DatabaseAccess.getInstance(this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        List<Product> products = dbA.getAllProducts();
+        List<Product> products = (List<Product>) getIntent().getSerializableExtra(Product.PRODUCT_LIST_EXTRA);
         mProduct.clear();
         mProduct.addAll(products);
         mListView.setAdapter(mAdapter);
-        List<ProductOnSale> prodss  = dbA.getAllProductOnSaleFromProduct(products.get(0));
 
-       Log.e("PRODUCT_ON_SALE_0", ""+ (dbA.getSearchProducts("delver","Innistrad" ,"Common","Single")).toString());
 
     }
 }

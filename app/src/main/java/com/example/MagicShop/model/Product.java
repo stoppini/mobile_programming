@@ -1,6 +1,8 @@
 package com.example.MagicShop.model;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable {
     private final long id;
     private final String name;
     private final String expansion;
@@ -8,6 +10,8 @@ public class Product {
     private final String type;
     private final String img;
 
+
+    public static final String PRODUCT_LIST_EXTRA = "com.example.cardmarket.model.PRODUCT_LIST_EXTRA";
 
     public Product(final long id, final String name, final String expansion, final String rarity,
                    final String type, final String img) {

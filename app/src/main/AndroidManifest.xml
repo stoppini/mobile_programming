@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".FindProducts"></activity>
+        <activity android:name=".ShowProducts"></activity>
+        <activity android:name=".FindProducts" />
         <activity android:name=".SummaryActivity" />
         <activity android:name=".MenuActivity" />
         <activity android:name=".ShowDb" />

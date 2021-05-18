@@ -25,6 +25,7 @@
     <string name="wrong_credentials_error">Wrong credentials</string>
     <string name="different_passwords_error">The passwords should be the same</string>
     <string name="all_mandatory_fields_error">All the fields are mandatory</string>
+    <string name="no_products_on_search">No products find with this search</string>
 
 
     <!-- FIND PRODUCTS  -->
@@ -32,6 +33,7 @@
     <string name="expansion">Expansion</string>
     <string name="rarity">Rarity</string>
     <string name="type">Type</string>
+    <string name="search">Search</string>
 
 
 </resources>

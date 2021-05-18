@@ -47,6 +47,15 @@
             style="@style/main_button_style"/>
 
 
+        <Button
+            android:id="@+id/find_products"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/find_products"
+            android:layout_below="@+id/view_remote_test_db"
+            style="@style/main_button_style"/>
+
+
 
 
     </RelativeLayout>

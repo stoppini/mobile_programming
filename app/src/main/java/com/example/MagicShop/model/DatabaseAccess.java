@@ -93,6 +93,62 @@ public class DatabaseAccess {
         return products_on_sale;
     }
 
+
+    public List<String> getAllExpansion(){
+        open();
+        List<String> expansions = new ArrayList<>();
+        Log.println(Log.DEBUG,"DB",db.toString());
+        String query = String.format("SELECT DISTINCT product.expansion FROM product ");
+
+        Cursor c = db.rawQuery(query,null);
+        c.moveToFirst();
+        while (!c.isAfterLast()){
+            expansions.add(c.getString(0));
+            c.moveToNext();
+        }
+        expansions.add("All");
+        c.close();
+        close();
+        return expansions;
+    }
+
+    public List<String> getAllTypes(){
+        open();
+        List<String> types = new ArrayList<>();
+        Log.println(Log.DEBUG,"DB",db.toString());
+        String query = String.format("SELECT DISTINCT product.type FROM product ");
+
+        Cursor c = db.rawQuery(query,null);
+        c.moveToFirst();
+        while (!c.isAfterLast()){
+            types.add(c.getString(0));
+            c.moveToNext();
+        }
+        types.add("All");
+        c.close();
+        close();
+        return types;
+    }
+
+    public List<String> getAllRaritys(){
+        open();
+        List<String> raritys = new ArrayList<>();
+        Log.println(Log.DEBUG,"DB",db.toString());
+        String query = String.format("SELECT DISTINCT product.rarity FROM product ");
+
+        Cursor c = db.rawQuery(query,null);
+        c.moveToFirst();
+        while (!c.isAfterLast()){
+            raritys.add(c.getString(0));
+            c.moveToNext();
+        }
+        raritys.add("All");
+        c.close();
+        close();
+        Log.println(Log.DEBUG,"DB","HEEEEEEEEEEEEEEEEEEEEELP");
+        return raritys;
+    }
+
     //TODO serve fixare l'user
     /*
     public List<ProductOnSale> getAllProductOnSaleFromUser(User user){

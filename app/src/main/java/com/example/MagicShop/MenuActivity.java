@@ -24,6 +24,12 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) { enterTestDatabase(); }
         });
+
+        final Button findProductsBtn = (Button)findViewById(R.id.find_products);
+        findProductsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { findProducts(); }
+        });
     }
 
 
@@ -31,5 +37,11 @@ public class MenuActivity extends AppCompatActivity {
         Log.d("DEBUG", "DB test access");
         final Intent showDatabaseIntent = new Intent(MenuActivity.this, ShowDb.class);
         startActivity(showDatabaseIntent);
+    }
+
+    private void findProducts(){
+        Log.d("DEBUG", "Find Products");
+        final Intent findProducts = new Intent(MenuActivity.this, FindProducts.class);
+        startActivity(findProducts);
     }
 }

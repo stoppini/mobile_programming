@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.MagicShop">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,25 +12,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name="com.example.MagicShop.SummaryActivity"></activity>
-        <activity android:name="com.example.MagicShop.MenuActivity" />
-        <activity android:name="com.example.MagicShop.ShowDb" />
-        <activity android:name="com.example.MagicShop.RegisterActivity">
+        <activity android:name=".FindProducts"></activity>
+        <activity android:name=".SummaryActivity" />
+        <activity android:name=".MenuActivity" />
+        <activity android:name=".ShowDb" />
+        <activity android:name=".RegisterActivity">
             <intent-filter>
                 <action android:name="com.example.cardmarket.action.REGISTRATION_ACTION" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.MagicShop.LogInActivity">
+        <activity android:name=".LogInActivity">
             <intent-filter>
                 <action android:name="com.example.cardmarket.action.LOGIN_ACTION" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.MagicShop.FirstAccessActivity" />
-        <activity android:name="com.example.MagicShop.SplashActivity">
+        <activity android:name=".FirstAccessActivity" />
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,8 +39,5 @@
             </intent-filter>
         </activity>
     </application>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-
 
 </manifest>

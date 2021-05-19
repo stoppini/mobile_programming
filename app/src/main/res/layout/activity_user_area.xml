@@ -44,15 +44,28 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/birthdate_to_register"
+                android:text="@string/address_to_register"
                 android:layout_weight="2"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/show_birthdate_data"
+                android:id="@+id/show_address_data"
                 android:layout_weight="1"/>
+        </TableRow>
 
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cap_to_register"
+                android:layout_weight="2"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/show_cap_data"
+                android:layout_weight="1"/>
         </TableRow>
 
         <TableRow>
@@ -67,8 +80,9 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/show_location_data"
                 android:layout_weight="1"/>
-
         </TableRow>
+
+
 
         <Button
             android:layout_width="wrap_content"

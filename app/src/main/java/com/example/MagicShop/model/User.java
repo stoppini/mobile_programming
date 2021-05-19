@@ -178,6 +178,15 @@ public class User implements Parcelable {
         return this.mLocation;
     }
 
+    public String getAddress() {
+        return this.mAddress;
+    }
+
+    public int getCap() {
+        return this.mCap;
+    }
+
+
 //    public long getBirthDate() {
 //        return this.mBirthDate;
 //    }

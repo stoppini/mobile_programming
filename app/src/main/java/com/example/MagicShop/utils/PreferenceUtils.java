@@ -22,6 +22,59 @@ public class PreferenceUtils {
         return prefs.getString(Constants.KEY_USERNAME, null);
     }
 
+    public static boolean saveEmail(String email, Context context){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor prefsEditor = prefs.edit();
+        prefsEditor.putString(Constants.KEY_EMAIL, email);
+        prefsEditor.apply();
+        return true;
+    }
+
+    public static String getEmail(Context context){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getString(Constants.KEY_EMAIL, null);
+    }
+
+    public static boolean saveLocation(String location, Context context){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor prefsEditor = prefs.edit();
+        prefsEditor.putString(Constants.KEY_LOCATION, location);
+        prefsEditor.apply();
+        return true;
+    }
+
+    public static String getLocation(Context context){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getString(Constants.KEY_LOCATION, null);
+    }
+
+    public static boolean saveAddress(String address, Context context){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor prefsEditor = prefs.edit();
+        prefsEditor.putString(Constants.KEY_ADDRESS, address);
+        prefsEditor.apply();
+        return true;
+    }
+
+    public static String getAddress(Context context){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getString(Constants.KEY_ADDRESS, null);
+    }
+
+    public static boolean saveCap(String cap, Context context){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor prefsEditor = prefs.edit();
+        prefsEditor.putString(Constants.KEY_CAP, cap);
+        prefsEditor.apply();
+        return true;
+    }
+
+    public static String getCap(Context context){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getString(Constants.KEY_CAP, null);
+    }
+
+
     public static boolean savePassword(String password, Context context){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor prefsEditor = prefs.edit();

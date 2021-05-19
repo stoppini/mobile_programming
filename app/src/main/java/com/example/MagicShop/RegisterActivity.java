@@ -89,6 +89,11 @@ public class RegisterActivity extends AppCompatActivity {
             resultIntent.putExtra(User.USER_DATA_EXTRA,user);
             // saving preferences for logged user
             PreferenceUtils.saveUsername(usernameEdit, this);
+            PreferenceUtils.saveAddress(addressEdit, this);
+            PreferenceUtils.saveEmail(emailEdit, this);
+            PreferenceUtils.saveLocation(locationEdit, this);
+            PreferenceUtils.saveCap(capEdit, this);
+            Log.d(TAG_LOG,PreferenceUtils.getAddress(this));
             setResult(RESULT_OK,resultIntent);
             finish();
         }

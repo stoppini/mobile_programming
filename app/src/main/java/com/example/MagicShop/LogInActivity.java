@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.MagicShop.model.User;
+import com.example.MagicShop.utils.PreferenceUtils;
 
 import java.util.Calendar;
 
@@ -49,19 +50,26 @@ public class LogInActivity extends AppCompatActivity {
         }
 
 
+        // to do gestione utenti attraverso DB
         final String DUMMY_USERNAME = "diego";
         final String DUMMY_PASSWORD = "password";
+
 
         User user = null;
 
         if(DUMMY_USERNAME.equals(usernameEdit) && DUMMY_PASSWORD.equals(passwordEdit))
         {
+            //saving preferences
+            PreferenceUtils.saveUsername(DUMMY_USERNAME, this);
+            PreferenceUtils.savePassword(DUMMY_PASSWORD, this);
+
             Calendar cal = Calendar.getInstance();
             cal.set(Calendar.DAY_OF_MONTH,17);
             cal.set(Calendar.MONTH,6);
             cal.set(Calendar.YEAR,1977);
             final long birthDate = cal.getTimeInMillis();
-            user = User.create(birthDate).withUsername(usernameEdit).withPassword(passwordEdit).withEmail("diego.berardi@unibs.it").withLocation("Brescia");
+            user = User.create(birthDate).withUsername(usernameEdit).withPassword(passwordEdit).
+                    withEmail("diego.berardi@unibs.it").withLocation("Brescia");
         }
 
         if(user != null)

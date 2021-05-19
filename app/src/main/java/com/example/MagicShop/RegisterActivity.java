@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.MagicShop.model.User;
+import com.example.MagicShop.utils.PreferenceUtils;
 
 import java.util.Calendar;
 
@@ -78,6 +79,8 @@ public class RegisterActivity extends AppCompatActivity {
         if(user != null) {
             Log.d(TAG_LOG,"Send registration!");
             resultIntent.putExtra(User.USER_DATA_EXTRA,user);
+            // saving preferences for logged user
+            PreferenceUtils.saveUsername(usernameEdit, this);
             setResult(RESULT_OK,resultIntent);
             finish();
         }

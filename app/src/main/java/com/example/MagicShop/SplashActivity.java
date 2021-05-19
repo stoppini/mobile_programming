@@ -10,6 +10,8 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.MagicShop.utils.PreferenceUtils;
+
 public class SplashActivity extends AppCompatActivity {
 
     private static final long MIN_WAIT_INTERVAL = 1000L;
@@ -74,8 +76,16 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void goAhead() {
-        final Intent intent = new Intent(this, FirstAccessActivity.class);
-        startActivity(intent);
-        finish();
+        Log.d(TAG_LOG, "preferences: " + PreferenceUtils.getUsername(this));
+
+        if(PreferenceUtils.getUsername(this) != null){
+            final Intent intent = new Intent(this, MenuActivity.class);
+            startActivity(intent);
+            finish();
+        }else{
+            final Intent intent = new Intent(this, FirstAccessActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 }

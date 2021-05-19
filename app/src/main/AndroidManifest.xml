@@ -16,6 +16,8 @@
         <activity android:name=".ShowProducts" />
         <activity android:name=".FindProducts" />
         <activity android:name=".ShowProductsOnSale" />
+        <activity android:name=".ModifyInformationsActivity"></activity>
+        <activity android:name=".UserAreaActivity" />
         <activity android:name=".SummaryActivity" />
         <activity android:name=".MenuActivity" />
         <activity android:name=".ShowDb" />

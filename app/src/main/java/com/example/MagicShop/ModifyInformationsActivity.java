@@ -35,6 +35,7 @@ public class ModifyInformationsActivity extends AppCompatActivity {
         final Intent userAreaIntent = new Intent(ModifyInformationsActivity.this,UserAreaActivity.class);
 
         //modifica dati utente e aggiornamento db
+
         final String un = this.mUsername.getText().toString();
         PreferenceUtils.saveUsername(un, this);
 

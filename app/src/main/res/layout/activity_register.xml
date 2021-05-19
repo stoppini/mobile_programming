@@ -59,15 +59,24 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/birthdate_to_register"/>
+            android:text="@string/address_to_register"/>
 
-        <DatePicker
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/address_edit_to_register"
+            style="@style/main_edittext_style"/>
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/birthDate_edit_to_register"
-            android:datePickerMode="spinner"
-            android:calendarViewShown="false"
-            android:layout_gravity="center"/>
+            android:text="@string/cap_to_register"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cap_edit_to_register"
+            style="@style/main_edittext_style"/>
 
         <TextView
             android:layout_width="wrap_content"

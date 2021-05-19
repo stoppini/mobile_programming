@@ -8,6 +8,10 @@
     <string name="email_to_register">Email:</string>
     <string name="birthdate_to_register">Birthdate:</string>
     <string name="location_to_register">Location:</string>
+    <string name="address_to_register">Address:</string>
+    <string name="cap_to_register">CAP:</string>
+
+
     modify_button_label
 
     <!-- LABELS -->

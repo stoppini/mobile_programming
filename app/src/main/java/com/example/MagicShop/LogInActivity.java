@@ -63,12 +63,12 @@ public class LogInActivity extends AppCompatActivity {
             PreferenceUtils.saveUsername(DUMMY_USERNAME, this);
             PreferenceUtils.savePassword(DUMMY_PASSWORD, this);
 
-            Calendar cal = Calendar.getInstance();
-            cal.set(Calendar.DAY_OF_MONTH,17);
-            cal.set(Calendar.MONTH,6);
-            cal.set(Calendar.YEAR,1977);
-            final long birthDate = cal.getTimeInMillis();
-            user = User.create(birthDate).withUsername(usernameEdit).withPassword(passwordEdit).
+//            Calendar cal = Calendar.getInstance();
+//            cal.set(Calendar.DAY_OF_MONTH,17);
+//            cal.set(Calendar.MONTH,6);
+//            cal.set(Calendar.YEAR,1977);
+//            final long birthDate = cal.getTimeInMillis();
+            user = User.create().withUsername(usernameEdit).withPassword(passwordEdit).
                     withEmail("diego.berardi@unibs.it").withLocation("Brescia");
         }
 

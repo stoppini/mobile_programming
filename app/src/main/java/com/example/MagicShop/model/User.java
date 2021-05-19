@@ -6,11 +6,18 @@ import android.os.Parcelable;
 import android.text.TextUtils;
 
 public class User implements Parcelable {
+    // togliere: data,
+    // aggiungere: address, cap
+    private int mID;
     private String mUserName;
     private String mPassword;
     private String mEmail;
     private String mLocation;
+    private String mAddress;
+    private int mCap;
+
     private long mBirthDate;
+
     public static final String USER_DATA_EXTRA = "com.example.cardmarket.model.USER_DATA_EXTRA";
 
     private static final byte PRESENT = 1;
@@ -30,7 +37,7 @@ public class User implements Parcelable {
     };
 
     public User(Parcel in) {
-        this.mBirthDate = in.readLong();
+        this.mAddress = in.readString();
         if(in.readByte() == PRESENT)
         {
             this.mUserName = in.readString();
@@ -49,6 +56,11 @@ public class User implements Parcelable {
         {
             this.mLocation = in.readString();
         }
+
+        if(in.readByte() == PRESENT)
+        {
+            this.mCap = in.readInt();
+        }
     }
 
     @Override
@@ -60,14 +72,14 @@ public class User implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flag)
     {
-        dest.writeLong(this.mBirthDate);
-        if(!TextUtils.isEmpty(this.mUserName))
-        {
-            dest.writeByte(PRESENT);
-            dest.writeString(this.mUserName);
-        } else {
-            dest.writeByte(NOT_PRESENT);
-        }
+//        dest.writeLong(this.mBirthDate);
+//        if(!TextUtils.isEmpty(this.mUserName))
+//        {
+//            dest.writeByte(PRESENT);
+//            dest.writeString(this.mUserName);
+//        } else {
+//            dest.writeByte(NOT_PRESENT);
+//        }
 
         if(!TextUtils.isEmpty(this.mPassword))
         {
@@ -92,14 +104,31 @@ public class User implements Parcelable {
         } else {
             dest.writeByte(NOT_PRESENT);
         }
+
+        if(!TextUtils.isEmpty(this.mAddress))
+        {
+            dest.writeByte(PRESENT);
+            dest.writeString(this.mAddress);
+        } else {
+            dest.writeByte(NOT_PRESENT);
+        }
+
+        if(!TextUtils.isEmpty(Integer.toString(this.mCap)))
+        {
+            dest.writeByte(PRESENT);
+            //scrivo l'int
+            dest.writeInt(this.mCap);
+        } else {
+            dest.writeByte(NOT_PRESENT);
+        }
     }
 
-    private User(final long birthDate) {
-        this.mBirthDate = birthDate;
+    private User() {
+
     }
 
-    public static User create(final long birthDate) {
-        final User user = new User(birthDate);
+    public static User create() {
+        final User user = new User();
         return user;
     }
 
@@ -123,6 +152,16 @@ public class User implements Parcelable {
         return this;
     }
 
+    public User withAddress(String newAddress) {
+        this.mAddress = newAddress;
+        return this;
+    }
+
+    public User withCap(int newCap) {
+        this.mCap = newCap;
+        return this;
+    }
+
     public String getUsername() {
         return this.mUserName;
     }
@@ -139,9 +178,9 @@ public class User implements Parcelable {
         return this.mLocation;
     }
 
-    public long getBirthDate() {
-        return this.mBirthDate;
-    }
+//    public long getBirthDate() {
+//        return this.mBirthDate;
+//    }
 
 }
 

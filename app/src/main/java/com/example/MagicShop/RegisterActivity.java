@@ -25,8 +25,10 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText mPasswordEditText;
     private EditText mConfirmPasswordEditText;
     private EditText mEmailEditText;
-    private DatePicker mBirthDateEditText;
+    //private DatePicker mBirthDateEditText;
     private EditText mLocationEditText;
+    private EditText mAddressEditText;
+    private EditText mCapEditText;
 
     private static final String TAG_LOG = RegisterActivity.class.getName();
 
@@ -39,8 +41,10 @@ public class RegisterActivity extends AppCompatActivity {
         this.mPasswordEditText = (EditText)findViewById(R.id.password_edit_to_register);
         this.mConfirmPasswordEditText = (EditText)findViewById(R.id.confirm_password);
         this.mEmailEditText = (EditText)findViewById(R.id.email_edit_to_register);
-        this.mBirthDateEditText = (DatePicker)findViewById(R.id.birthDate_edit_to_register);
+        //this.mBirthDateEditText = (DatePicker)findViewById(R.id.birthDate_edit_to_register);
         this.mLocationEditText = (EditText)findViewById(R.id.location_edit_to_register);
+        this.mAddressEditText = (EditText)findViewById(R.id.address_edit_to_register);
+        this.mCapEditText = (EditText)findViewById(R.id.cap_edit_to_register);
     }
 
     public void doRegistration(View confirmButton){
@@ -49,10 +53,13 @@ public class RegisterActivity extends AppCompatActivity {
         final String confirmPasswordEdit = this.mConfirmPasswordEditText.getText().toString();
         final String emailEdit = this.mEmailEditText.getText().toString();
         final String locationEdit = this.mLocationEditText.getText().toString().toLowerCase();
+        final String addressEdit = this.mAddressEditText.getText().toString().toLowerCase();
+        final String capEdit = this.mCapEditText.getText().toString();
 
         //checking all fields are not null
         if(TextUtils.isEmpty(usernameEdit) || TextUtils.isEmpty(passwordEdit) || TextUtils.isEmpty(confirmPasswordEdit)
-                || TextUtils.isEmpty(emailEdit) || TextUtils.isEmpty(locationEdit))
+                || TextUtils.isEmpty(emailEdit) || TextUtils.isEmpty(locationEdit) || TextUtils.isEmpty(addressEdit)
+                || TextUtils.isEmpty(capEdit))
         {
             final String usernameMandatory = getResources().getString(R.string.all_mandatory_fields_error);
             this.mErrorTextView.setText(usernameMandatory);
@@ -69,10 +76,11 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        Calendar cal = Calendar.getInstance();
-        cal.set(this.mBirthDateEditText.getYear(),this.mBirthDateEditText.getMonth(),this.mBirthDateEditText.getDayOfMonth());
-        final long birthDateEdit = cal.getTimeInMillis();
-        final User user = User.create(birthDateEdit).withUsername(usernameEdit).withPassword(passwordEdit).withEmail(emailEdit).withLocation(locationEdit);
+//        Calendar cal = Calendar.getInstance();
+//        cal.set(this.mBirthDateEditText.getYear(),this.mBirthDateEditText.getMonth(),this.mBirthDateEditText.getDayOfMonth());
+//        final long birthDateEdit = cal.getTimeInMillis();
+        final User user = User.create().withUsername(usernameEdit).withPassword(passwordEdit).withEmail(emailEdit).
+                withLocation(locationEdit).withAddress(addressEdit).withCap(Integer.parseInt(capEdit));
 
         Intent resultIntent = new Intent();
 

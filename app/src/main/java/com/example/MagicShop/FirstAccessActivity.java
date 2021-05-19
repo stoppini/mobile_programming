@@ -43,7 +43,7 @@ public class FirstAccessActivity extends AppCompatActivity {
     private void enterAsAnonymous(){
         Log.d(TAG_LOG, "Anonymous access");
         final Intent anonymousIntent = new Intent(FirstAccessActivity.this, MenuActivity.class);
-        final User user = User.create(System.currentTimeMillis());
+        final User user = User.create();
         anonymousIntent.putExtra(User.USER_DATA_EXTRA, user);
         //userModel.save(this); // non usiamo più gli extra in questo caso, ma le SharedPreferences
         startActivity(anonymousIntent);

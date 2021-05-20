@@ -28,6 +28,8 @@
     <string name="modify_button_label">Modify</string>
     <string name="user_area_button_label">User Area</string>
     <string name="log_out_button_label">Log Out</string>
+    <string name="all">All</string>
+
 
     <!-- MESSAGGI D'ERRORE -->
     <string name="mandatory_field_error">The field %1$s is mandatory</string>

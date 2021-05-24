@@ -32,8 +32,7 @@ public class SummaryActivity extends AppCompatActivity {
 
         Intent data = getIntent();
         this.mUser = (User) data.getParcelableExtra(User.USER_DATA_EXTRA);
-        Log.e("debug",  "" + mUser.getUsername() + mUser.getAddress() + mUser.getEmail() + mUser.getLocation()
-        + mUser.getCap());
+
 
         this.mUsername = (TextView)findViewById(R.id.show_username_data);
         mUsername.setText(mUser.getUsername());

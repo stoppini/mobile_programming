@@ -21,8 +21,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
- public class ShowDb extends AppCompatActivity {
-     private ListView mListView;
+ public class ShowDb extends AppCompatActivity { private ListView mListView;
     private List<Product> mProduct = new LinkedList<>();
     private ListAdapter mAdapter;
 
@@ -30,6 +29,12 @@ import java.util.List;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+     protected void onStart(){
+        super.onStart();
         setContentView(R.layout.simple_first_local_data);
         mListView = (ListView)findViewById(R.id.listViewT);
 
@@ -53,24 +58,21 @@ import java.util.List;
                 if(view == null){
                     view = getLayoutInflater().inflate(R.layout.custom_list_item, null);
                 }
+
                 final TextView nameToView = (TextView) view.findViewById(R.id.nameT);
                 final ImageView imageToView = (ImageView)view.findViewById(R.id.imgT);
+                final TextView ruleToView = (TextView) view.findViewById(R.id.rule);
 
                 final Product product = (Product) getItem(position);
 
                 nameToView.setText(product.getName());
                 Picasso.get().load(""+product.getImg()).into(imageToView);
+                ruleToView.setText(product.getRule());
                 return view;
             }
         };
 
         mListView.setAdapter(mAdapter);
-
-    }
-
-    @Override
-     protected void onStart(){
-        super.onStart();
         DatabaseAccess dbA = null;
         try {
             dbA = DatabaseAccess.getInstance(this);
@@ -81,9 +83,6 @@ import java.util.List;
         mProduct.clear();
         mProduct.addAll(products);
         mListView.setAdapter(mAdapter);
-        List<ProductOnSale> prodss  = dbA.getAllProductOnSaleFromProduct(products.get(0));
-
-       Log.e("PRODUCT_ON_SALE_0", ""+ (dbA.getSearchProducts("delver","Innistrad" ,"Common","Single")).toString());
 
     }
 }

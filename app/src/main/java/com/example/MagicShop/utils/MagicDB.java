@@ -6,7 +6,7 @@ public class MagicDB {
     public static final String DATABASE_NAME = "magic_db.db";
     public static final int DATABASE_VERSION = 1;
 
-    public static class Pruduct_db implements BaseColumns{
+    public static class Product_db implements BaseColumns{
         public static final String TABLE_NAME = "product";
         public static final String COLUMN_ID = "id";
         public static final String COLUMN_NAME = "name";
@@ -16,13 +16,6 @@ public class MagicDB {
         public static final String COLUMN_IMG = "img";
     }
 
-    public static class Pruduct_On_Sale_db implements BaseColumns{
-        public static final String TABLE_NAME = "product_on_sale";
-        public static final String COLUMN_ID = "id";
-        public static final String COLUMN_PRODUCT_ID = "product_id";
-        public static final String COLUMN_USER_ID = "user_id";
-        public static final String COLUMN_PRICE = "price";
-    }
 
 
 }

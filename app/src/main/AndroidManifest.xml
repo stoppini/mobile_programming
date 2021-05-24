@@ -13,9 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".ShowProductOnSaleSeller"></activity>
-        <activity android:name=".ShowProducts" />
         <activity android:name=".FindProducts" />
-        <activity android:name=".ShowProductsOnSale" />
+        <activity android:name=".ShowProducts" />
         <activity android:name=".ModifyInformationsActivity"></activity>
         <activity android:name=".UserAreaActivity" />
         <activity android:name=".SummaryActivity" />

@@ -14,21 +14,15 @@
         tools:layout_editor_absoluteY="0dp">
 
         <TextView
-            android:id="@+id/nameT"
+            android:id="@+id/name_vendor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="name"
             android:textColor="@color/black" />
 
-        <ImageView
-            android:id="@+id/imgT"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center" />
-
         <TextView
-            android:id="@+id/rule"
+            android:id="@+id/price_vendor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

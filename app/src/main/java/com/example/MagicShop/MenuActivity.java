@@ -8,8 +8,11 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.MagicShop.model.DatabaseAccess;
 import com.example.MagicShop.model.User;
 import com.example.MagicShop.utils.PreferenceUtils;
+
+import java.io.IOException;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -19,6 +22,21 @@ public class MenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+
+        DatabaseAccess dbA = null;
+        try {
+            dbA = DatabaseAccess.getInstance(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+//        Log.d("CHEK USERS IN DB","users: " + dbA.getAllUsers().get(0).getUsername() + "\n"
+//                                                    + dbA.getAllUsers().get(1).getUsername() + "\n"
+//                                                    + dbA.getAllUsers().get(2).getUsername() + "\n"
+//                                                    + dbA.getAllUsers().get(3).getUsername());
+
+        Log.d("CHEK USERS IN DB","users: " + dbA.getAllUsers());
 
         final Button userArea = (Button)findViewById(R.id.user_area_button);
         userArea.setOnClickListener(new View.OnClickListener() {

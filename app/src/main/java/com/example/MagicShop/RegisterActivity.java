@@ -83,13 +83,15 @@ public class RegisterActivity extends AppCompatActivity {
 //        cal.set(this.mBirthDateEditText.getYear(),this.mBirthDateEditText.getMonth(),this.mBirthDateEditText.getDayOfMonth());
 //        final long birthDateEdit = cal.getTimeInMillis();
         final User user = User.create().withUsername(usernameEdit).withPassword(passwordEdit).withEmail(emailEdit).
-                withLocation(locationEdit).withAddress(addressEdit).withCap(Integer.parseInt(capEdit));
+                withLocation(locationEdit).withAddress(addressEdit).withCap(Long.parseLong(capEdit));
 
         Intent resultIntent = new Intent();
 
         if(user != null) {
+
             Log.d(TAG_LOG,"Send registration!");
             resultIntent.putExtra(User.USER_DATA_EXTRA,user);
+
             // saving preferences for logged user
             PreferenceUtils.saveUsername(usernameEdit, this);
             PreferenceUtils.saveAddress(addressEdit, this);
@@ -100,13 +102,14 @@ public class RegisterActivity extends AppCompatActivity {
             // saving in db
             try{
                 DatabaseAccess db = DatabaseAccess.getInstance(this);
+                Log.d(TAG_LOG,"saving in db!");
                 db.registerUser(user);
 
             }catch(IOException e){
                 Log.d(TAG_LOG,"Exception: " + e);
             }
 
-            Log.d(TAG_LOG,PreferenceUtils.getAddress(this));
+
             setResult(RESULT_OK,resultIntent);
             finish();
         }

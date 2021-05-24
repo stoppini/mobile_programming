@@ -9,9 +9,11 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.MagicShop.model.DatabaseAccess;
 import com.example.MagicShop.model.User;
 import com.example.MagicShop.utils.PreferenceUtils;
 
+import java.io.IOException;
 import java.util.Calendar;
 
 public class LogInActivity extends AppCompatActivity {
@@ -57,11 +59,22 @@ public class LogInActivity extends AppCompatActivity {
 
         User user = null;
 
-        if(DUMMY_USERNAME.equals(usernameEdit) && DUMMY_PASSWORD.equals(passwordEdit))
+        DatabaseAccess dbA = null;
+        try {
+            dbA = DatabaseAccess.getInstance(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //if(DUMMY_USERNAME.equals(usernameEdit) && DUMMY_PASSWORD.equals(passwordEdit))
+        if(dbA.logInUser(usernameEdit, passwordEdit))
         {
             //saving preferences
-            PreferenceUtils.saveUsername(DUMMY_USERNAME, this);
-            PreferenceUtils.savePassword(DUMMY_PASSWORD, this);
+            //PreferenceUtils.saveUsername(DUMMY_USERNAME, this);
+            //PreferenceUtils.savePassword(DUMMY_PASSWORD, this);
+
+            PreferenceUtils.saveUsername(usernameEdit, this);
+            PreferenceUtils.savePassword(passwordEdit, this);
 
 //            Calendar cal = Calendar.getInstance();
 //            cal.set(Calendar.DAY_OF_MONTH,17);

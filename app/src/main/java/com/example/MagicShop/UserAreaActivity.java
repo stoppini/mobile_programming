@@ -12,7 +12,7 @@ import com.example.MagicShop.utils.PreferenceUtils;
 
 public class UserAreaActivity extends AppCompatActivity {
 
-    private User mUser;
+    private UserOutOfModel mUser;
     private TextView mUsername;
     private TextView mEmail;
     private TextView mLocation;

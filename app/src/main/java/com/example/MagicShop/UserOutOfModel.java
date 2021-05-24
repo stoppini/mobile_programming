@@ -5,7 +5,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
-public class User implements Parcelable {
+public class UserOutOfModel implements Parcelable {
     private String mUserName;
     private String mPassword;
     private String mEmail;
@@ -17,19 +17,19 @@ public class User implements Parcelable {
     private static final byte NOT_PRESENT = 0;
 
 
-    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+    public static final Parcelable.Creator<UserOutOfModel> CREATOR = new Parcelable.Creator<UserOutOfModel>() {
         @Override
-        public User createFromParcel(Parcel parcel) {
-            return new User(parcel);
+        public UserOutOfModel createFromParcel(Parcel parcel) {
+            return new UserOutOfModel(parcel);
         }
 
         @Override
-        public User[] newArray(int i) {
-            return new User[0];
+        public UserOutOfModel[] newArray(int i) {
+            return new UserOutOfModel[0];
         }
     };
 
-    public User(Parcel in) {
+    public UserOutOfModel(Parcel in) {
         this.mBirthDate = in.readLong();
         if(in.readByte() == PRESENT)
         {
@@ -94,31 +94,31 @@ public class User implements Parcelable {
         }
     }
 
-    private User(final long birthDate) {
+    private UserOutOfModel(final long birthDate) {
         this.mBirthDate = birthDate;
     }
 
-    public static User create(final long birthDate) {
-        final User user = new User(birthDate);
+    public static UserOutOfModel create(final long birthDate) {
+        final UserOutOfModel user = new UserOutOfModel(birthDate);
         return user;
     }
 
-    public User withUsername(String newUserUsername) {
+    public UserOutOfModel withUsername(String newUserUsername) {
         this.mUserName = newUserUsername;
         return this;
     }
 
-    public User withPassword(String newPassword) {
+    public UserOutOfModel withPassword(String newPassword) {
         this.mPassword = newPassword;
         return this;
     }
 
-    public User withEmail(String newEmail) {
+    public UserOutOfModel withEmail(String newEmail) {
         this.mEmail = newEmail;
         return this;
     }
 
-    public User withLocation(String newLocation) {
+    public UserOutOfModel withLocation(String newLocation) {
         this.mLocation = newLocation;
         return this;
     }

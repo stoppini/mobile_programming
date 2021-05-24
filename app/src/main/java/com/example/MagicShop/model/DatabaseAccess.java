@@ -228,26 +228,78 @@ public class DatabaseAccess {
     public void registerUser(User user) {
         open();
         String query = String.format("INSERT INTO user (username, password, email, city, " +
-                        "address, cap) VALUES ('%s','%s','%s','%s','%s',%d", user.getUsername(),
+                        "address, cap) VALUES ('%s','%s','%s','%s','%s','%d')", user.getUsername(),
                 user.getPassword(), user.getEmail(), user.getLocation(), user.getAddress(), user.getCap());
+
+        String s = String.format("INSERT INTO user (username, password, email, city, " +
+                        "address, cap) VALUES (" +
+                        user.getUsername() + "," +
+                        user.getPassword() + "," +
+                        user.getEmail() + "," +
+                        user.getLocation() + "," +
+                        user.getAddress() + "," +
+                        user.getCap()) + ")";
         Cursor c = db.rawQuery(query, null);
         c.close();
         close();
     }
 
+    public boolean logInUser(String username, String password) {
+        open();
+        boolean login=true;
+        String query = String.format("SELECT EXISTS (SELECT * FROM user WHERE username = ? AND password = ?)");
+        Cursor c = db.rawQuery(query, null);
+        // Log.d("DEBUG", "query result: " + c);
+        if(c.isNull(0)){
+            login=false;
+        }
+        c.close();
+        close();
+        return login;
+    }
 
-    /*TODO fix dell'user
+
+    public User getUser(String username, String password){
+        open();
+        String query = String.format("SELECT * FROM user WHERE username = ? AND password = ?");
+        Cursor c = db.rawQuery(query, null);
+        // c.moveToFirst();
+        User user = cursorToUser(c);
+        return user;
+    }
+
+
+    public List<User> getAllUsers() {
+        open();
+        List<User> users = new ArrayList<>();
+        Log.println(Log.DEBUG,"DB",db.toString());
+        Cursor c = db.rawQuery("SELECT * from user",null);
+        c.moveToFirst();
+        while (!c.isAfterLast()){
+            User p = cursorToUser(c);
+            users.add(p);
+            c.moveToNext();
+        }
+        c.close();
+        close();
+        return users;
+    }
+
+
+    //TODO fix dell'user
     private User cursorToUser(Cursor c){
         long id = c.getLong(0);
         String username = c.getString(1);
         String password = c.getString(2);
         String email = c.getString(3);
-        String city = c.getString(4);
+        String location = c.getString(4);
         String address = c.getString(5);
         long cap = c.getLong(6);
-        return User.create(id, username, password, email, city, address, cap);
+
+        return User.create().withUsername(username).
+                withEmail(email).withLocation(location).withAddress(address).withCap(cap);
     }
-     */
+
 
 
     private Product cursorToProdut(Cursor c) {

@@ -12,9 +12,12 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.MagicShop.model.DatabaseAccess;
 import com.example.MagicShop.model.User;
 import com.example.MagicShop.utils.PreferenceUtils;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Calendar;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -93,6 +96,16 @@ public class RegisterActivity extends AppCompatActivity {
             PreferenceUtils.saveEmail(emailEdit, this);
             PreferenceUtils.saveLocation(locationEdit, this);
             PreferenceUtils.saveCap(capEdit, this);
+
+            // saving in db
+            try{
+                DatabaseAccess db = DatabaseAccess.getInstance(this);
+                db.registerUser(user);
+
+            }catch(IOException e){
+                Log.d(TAG_LOG,"Exception: " + e);
+            }
+
             Log.d(TAG_LOG,PreferenceUtils.getAddress(this));
             setResult(RESULT_OK,resultIntent);
             finish();

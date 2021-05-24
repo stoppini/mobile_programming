@@ -224,17 +224,16 @@ public class DatabaseAccess {
         return products_on_sale;
     }
     */
-    /*
-    public void registerUser(User user){
+
+    public void registerUser(User user) {
         open();
         String query = String.format("INSERT INTO user (username, password, email, city, " +
-                "address, cap) VALUES ('%s','%s','%s','%s','%s',%d", user.getUsername(),
-                user.getPassword(), user.getEmail(), user.getCity, user.getAddress, user.getCap);
-        Cursor c = db.rawQuery(query,null);
+                        "address, cap) VALUES ('%s','%s','%s','%s','%s',%d", user.getUsername(),
+                user.getPassword(), user.getEmail(), user.getLocation(), user.getAddress(), user.getCap());
+        Cursor c = db.rawQuery(query, null);
         c.close();
         close();
     }
-    */
 
 
     /*TODO fix dell'user

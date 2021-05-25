@@ -236,7 +236,6 @@ public class DatabaseAccess {
         return raritys;
     }
 
-    //TODO serve fixare l'user
     /*
     public List<ProductOnSale> getAllProductOnSaleFromUser(User user){
         open();
@@ -278,6 +277,22 @@ public class DatabaseAccess {
         close();
     }
 
+    //TODO necessiterà un fix
+    public User getUsersFromProductOnSale(ProductOnSale p) {
+        open();
+        List<User> users = new ArrayList<>();
+        Log.e("ID", ""+p.getId());
+        String query = String.format("SELECT user.username FROM user INNER JOIN product_on_sale ON " +
+                        "product_on_sale.user_id = user.id WHERE product_on_sale.id = %d", p.getId());
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+        User u = cursorToUser(c);
+        c.close();
+        close();
+        Log.e("nane", ""+u.getUsername());
+        return u;
+    }
+
     public boolean logInUser(String username, String password) {
         open();
         boolean login=true;
@@ -293,7 +308,6 @@ public class DatabaseAccess {
     }
 
 
-<<<<<<< HEAD
     public User getUser(String username, String password){
         open();
         String query = String.format("SELECT * FROM user WHERE username = ? AND password = ?");
@@ -320,13 +334,6 @@ public class DatabaseAccess {
         return users;
     }
 
-
-    //TODO fix dell'user
-    /*TODO fix dell'user
-
-
-
-
     private Product cursorToProduct(Cursor c) {
         long id = c.getLong(0);
         String name = c.getString(1);
@@ -338,7 +345,6 @@ public class DatabaseAccess {
         return Product.create(id, name, expansion, rarity, type, rule, img);
     }
 
-
     private ProductOnSale cursorToProductOnSale(Cursor c) {
         long id = c.getLong(0);
         long product_id = c.getLong(1);
@@ -347,5 +353,9 @@ public class DatabaseAccess {
         return ProductOnSale.create(id, product_id, user_id, price);
     }
 
+    private User cursorToUser(Cursor c) {
+        String name = c.getString(0);
+        return User.create().withUsername(name);
+    }
 
 }

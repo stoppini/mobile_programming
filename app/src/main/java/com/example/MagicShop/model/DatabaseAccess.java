@@ -319,9 +319,10 @@ public class DatabaseAccess {
 
     public User getUser(String username, String password){
         open();
-        String query = String.format("SELECT * FROM user WHERE username = ? AND password = ?");
+        String query = String.format("SELECT user.username, user.email, user.city, user.address, user.cap FROM user WHERE username = ? AND password = ?");
         Cursor c = db.rawQuery(query, null);
-        // c.moveToFirst();
+        c.moveToFirst();
+        Log.println(Log.DEBUG,"username ", String.valueOf(c.isNull(0)));
         User user = cursorToUser(c);
         return user;
     }
@@ -370,12 +371,11 @@ public class DatabaseAccess {
     //TODO necessiterà un fix
     private User cursorToUser(Cursor c){
         //long id = c.getLong(0);
-        String username = c.getString(1);
-        String password = c.getString(2);
-        String email = c.getString(3);
-        String location = c.getString(4);
-        String address = c.getString(5);
-        long cap = c.getLong(6);
+        String username = c.getString(0);
+        String email = c.getString(1);
+        String location = c.getString(2);
+        String address = c.getString(3);
+        long cap = c.getLong(4);
         return User.create().withUsername(username).
                 withEmail(email).withLocation(location).withAddress(address).withCap(cap);
     }

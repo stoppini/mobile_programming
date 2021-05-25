@@ -74,7 +74,6 @@ public class PreferenceUtils {
         return prefs.getString(Constants.KEY_CAP, null);
     }
 
-
     public static boolean savePassword(String password, Context context){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor prefsEditor = prefs.edit();

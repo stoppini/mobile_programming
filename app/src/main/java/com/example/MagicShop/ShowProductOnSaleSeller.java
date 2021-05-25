@@ -1,6 +1,5 @@
 package com.example.MagicShop;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.media.Image;
 import android.os.Bundle;

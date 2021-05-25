@@ -16,6 +16,7 @@ public class SummaryActivity extends AppCompatActivity {
 
     private User mUser;
     private TextView mUsername;
+    private TextView mPassword;
     private TextView mEmail;
     //private TextView mBirthDate;
     private TextView mLocation;
@@ -37,6 +38,9 @@ public class SummaryActivity extends AppCompatActivity {
 
         this.mUsername = (TextView)findViewById(R.id.show_username_data);
         mUsername.setText(mUser.getUsername());
+
+        this.mPassword = (TextView)findViewById(R.id.show_password_data);
+        mPassword.setText(mUser.getPassword());
 
         this.mEmail = (TextView)findViewById(R.id.show_email_data);
         mEmail.setText(mUser.getEmail());

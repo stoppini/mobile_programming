@@ -1,5 +1,6 @@
 package com.example.MagicShop.model;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -19,6 +20,13 @@ public class DatabaseAccess {
     private String[] allProductCol = {MagicDB.Product_db.COLUMN_ID, MagicDB.Product_db.TABLE_NAME,
             MagicDB.Product_db.COLUMN_EXPANSION, MagicDB.Product_db.COLUMN_RARITY,
             MagicDB.Product_db.COLUMN_TYPE, MagicDB.Product_db.COLUMN_IMG};
+
+    private static String KEY_USERNAME = "username";
+    private static String KEY_PASSWORD = "password";
+    private static String KEY_EMAIL = "email";
+    private static String KEY_LOCATION = "city";
+    private static String KEY_ADDRESS= "address";
+    private static String KEY_CAP= "cap";
 
     private DatabaseAccess (Context context) throws IOException {
         this.dbHelper = new MagicDBHelper(context);
@@ -264,14 +272,15 @@ public class DatabaseAccess {
                         "address, cap) VALUES ('%s','%s','%s','%s','%s','%d')", user.getUsername(),
                 user.getPassword(), user.getEmail(), user.getLocation(), user.getAddress(), user.getCap());
 
-        String s = String.format("INSERT INTO user (username, password, email, city, " +
-                        "address, cap) VALUES (" +
-                        user.getUsername() + "," +
-                        user.getPassword() + "," +
-                        user.getEmail() + "," +
-                        user.getLocation() + "," +
-                        user.getAddress() + "," +
-                        user.getCap()) + ")";
+        // da fixare
+        ContentValues contentValues=new ContentValues();
+        contentValues.put(KEY_USERNAME, user.getUsername());
+        contentValues.put(KEY_PASSWORD, user.getPassword());
+        contentValues.put(KEY_EMAIL, user.getEmail());
+        contentValues.put(KEY_LOCATION, user.getLocation());
+        contentValues.put(KEY_ADDRESS, user.getAddress());
+        contentValues.put(KEY_CAP, user.getCap());
+        db.insert("user",null, contentValues);
         Cursor c = db.rawQuery(query, null);
         c.close();
         close();
@@ -309,8 +318,8 @@ public class DatabaseAccess {
         boolean login=true;
         String query = String.format("SELECT EXISTS (SELECT * FROM user WHERE username = ? AND password = ?)");
         Cursor c = db.rawQuery(query, null);
-        // Log.d("DEBUG", "query result: " + c);
-        if(c.isNull(0)){
+        Log.d("DEBUG", "query result: " + c.getCount());
+        if(c.getCount() <= 0){
             login=false;
         }
         c.close();
@@ -364,9 +373,22 @@ public class DatabaseAccess {
         return ProductOnSale.create(id, product_id, user_id, price);
     }
 
-    private User cursorToUser(Cursor c) {
-        String name = c.getString(0);
-        return User.create().withUsername(name);
+//    private User cursorToUser(Cursor c) {
+//        String name = c.getString(0);
+//        return User.create().withUsername(name);
+//    }
+
+    //TODO necessiterà un fix
+    private User cursorToUser(Cursor c){
+        //long id = c.getLong(0);
+        String username = c.getString(1);
+        String password = c.getString(2);
+        String email = c.getString(3);
+        String location = c.getString(4);
+        String address = c.getString(5);
+        long cap = c.getLong(6);
+        return User.create().withUsername(username).
+                withEmail(email).withLocation(location).withAddress(address).withCap(cap);
     }
 
 }

@@ -4,19 +4,20 @@ package com.example.MagicShop.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
+import android.util.Log;
 
 public class User implements Parcelable {
     // togliere: data,
     // aggiungere: address, cap
-    private int mID;
+    // private int mID;
     private String mUserName;
     private String mPassword;
     private String mEmail;
     private String mLocation;
     private String mAddress;
-    private int mCap;
+    private long mCap;
 
-    private long mBirthDate;
+    //private long mBirthDate;
 
     public static final String USER_DATA_EXTRA = "com.example.cardmarket.model.USER_DATA_EXTRA";
 
@@ -37,7 +38,8 @@ public class User implements Parcelable {
     };
 
     public User(Parcel in) {
-        this.mAddress = in.readString();
+
+
         if(in.readByte() == PRESENT)
         {
             this.mUserName = in.readString();
@@ -59,8 +61,15 @@ public class User implements Parcelable {
 
         if(in.readByte() == PRESENT)
         {
-            this.mCap = in.readInt();
+            this.mAddress = in.readString();
         }
+
+        this.mCap = in.readLong();
+//        if(in.readByte() == PRESENT)
+//        {
+//            this.mCap = in.readLong();
+//            Log.d("debug","cap: " + this.mCap);
+//        }
     }
 
     @Override
@@ -72,14 +81,14 @@ public class User implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flag)
     {
-//        dest.writeLong(this.mBirthDate);
-//        if(!TextUtils.isEmpty(this.mUserName))
-//        {
-//            dest.writeByte(PRESENT);
-//            dest.writeString(this.mUserName);
-//        } else {
-//            dest.writeByte(NOT_PRESENT);
-//        }
+        //dest.writeLong(this.mBirthDate);
+        if(!TextUtils.isEmpty(this.mUserName))
+        {
+            dest.writeByte(PRESENT);
+            dest.writeString(this.mUserName);
+        } else {
+            dest.writeByte(NOT_PRESENT);
+        }
 
         if(!TextUtils.isEmpty(this.mPassword))
         {
@@ -113,14 +122,15 @@ public class User implements Parcelable {
             dest.writeByte(NOT_PRESENT);
         }
 
-        if(!TextUtils.isEmpty(Integer.toString(this.mCap)))
+        if(!TextUtils.isEmpty(Long.toString(this.mCap)))
         {
             dest.writeByte(PRESENT);
-            //scrivo l'int
-            dest.writeInt(this.mCap);
+            //scrivo il long
+            dest.writeLong(this.mCap);
         } else {
             dest.writeByte(NOT_PRESENT);
         }
+
     }
 
     private User() {
@@ -131,6 +141,7 @@ public class User implements Parcelable {
         final User user = new User();
         return user;
     }
+
 
     public User withUsername(String newUserUsername) {
         this.mUserName = newUserUsername;
@@ -157,7 +168,7 @@ public class User implements Parcelable {
         return this;
     }
 
-    public User withCap(int newCap) {
+    public User withCap(long newCap) {
         this.mCap = newCap;
         return this;
     }
@@ -182,7 +193,7 @@ public class User implements Parcelable {
         return this.mAddress;
     }
 
-    public int getCap() {
+    public long getCap() {
         return this.mCap;
     }
 

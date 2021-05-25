@@ -8,13 +8,12 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.example.MagicShop.utils.PreferenceUtils;
 
 public class ModifyInformationsActivity extends AppCompatActivity {
 
-    private User mUser;
+    private UserOutOfModel mUser;
     private EditText mUsername;
     private EditText mEmail;
     private EditText mLocation;

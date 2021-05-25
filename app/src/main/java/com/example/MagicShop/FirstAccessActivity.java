@@ -88,7 +88,8 @@ public class FirstAccessActivity extends AppCompatActivity {
                     // now using SharePreferences, quindi commenti le prossime righe
                     final User user = (User)data.getParcelableExtra(User.USER_DATA_EXTRA);
                     //final Intent detailIntent = new Intent(Action.SHOW_USER_ACTION);
-                    final Intent summaryIntent = new Intent(FirstAccessActivity.this, SummaryActivity.class);
+                    final Intent summaryIntent = new Intent(FirstAccessActivity.this,
+                            SummaryActivity.class);
                     Log.d(TAG_LOG,"Registration completed!");
                     summaryIntent.putExtra(User.USER_DATA_EXTRA, user);
                     startActivity(summaryIntent);

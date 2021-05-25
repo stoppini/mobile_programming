@@ -33,6 +33,7 @@ public class SummaryActivity extends AppCompatActivity {
         Intent data = getIntent();
         this.mUser = (User) data.getParcelableExtra(User.USER_DATA_EXTRA);
 
+
         this.mUsername = (TextView)findViewById(R.id.show_username_data);
         mUsername.setText(mUser.getUsername());
 
@@ -52,7 +53,7 @@ public class SummaryActivity extends AppCompatActivity {
         mAddress.setText(mUser.getAddress());
 
         this.mCap = (TextView)findViewById(R.id.show_cap_data);
-        mCap.setText(mUser.getCap());
+        mCap.setText(Long.toString(mUser.getCap()));
 
         Log.d(TAG_LOG,mUsername.getText().toString());
 

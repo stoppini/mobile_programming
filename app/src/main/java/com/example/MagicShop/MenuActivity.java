@@ -8,8 +8,11 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.MagicShop.model.DatabaseAccess;
 import com.example.MagicShop.model.User;
 import com.example.MagicShop.utils.PreferenceUtils;
+
+import java.io.IOException;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -20,18 +23,31 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        // dovrebbe essere il bottone "user area"
+
+        DatabaseAccess dbA = null;
+        try {
+            dbA = DatabaseAccess.getInstance(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+//        Log.d("CHEK USERS IN DB","users: " + dbA.getAllUsers().get(0).getUsername() + "\n"
+//                                                    + dbA.getAllUsers().get(1).getUsername() + "\n"
+//                                                    + dbA.getAllUsers().get(2).getUsername() + "\n"
+//                                                    + dbA.getAllUsers().get(3).getUsername());
+
+        Log.d("CHEK USERS IN DB","users: " + dbA.getAllUsers());
+
         final Button userArea = (Button)findViewById(R.id.user_area_button);
         userArea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { enterUserArea(); }
         });
 
-        // dovrebbe essere il bottone "log out"
         final Button logOut = (Button)findViewById(R.id.log_out_button);
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { dologOut(); }
+            public void onClick(View v) { doLogOut(); }
         });
 
         final Button anonymousBtn = (Button)findViewById(R.id.view_remote_test_db);
@@ -66,7 +82,7 @@ public class MenuActivity extends AppCompatActivity {
         startActivity(userArea);
     }
 
-    private void dologOut(){
+    private void doLogOut(){
         Log.d("Menu Activity", "logging out");
         final Intent userArea = new Intent(MenuActivity.this, FirstAccessActivity.class);
         PreferenceUtils.logOut(this);

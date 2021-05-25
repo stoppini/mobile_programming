@@ -307,8 +307,8 @@ public class DatabaseAccess {
         boolean login=true;
         String query = String.format("SELECT EXISTS (SELECT * FROM user WHERE username = ? AND password = ?)");
         Cursor c = db.rawQuery(query, null);
-        // Log.d("DEBUG", "query result: " + c);
-        if(c.isNull(0)){
+        Log.d("DEBUG", "query result: " + c.getCount());
+        if(c.getCount() <= 0){
             login=false;
         }
         c.close();
@@ -367,8 +367,9 @@ public class DatabaseAccess {
 //        return User.create().withUsername(name);
 //    }
 
+    //TODO necessiterà un fix
     private User cursorToUser(Cursor c){
-        long id = c.getLong(0);
+        //long id = c.getLong(0);
         String username = c.getString(1);
         String password = c.getString(2);
         String email = c.getString(3);

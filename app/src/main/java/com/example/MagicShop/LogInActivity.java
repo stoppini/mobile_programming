@@ -3,6 +3,7 @@ package com.example.MagicShop;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -57,7 +58,7 @@ public class LogInActivity extends AppCompatActivity {
         final String DUMMY_PASSWORD = "password";
 
 
-        User user = null;
+        User userFromDb = null;
 
         DatabaseAccess dbA = null;
         try {
@@ -73,22 +74,33 @@ public class LogInActivity extends AppCompatActivity {
             //PreferenceUtils.saveUsername(DUMMY_USERNAME, this);
             //PreferenceUtils.savePassword(DUMMY_PASSWORD, this);
 
+            userFromDb = dbA.getUser(usernameEdit, passwordEdit);
+
+            Log.d("DEBUG", "username e password " + usernameEdit + " " + passwordEdit);
             PreferenceUtils.saveUsername(usernameEdit, this);
             PreferenceUtils.savePassword(passwordEdit, this);
+            PreferenceUtils.saveEmail(userFromDb.getEmail(), this);
+            PreferenceUtils.saveAddress(userFromDb.getAddress(), this);
+            PreferenceUtils.saveLocation(userFromDb.getLocation(), this);
+            PreferenceUtils.saveCap(Long.toString(userFromDb.getCap()), this);
+
+
+
+
 
 //            Calendar cal = Calendar.getInstance();
 //            cal.set(Calendar.DAY_OF_MONTH,17);
 //            cal.set(Calendar.MONTH,6);
 //            cal.set(Calendar.YEAR,1977);
 //            final long birthDate = cal.getTimeInMillis();
-            user = User.create().withUsername(usernameEdit).withPassword(passwordEdit).
-                    withEmail("diego.berardi@unibs.it").withLocation("Brescia");
+//            user = User.create().withUsername(usernameEdit).withPassword(passwordEdit).
+//                    withEmail("diego.berardi@unibs.it").withLocation("Brescia");
         }
 
-        if(user != null)
+        if(userFromDb != null)
         {
             Intent resultIntent = new Intent();
-            resultIntent.putExtra(User.USER_DATA_EXTRA, user);
+            resultIntent.putExtra(User.USER_DATA_EXTRA, userFromDb);
             setResult(RESULT_OK,resultIntent);
             finish();
         }

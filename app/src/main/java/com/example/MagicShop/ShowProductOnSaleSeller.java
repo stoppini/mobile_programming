@@ -1,52 +1,60 @@
 package com.example.MagicShop;
 
 
-import android.media.Image;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.MagicShop.model.DatabaseAccess;
 import com.example.MagicShop.model.Product;
 import com.example.MagicShop.model.ProductOnSale;
+import com.example.MagicShop.model.User;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+
+
+
 public class ShowProductOnSaleSeller extends AppCompatActivity {
-    DatabaseAccess dbA;
-    TextView nameToView;
-    TextView expansionToView;
-    TextView rarityToView;
-    TextView ruleToView;
-    ImageView imgToView;
+    private DatabaseAccess dbA;
+    private TextView nameToView;
+    private TextView expansionToView;
+    private TextView rarityToView;
+    private TextView ruleToView;
+    private ImageView imgToView;
     private ListView mListView;
     private List<ProductOnSale> mProduct = new LinkedList<>();
     private ListAdapter mAdapter;
+    private Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_product_on_sale_seller);
         mListView = (ListView)findViewById(R.id.listViewShowUsers);
-
         nameToView = (TextView)findViewById(R.id.nameView);
         expansionToView = (TextView)findViewById(R.id.expansionView);
         rarityToView = (TextView)findViewById(R.id.rarityView);
         ruleToView = (TextView)findViewById(R.id.ruleView);
         imgToView = (ImageView) findViewById(R.id.imgView);
+
     }
 
     @Override
@@ -118,6 +126,33 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
         Picasso.get().load(""+p.getImg()).into(imgToView);
 
 
+        final Button sellButton = (Button)findViewById(R.id.sell_product);
+        sellButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showForgotDialog(context, p, User.create());
+            }
+        });
+
         Log.e("",""+p.toString());
+    }
+
+
+    private void showForgotDialog(Context c, Product p, User u) {
+        final EditText taskEditText = new EditText(c);
+        AlertDialog dialog = new AlertDialog.Builder(c)
+                .setTitle("Sell the product "+p.getName())
+                .setMessage("Enter the amount in Euro")
+                .setView(taskEditText)
+                .setPositiveButton("Sell", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Long task = Long.valueOf(String.valueOf(taskEditText.getText()));
+                        dbA.sellProductFromUser(u, p, task );
+                    }
+                })
+                .setNegativeButton("Undo", null)
+                .create();
+        dialog.show();
     }
 }

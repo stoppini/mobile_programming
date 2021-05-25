@@ -30,7 +30,7 @@ public class MagicDBHelper extends SQLiteOpenHelper {
         }
 
         public void importDataBaseFromAssets() throws IOException {
-            InputStream     myInput = context.getAssets().open(MagicDB.DATABASE_NAME);
+            InputStream myInput = context.getAssets().open(MagicDB.DATABASE_NAME);
             String outFileName = DB_PATH;
             OutputStream myOutput = new FileOutputStream(outFileName);
             byte[] buffer = new byte[1024];
@@ -44,8 +44,6 @@ public class MagicDBHelper extends SQLiteOpenHelper {
             myOutput.flush();
             myOutput.close();
             myInput.close();
-
-
         }
 
         @Override

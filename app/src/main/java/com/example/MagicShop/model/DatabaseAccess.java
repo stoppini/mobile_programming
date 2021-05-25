@@ -286,6 +286,17 @@ public class DatabaseAccess {
         close();
     }
 
+
+    public void sellProductFromUser(User u, Product p, Long price){
+        open();
+        String query = String.format("INSERT INTO product_on_sale (product_id, user_id, price) " +
+                        "VALUES (%d,%d,%d);", 1, p.getId(), price);
+        db.execSQL(query);
+        close();
+        Log.e("executed","query = "+query);
+    }
+
+
     //TODO necessiterà un fix
     public User getUsersFromProductOnSale(ProductOnSale p) {
         open();

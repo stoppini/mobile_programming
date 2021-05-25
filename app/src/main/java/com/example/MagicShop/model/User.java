@@ -39,29 +39,35 @@ public class User implements Parcelable {
 
     public User(Parcel in) {
 
+        Log.d("debug","cap: " + this.mCap);
 
         if(in.readByte() == PRESENT)
         {
             this.mUserName = in.readString();
+            Log.d("debug","username: " + this.mUserName);
         }
         if(in.readByte() == PRESENT)
         {
             this.mPassword = in.readString();
+            Log.d("debug","password: " + this.mPassword);
         }
 
         if(in.readByte() == PRESENT)
         {
             this.mEmail = in.readString();
+            Log.d("debug","email: " + this.mEmail);
         }
 
         if(in.readByte() == PRESENT)
         {
             this.mLocation = in.readString();
+            Log.d("debug","location: " + this.mLocation);
         }
 
         if(in.readByte() == PRESENT)
         {
             this.mAddress = in.readString();
+            Log.d("debug","address: " + this.mAddress);
         }
 
         this.mCap = in.readLong();

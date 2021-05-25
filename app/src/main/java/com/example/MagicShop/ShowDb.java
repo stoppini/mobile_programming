@@ -58,7 +58,6 @@ import java.util.List;
                 if(view == null){
                     view = getLayoutInflater().inflate(R.layout.custom_list_item, null);
                 }
-
                 final TextView nameToView = (TextView) view.findViewById(R.id.nameT);
                 final ImageView imageToView = (ImageView)view.findViewById(R.id.imgT);
                 final TextView ruleToView = (TextView) view.findViewById(R.id.rule);
@@ -83,6 +82,8 @@ import java.util.List;
         mProduct.clear();
         mProduct.addAll(products);
         mListView.setAdapter(mAdapter);
+        List<ProductOnSale> prodss  = dbA.getAllProductOnSaleFromProduct(products.get(0));
+
 
     }
 }

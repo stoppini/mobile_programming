@@ -60,28 +60,10 @@ public class DatabaseAccess {
     }
 
 
-
-    public List<ProductOnSale> getProductOnSaleFromProductId(Long id){
-        open();
-        List<ProductOnSale> products_on_sale = new ArrayList<>();
-        String query = String.format("SELECT product_on_sale.id, product_on_sale.product_id, " +
-                "product_on_sale.user_id,  product_on_sale.price FROM product_on_sale INNER JOIN " +
-                "product ON product_on_sale.product_id = product.id WHERE product.id=%d", id);
-        Cursor c = db.rawQuery(query,null);
-        c.moveToFirst();
-        while (!c.isAfterLast()){
-            ProductOnSale p = cursorToProductOnSale(c);
-            products_on_sale.add(p);
-            c.moveToNext();
-        }
-        c.close();
-        close();
-        return products_on_sale;
-    }
-
     public List<ProductOnSale> getAllProductOnSaleFromProduct(Product product){
         open();
         List<ProductOnSale> products_on_sale = new ArrayList<>();
+        Log.println(Log.DEBUG,"DB",db.toString());
         String query = String.format("SELECT product_on_sale.id, product_on_sale.product_id, " +
                 "product_on_sale.user_id, product_on_sale.price FROM product INNER JOIN " +
                 "product_on_sale ON product_on_sale.product_id = product.id INNER JOIN " +
@@ -103,10 +85,13 @@ public class DatabaseAccess {
     public List<Product> getAllProducts() {
         open();
         List<Product> products = new ArrayList<>();
+        Log.println(Log.DEBUG,"DB",db.toString());
         String query = String.format("SELECT product.id, language_%1$s.name, " +
                 "language_%1$s.expansion, language_%1$s.rarity, language_%1$s.type, " +
                 "language_%1$s.rule, product.img FROM product INNER JOIN language_%1$s ON " +
                 "language_%1$s.product_id = product.id", Locale.getDefault().getLanguage());
+        Log.e("QUERY", ""+query);
+
         Cursor c = db.rawQuery(query,null);
         c.moveToFirst();
         while (!c.isAfterLast()){
@@ -122,11 +107,14 @@ public class DatabaseAccess {
 
     public Product getProductFromId(Long id) {
         open();
+        Log.println(Log.DEBUG,"DB",db.toString());
         String query = String.format("SELECT product.id, language_%1$s.name, " +
                 "language_%1$s.expansion, language_%1$s.rarity, language_%1$s.type, " +
                 "language_%1$s.rule, product.img FROM product INNER JOIN language_%1$s ON " +
                 "language_%1$s.product_id = product.id WHERE product.id = %2$d",
                 Locale.getDefault().getLanguage(), id);
+        Log.e("QUERY", ""+query);
+
         Cursor c = db.rawQuery(query,null);
         c.moveToFirst();
         Product p = cursorToProduct(c);
@@ -143,6 +131,7 @@ public class DatabaseAccess {
         String mType = type;
         open();
         List<Product> products = new ArrayList<>();
+        Log.println(Log.DEBUG,"DB","NEL METODO");
         if (mExpansion.equals("All")) {
             mExpansion = "";
         }
@@ -152,6 +141,7 @@ public class DatabaseAccess {
         if (mType.equals("All")) {
             mType = "";
         }
+
         String query = String.format("SELECT product.id, language_%1$s.name, " +
                         "language_%1$s.expansion, language_%1$s.rarity, language_%1$s.type, " +
                         "language_%1$s.rule, product.img FROM product INNER JOIN language_%1$s ON " +
@@ -159,10 +149,12 @@ public class DatabaseAccess {
                         "AND language_%1$s.expansion LIKE '%3$s' AND language_%1$s.rarity LIKE '%4$s' " +
                         "AND language_%1$s.type LIKE '%5$s' ", Locale.getDefault().getLanguage(),
                         name.concat("%"), mExpansion.concat("%"), mRarity.concat("%"), mType.concat("%"));
+        Log.println(Log.DEBUG,"QUERY", ""+query);
         Cursor c = db.rawQuery(query,null);
         c.moveToFirst();
         while (!c.isAfterLast()){
             Product p = cursorToProduct(c);
+            Log.println(Log.DEBUG,"PRODUCT",p.getName());
             products.add(p);
             c.moveToNext();
         }
@@ -190,6 +182,7 @@ public class DatabaseAccess {
     public List<String> getAllExpansion(){
         open();
         List<String> expansions = new ArrayList<>();
+        Log.println(Log.DEBUG,"DB",db.toString());
         String query = String.format("SELECT DISTINCT language_%1$s.expansion FROM language_%1$s",
                 Locale.getDefault().getLanguage());
 
@@ -209,6 +202,7 @@ public class DatabaseAccess {
     public List<String> getAllTypes(){
         open();
         List<String> types = new ArrayList<>();
+        Log.println(Log.DEBUG,"DB",db.toString());
         String query = String.format("SELECT DISTINCT language_%1$s.type FROM language_%1$s",
                 Locale.getDefault().getLanguage());
         Cursor c = db.rawQuery(query,null);
@@ -227,6 +221,7 @@ public class DatabaseAccess {
     public List<String> getAllRaritys(){
         open();
         List<String> raritys = new ArrayList<>();
+        Log.println(Log.DEBUG,"DB",db.toString());
         String query = String.format("SELECT DISTINCT language_%1$s.rarity FROM language_%1$s",
                 Locale.getDefault().getLanguage());
         Cursor c = db.rawQuery(query,null);
@@ -239,20 +234,6 @@ public class DatabaseAccess {
         c.close();
         close();
         return raritys;
-    }
-
-
-    public User getUserFromProductOnSale(Long id){
-        open();
-        List<ProductOnSale> products_on_sale = new ArrayList<>();
-        String query = String.format("SELECT user.username FROM user INNER JOIN product_on_sale" +
-                " ON product_on_sale.user_id = user.id WHERE product_on_sale.user_id = %d", id);
-        Cursor c = db.rawQuery(query,null);
-        c.moveToFirst();
-        User u = cursorToUser(c);
-        c.close();
-        close();
-        return u;
     }
 
     //TODO serve fixare l'user
@@ -303,6 +284,7 @@ public class DatabaseAccess {
     }
 
 
+<<<<<<< HEAD
     public User getUser(String username, String password){
         open();
         String query = String.format("SELECT * FROM user WHERE username = ? AND password = ?");
@@ -331,17 +313,8 @@ public class DatabaseAccess {
 
 
     //TODO fix dell'user
-    private User cursorToUser(Cursor c){
-        long id = c.getLong(0);
-        String username = c.getString(1);
-        String password = c.getString(2);
-        String email = c.getString(3);
-        String location = c.getString(4);
-        String address = c.getString(5);
-        long cap = c.getLong(6);
-        return User.create().withUsername(username).
-                withEmail(email).withLocation(location).withAddress(address).withCap(cap);
-    }
+    /*TODO fix dell'user
+
 
 
 

@@ -51,7 +51,7 @@ public class ShowProducts extends AppCompatActivity {
             @Override
             public long getItemId(int position) {
                 Product product = (Product) getItem(position);
-                return product.getId();
+                return -1;
             }
 
             @Override
@@ -80,7 +80,7 @@ public class ShowProducts extends AppCompatActivity {
 
                 final Intent showProductOnSaleIntent = new Intent(
                         ShowProducts.this,ShowProductOnSaleSeller.class);
-                showProductOnSaleIntent.putExtra(Product.PRODUCT_LIST_EXTRA, (Serializable) product.getId());
+                showProductOnSaleIntent.putExtra(Product.PRODUCT_LIST_EXTRA, product.getId());
                 startActivity(showProductOnSaleIntent);
                 Log.println(Log.DEBUG,"DB",product.getName());
             }
@@ -100,7 +100,7 @@ public class ShowProducts extends AppCompatActivity {
         }
         List<Product> products = new ArrayList<>();
         List<Long> ids = (List<Long>) getIntent().getSerializableExtra(Product.PRODUCT_LIST_EXTRA);
-        for (Long id : ids){
+        for (long id : ids){
             products.add(dbA.getProductFromId(id));
         }
         mProduct.clear();

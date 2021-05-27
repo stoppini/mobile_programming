@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "797099272995",
+    "firebase_url": "https://magic-db-dfa33-default-rtdb.firebaseio.com",
+    "project_id": "magic-db-dfa33",
+    "storage_bucket": "magic-db-dfa33.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:797099272995:android:2e822b9f92967713783a96",
+        "android_client_info": {
+          "package_name": "com.example.myapplication_test_db"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "797099272995-isnird88sr28415kkqfamq82ra7cif6f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUzGsR2XFNKcBPORVhccLYbGHSuKaM120"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "797099272995-isnird88sr28415kkqfamq82ra7cif6f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

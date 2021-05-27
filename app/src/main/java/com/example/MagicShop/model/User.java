@@ -37,6 +37,7 @@ public class User implements Parcelable {
         }
     };
 
+
     public User(Parcel in) {
 
         Log.d("debug","cap: " + this.mCap);

@@ -3,6 +3,7 @@ package com.example.MagicShop;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -80,7 +81,7 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
             @Override
             public long getItemId(int position) {
                 Product product = (Product) getItem(position);
-                return product.getId();
+                return -1;
             }
 
             @Override
@@ -113,7 +114,6 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
         Product p = dbA.getProductFromId((Long)getIntent().getSerializableExtra(Product.PRODUCT_LIST_EXTRA));
         List<ProductOnSale> products = dbA.getAllProductOnSaleFromProduct(p);
 
-
         mProduct.clear();
         mProduct.addAll(products);
         mListView.setAdapter(mAdapter);
@@ -134,7 +134,6 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
             }
         });
 
-        Log.e("",""+p.toString());
     }
 
 
@@ -147,8 +146,9 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
                 .setPositiveButton("Sell", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Long task = Long.valueOf(String.valueOf(taskEditText.getText()));
-                        dbA.sellProductFromUser(u, p, task );
+                        Long price = Long.valueOf(String.valueOf(taskEditText.getText()));
+                        dbA.sellProductFromUser(p, u, price);
+                        onStart();
                     }
                 })
                 .setNegativeButton("Undo", null)

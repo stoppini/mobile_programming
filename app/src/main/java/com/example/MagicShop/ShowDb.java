@@ -14,7 +14,8 @@ import android.widget.TextView;
 
 import com.example.MagicShop.model.DatabaseAccess;
 import com.example.MagicShop.model.Product;
-import com.example.MagicShop.model.ProductOnSale;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -22,11 +23,16 @@ import java.util.LinkedList;
 import java.util.List;
 
  public class ShowDb extends AppCompatActivity { private ListView mListView;
+
     private List<Product> mProduct = new LinkedList<>();
     private ListAdapter mAdapter;
 
 
-    @Override
+     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+
+
+
+     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -47,10 +53,8 @@ import java.util.List;
                 return mProduct.get(position);
             }
 
-            @Override
             public long getItemId(int position) {
-                Product product = (Product) getItem(position);
-                return product.getId();
+                return -1;
             }
 
             @Override
@@ -78,12 +82,23 @@ import java.util.List;
         } catch (IOException e) {
             e.printStackTrace();
         }
-        List<Product> products = dbA.getAllProducts();
+        //List<Product> products = dbA.getAllProducts();
+        List<Product> prodss  = dbA.getAllProducts();
         mProduct.clear();
-        mProduct.addAll(products);
+        mProduct.addAll(prodss);
         mListView.setAdapter(mAdapter);
-        List<ProductOnSale> prodss  = dbA.getAllProductOnSaleFromProduct(products.get(0));
+        //List<Product> prodss  = dbA.getAllProducts_();
+        for (Product p : prodss){
+            Log.e("TEST", ""+p.getName());
+        }
+
+
+
+
+
 
 
     }
+
+
 }

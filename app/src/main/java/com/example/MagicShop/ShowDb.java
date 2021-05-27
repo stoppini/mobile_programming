@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.MagicShop.model.DatabaseAccess;
 import com.example.MagicShop.model.Product;
+import com.example.MagicShop.model.ProductOnSale;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
@@ -88,8 +89,11 @@ import java.util.List;
         mProduct.addAll(prodss);
         mListView.setAdapter(mAdapter);
         //List<Product> prodss  = dbA.getAllProducts_();
-        for (Product p : prodss){
-            Log.e("TEST", ""+p.getName());
+
+
+        List<ProductOnSale> proasdfdss  = dbA.getAllProductsOnSale();
+        for (ProductOnSale p : proasdfdss){
+            Log.e("TEST", ""+p.getId());
         }
 
 

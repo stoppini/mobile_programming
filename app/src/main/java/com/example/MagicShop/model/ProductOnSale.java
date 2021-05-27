@@ -4,13 +4,13 @@ public class ProductOnSale {
 
     //TODO bisonga farla parcializable
 
-    private final long id;
+    private final String id;
     private final long product_id;
     private final long user_id;
     private final long price;
 
 
-    public ProductOnSale(final long id, final long product_id,
+    public ProductOnSale(final String id, final long product_id,
                          final long user_id, final long price) {
         this.id = id;
         this.product_id = product_id;
@@ -18,12 +18,12 @@ public class ProductOnSale {
         this.price = price;
     }
 
-    public static ProductOnSale create(final long id, final long product_id,
+    public static ProductOnSale create(final String id, final long product_id,
                                        final long user_id, final long price) {
         return new ProductOnSale(id, product_id, user_id, price);
     }
 
-    public long getId() {return id;}
+    public String getId() {return id;}
 
     public long getProduct_id() {return product_id;}
 

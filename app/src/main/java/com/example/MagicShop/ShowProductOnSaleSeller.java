@@ -113,6 +113,7 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
 
         Product p = dbA.getProductFromId((Long)getIntent().getSerializableExtra(Product.PRODUCT_LIST_EXTRA));
         List<ProductOnSale> products = dbA.getAllProductOnSaleFromProduct(p);
+        Log.e("PRODUCS ON SALE", ""+products.get(0).getId());
 
         mProduct.clear();
         mProduct.addAll(products);

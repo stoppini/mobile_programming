@@ -52,7 +52,7 @@ public class DatabaseAccess {
         while(!snap.isComplete()){}
 
         for (DataSnapshot s : snap.getResult().getChildren()){
-            ProductOnSale p = new ProductOnSale((Long)s.child("id").getValue(),
+            ProductOnSale p = new ProductOnSale(""+s.getKey(),
                     (Long)s.child("product_id").getValue(),
                     (Long)s.child("user_id").getValue(),
                     (Long)s.child("price").getValue());
@@ -88,7 +88,6 @@ public class DatabaseAccess {
     }
 
 
-
     public List<ProductOnSale> getAllProductOnSaleFromProduct(Product product){
         List<ProductOnSale> products_on_sale = new ArrayList<>();
         Task<DataSnapshot> ref_prod = database.child("product").get();
@@ -99,7 +98,7 @@ public class DatabaseAccess {
         for (DataSnapshot s : ref_prod_on_sale.getResult().getChildren()){
 
             if ((""+s.child("product_id").getValue()).equals(""+product.getId())){
-                long id = (Long)product.getId();
+                String id = s.getKey();
                 Long price = (Long)s.child("price").getValue();
                 long prod_id = (Long)s.child("product_id").getValue();
                 long user_id = (Long)s.child("user_id").getValue();
@@ -247,13 +246,13 @@ public class DatabaseAccess {
     public void sellProductFromUser(Product product, User user, Long price){
         Task<DataSnapshot> ref = database.child("product_on_sale").orderByKey().limitToLast(1).get();
         while(!ref.isComplete()){};
-        Long id = null;
+        Long id = null;/*
         for (DataSnapshot s : ref.getResult().getChildren()){
             id=Long.parseLong(s.getKey());
         }
-        id = id+1;
-        ProductOnSale p = ProductOnSale.create(id,product.getId(),1,price);
-        database.child("product_on_sale").child(""+id).setValue(p);
+        id = id+1;*/
+        ProductOnSale p = ProductOnSale.create(null,product.getId(),1,price);
+        database.child("product_on_sale").push().setValue(p);
     }
 
 
@@ -383,14 +382,14 @@ public class DatabaseAccess {
         String img = c.getString(6);
         return Product.create(id, name, expansion, rarity, type, rule, img);
     }
-
+/*
     private ProductOnSale cursorToProductOnSale(Cursor c) {
         long id = c.getLong(0);
         long product_id = c.getLong(1);
         long user_id = c.getLong(2);
         long price = c.getLong(3);
         return ProductOnSale.create(id, product_id, user_id, price);
-    }
+    }*/
 
 //    private User cursorToUser(Cursor c) {
 //        String name = c.getString(0);

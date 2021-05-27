@@ -23,7 +23,7 @@ import java.util.Calendar;
 public class RegisterActivity extends AppCompatActivity {
 
     private TextView mErrorTextView;
-
+    private DatabaseAccess dbA;
     private EditText mUsernameEditText;
     private EditText mPasswordEditText;
     private EditText mConfirmPasswordEditText;
@@ -100,14 +100,8 @@ public class RegisterActivity extends AppCompatActivity {
             PreferenceUtils.saveCap(capEdit, this);
 
             // saving in db
-            try{
-                DatabaseAccess db = DatabaseAccess.getInstance(this);
-                Log.d(TAG_LOG,"saving in db!");
-                db.registerUser(user);
 
-            }catch(IOException e){
-                Log.d(TAG_LOG,"Exception: " + e);
-            }
+            dbA.registerUser(user);
 
 
             setResult(RESULT_OK,resultIntent);

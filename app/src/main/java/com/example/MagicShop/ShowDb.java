@@ -24,7 +24,7 @@ import java.util.LinkedList;
 import java.util.List;
 
  public class ShowDb extends AppCompatActivity { private ListView mListView;
-
+    private DatabaseAccess dbA;
     private List<Product> mProduct = new LinkedList<>();
     private ListAdapter mAdapter;
 
@@ -77,18 +77,12 @@ import java.util.List;
         };
 
         mListView.setAdapter(mAdapter);
-        DatabaseAccess dbA = null;
-        try {
-            dbA = DatabaseAccess.getInstance(this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //List<Product> products = dbA.getAllProducts();
+        dbA = DatabaseAccess.getDb();
+
         List<Product> prodss  = dbA.getAllProducts();
         mProduct.clear();
         mProduct.addAll(prodss);
         mListView.setAdapter(mAdapter);
-        //List<Product> prodss  = dbA.getAllProducts_();
 
 
         List<ProductOnSale> proasdfdss  = dbA.getAllProductsOnSale();

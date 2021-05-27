@@ -60,14 +60,10 @@ public class LogInActivity extends AppCompatActivity {
 
         User userFromDb = null;
 
-        DatabaseAccess dbA = null;
-        try {
-            dbA = DatabaseAccess.getInstance(this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
 
         //if(DUMMY_USERNAME.equals(usernameEdit) && DUMMY_PASSWORD.equals(passwordEdit))
+        /*
         if(dbA.logInUser(usernameEdit, passwordEdit))
         {
             //saving preferences
@@ -109,5 +105,6 @@ public class LogInActivity extends AppCompatActivity {
             this.mErrorTextView.setText(getResources().getString(R.string.wrong_credentials_error));
             this.mErrorTextView.setVisibility(View.VISIBLE);
         }
+        */
     }
 }

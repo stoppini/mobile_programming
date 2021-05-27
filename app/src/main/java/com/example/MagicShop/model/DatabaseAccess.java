@@ -28,22 +28,16 @@ import java.util.Map;
 import okhttp3.internal.cache.DiskLruCache;
 
 public class DatabaseAccess {
+    private static DatabaseAccess db = null;
+    private DatabaseAccess() {}
+    public static synchronized DatabaseAccess getDb() {
+        if (db == null) {
+            db = new DatabaseAccess();
+        }
+        return db;
+    }
 
-    DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-    private MagicDBHelper dbHelper;
-    private SQLiteDatabase db;
-    private static DatabaseAccess instance;
-    private String[] allProductCol = {MagicDB.Product_db.COLUMN_ID, MagicDB.Product_db.TABLE_NAME,
-            MagicDB.Product_db.COLUMN_EXPANSION, MagicDB.Product_db.COLUMN_RARITY,
-            MagicDB.Product_db.COLUMN_TYPE, MagicDB.Product_db.COLUMN_IMG};
-
-    private static String KEY_USERNAME = "username";
-    private static String KEY_PASSWORD = "password";
-    private static String KEY_EMAIL = "email";
-    private static String KEY_LOCATION = "city";
-    private static String KEY_ADDRESS= "address";
-    private static String KEY_CAP= "cap";
-
+    private DatabaseReference database = FirebaseDatabase.getInstance().getReference();
 
     public List<ProductOnSale> getAllProductsOnSale() {
         DatabaseReference ref = database.child("product_on_sale");
@@ -244,92 +238,18 @@ public class DatabaseAccess {
 
 
     public void sellProductFromUser(Product product, User user, Long price){
-        Task<DataSnapshot> ref = database.child("product_on_sale").orderByKey().limitToLast(1).get();
-        while(!ref.isComplete()){};
-        Long id = null;/*
-        for (DataSnapshot s : ref.getResult().getChildren()){
-            id=Long.parseLong(s.getKey());
-        }
-        id = id+1;*/
         ProductOnSale p = ProductOnSale.create(null,product.getId(),1,price);
         database.child("product_on_sale").push().setValue(p);
     }
 
-
-    private DatabaseAccess (Context context) throws IOException {
-        this.dbHelper = new MagicDBHelper(context);
-        dbHelper.importDataBaseFromAssets();
-
-    }
-
-    public static DatabaseAccess getInstance(Context context) throws IOException {
-        if(instance == null){
-            instance = new DatabaseAccess(context);
-        }
-        return instance;
-    }
-
-    public void open(){
-        this.db = dbHelper.getWritableDatabase();
-    }
-
-    public void close(){
-        if(db != null){
-            this.db.close();
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    //TODO rifare con i dati
     public void registerUser(User user) {
-        open();
-        String query = String.format("INSERT INTO user (username, password, email, city, " +
-                        "address, cap) VALUES ('%s','%s','%s','%s','%s','%d')", user.getUsername(),
-                user.getPassword(), user.getEmail(), user.getLocation(), user.getAddress(), user.getCap());
-
-        // da fixare
-        ContentValues contentValues=new ContentValues();
-        contentValues.put(KEY_USERNAME, user.getUsername());
-        contentValues.put(KEY_PASSWORD, user.getPassword());
-        contentValues.put(KEY_EMAIL, user.getEmail());
-        contentValues.put(KEY_LOCATION, user.getLocation());
-        contentValues.put(KEY_ADDRESS, user.getAddress());
-        contentValues.put(KEY_CAP, user.getCap());
-        db.insert("user",null, contentValues);
-        Cursor c = db.rawQuery(query, null);
-        c.close();
-        close();
+        database.child("user").push().setValue(user);
     }
 
 
 
-
-
-
-
+/*
     public boolean logInUser(String username, String password) {
         open();
         boolean login=true;
@@ -382,14 +302,14 @@ public class DatabaseAccess {
         String img = c.getString(6);
         return Product.create(id, name, expansion, rarity, type, rule, img);
     }
-/*
+
     private ProductOnSale cursorToProductOnSale(Cursor c) {
         long id = c.getLong(0);
         long product_id = c.getLong(1);
         long user_id = c.getLong(2);
         long price = c.getLong(3);
         return ProductOnSale.create(id, product_id, user_id, price);
-    }*/
+    }
 
 //    private User cursorToUser(Cursor c) {
 //        String name = c.getString(0);

@@ -9,7 +9,7 @@ import android.util.Log;
 public class User implements Parcelable {
     // togliere: data,
     // aggiungere: address, cap
-    // private int mID;
+    private String mId;
     private String mUserName;
     private String mPassword;
     private String mEmail;
@@ -178,6 +178,15 @@ public class User implements Parcelable {
     public User withCap(long newCap) {
         this.mCap = newCap;
         return this;
+    }
+
+    public User withId(String newId) {
+        this.mId = newId;
+        return this;
+    }
+
+    public String getId() {
+        return this.mId;
     }
 
     public String getUsername() {

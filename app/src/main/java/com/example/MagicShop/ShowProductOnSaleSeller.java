@@ -34,7 +34,8 @@ import java.util.List;
 
 
 public class ShowProductOnSaleSeller extends AppCompatActivity {
-    private DatabaseAccess dbA;
+    DatabaseAccess dbA;
+
     private TextView nameToView;
     private TextView expansionToView;
     private TextView rarityToView;
@@ -62,12 +63,6 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
     protected void onStart(){
 
         super.onStart();
-
-        try {
-            dbA = DatabaseAccess.getInstance(this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         mAdapter = new BaseAdapter() {
             @Override
@@ -103,17 +98,11 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
 
 
         mListView.setAdapter(mAdapter);
-        try {
-            dbA = DatabaseAccess.getInstance(this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-
+        dbA = DatabaseAccess.getDb();
 
         Product p = dbA.getProductFromId((Long)getIntent().getSerializableExtra(Product.PRODUCT_LIST_EXTRA));
         List<ProductOnSale> products = dbA.getAllProductOnSaleFromProduct(p);
-        Log.e("PRODUCS ON SALE", ""+products.get(0).getId());
 
         mProduct.clear();
         mProduct.addAll(products);

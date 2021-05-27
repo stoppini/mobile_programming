@@ -25,7 +25,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ShowProducts extends AppCompatActivity {
-
     private DatabaseAccess dbA;
     private ListView mListView;
     private List<Product> mProduct = new LinkedList<>();
@@ -92,14 +91,12 @@ public class ShowProducts extends AppCompatActivity {
 
     @Override
     protected void onStart(){
+
         super.onStart();
-        try {
-            dbA = DatabaseAccess.getInstance(this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
         List<Product> products = new ArrayList<>();
         List<Long> ids = (List<Long>) getIntent().getSerializableExtra(Product.PRODUCT_LIST_EXTRA);
+        dbA = DatabaseAccess.getDb();
         for (long id : ids){
             products.add(dbA.getProductFromId(id));
         }

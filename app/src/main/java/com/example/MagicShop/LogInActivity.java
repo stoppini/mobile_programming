@@ -2,6 +2,7 @@ package com.example.MagicShop;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +19,7 @@ import java.io.IOException;
 import java.util.Calendar;
 
 public class LogInActivity extends AppCompatActivity {
-
+    DatabaseAccess dbA;
     private TextView mErrorTextView;
     private EditText mUsernameEditText;
     private EditText mPasswordEditText;
@@ -44,7 +45,7 @@ public class LogInActivity extends AppCompatActivity {
         }
 
         final String passwordEdit = this.mPasswordEditText.getText().toString();
-        if(TextUtils.isEmpty(usernameEdit))
+        if(TextUtils.isEmpty(passwordEdit))
         {
             final String passwordMandatory = getResources().getString(R.string.mandatory_field_error,"password");
             this.mErrorTextView.setText(passwordMandatory);
@@ -58,19 +59,18 @@ public class LogInActivity extends AppCompatActivity {
         final String DUMMY_PASSWORD = "password";
 
 
-        User userFromDb = null;
+        Log.e("afad",""+usernameEdit+"________________"+passwordEdit);
+        dbA = DatabaseAccess.getDb();
 
 
+        User userFromDb = dbA.logInUser(usernameEdit, passwordEdit);
+        if(DUMMY_USERNAME.equals(usernameEdit) && DUMMY_PASSWORD.equals(passwordEdit))
 
-        //if(DUMMY_USERNAME.equals(usernameEdit) && DUMMY_PASSWORD.equals(passwordEdit))
-        /*
-        if(dbA.logInUser(usernameEdit, passwordEdit))
-        {
+
+        if(userFromDb != null){
             //saving preferences
             //PreferenceUtils.saveUsername(DUMMY_USERNAME, this);
             //PreferenceUtils.savePassword(DUMMY_PASSWORD, this);
-
-            userFromDb = dbA.getUser(usernameEdit, passwordEdit);
 
             Log.d("DEBUG", "username e password " + usernameEdit + " " + passwordEdit);
             PreferenceUtils.saveUsername(usernameEdit, this);
@@ -105,6 +105,7 @@ public class LogInActivity extends AppCompatActivity {
             this.mErrorTextView.setText(getResources().getString(R.string.wrong_credentials_error));
             this.mErrorTextView.setVisibility(View.VISIBLE);
         }
-        */
+
+        Log.e("USER_LOGGED",""+userFromDb.getUsername());
     }
 }

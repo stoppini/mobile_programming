@@ -248,6 +248,28 @@ public class DatabaseAccess {
     }
 
 
+    public User logInUser(String userna, String passwo){
+        DatabaseReference users = database.child("user");
+        Task<DataSnapshot> snap = users.get();
+        while(!snap.isComplete()){};
+        for (DataSnapshot s : snap.getResult().getChildren()){
+            if((""+s.child("username").getValue()).equals(userna) &&
+                    (""+s.child("password").getValue()).equals(passwo)){
+                String address = ""+s.child("address").getValue();
+                Long cap = (Long)s.child("cap").getValue();
+                String city = ""+s.child("city").getValue();
+                String email = ""+s.child("email").getValue();
+                String username = ""+s.child("username").getValue();
+                String password = ""+s.child("password").getValue();
+                String id = s.getKey();
+                User u = User.create().withAddress(address).withUsername(username).withCap(cap).withEmail(email).withPassword(password)
+                            .withLocation(city).withId(id);
+                return u;
+            }
+        }
+        return null;
+    }
+
 
 /*
     public boolean logInUser(String username, String password) {

@@ -64,24 +64,24 @@ public class LogInActivity extends AppCompatActivity {
 
 
         User userFromDb = dbA.logInUser(usernameEdit, passwordEdit);
-        if(DUMMY_USERNAME.equals(usernameEdit) && DUMMY_PASSWORD.equals(passwordEdit))
+//        if(DUMMY_USERNAME.equals(usernameEdit) && DUMMY_PASSWORD.equals(passwordEdit))
 
 
         if(userFromDb != null){
+            Log.e("debug",""+usernameEdit+" is logged "+passwordEdit);
             //saving preferences
             //PreferenceUtils.saveUsername(DUMMY_USERNAME, this);
             //PreferenceUtils.savePassword(DUMMY_PASSWORD, this);
 
-            Log.d("DEBUG", "username e password " + usernameEdit + " " + passwordEdit);
-            PreferenceUtils.saveUsername(usernameEdit, this);
-            PreferenceUtils.savePassword(passwordEdit, this);
-            PreferenceUtils.saveEmail(userFromDb.getEmail(), this);
-            PreferenceUtils.saveAddress(userFromDb.getAddress(), this);
-            PreferenceUtils.saveLocation(userFromDb.getLocation(), this);
-            PreferenceUtils.saveCap(Long.toString(userFromDb.getCap()), this);
 
-
-
+//            PreferenceUtils.saveUsername(usernameEdit, this);
+//            PreferenceUtils.savePassword(passwordEdit, this);
+//            PreferenceUtils.saveEmail(userFromDb.getEmail(), this);
+//            PreferenceUtils.saveAddress(userFromDb.getAddress(), this);
+//            PreferenceUtils.saveLocation(userFromDb.getLocation(), this);
+//            PreferenceUtils.saveCap(Long.toString(userFromDb.getCap()), this);
+            PreferenceUtils.logging(true, this);
+            PreferenceUtils.saveId(userFromDb.getId(), this);
 
 
 //            Calendar cal = Calendar.getInstance();

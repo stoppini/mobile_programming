@@ -7,4 +7,7 @@ public class Constants {
     public static String KEY_LOCATION = "location";
     public static String KEY_ADDRESS= "address";
     public static String KEY_CAP= "cap";
+    public static String KEY_ID= "id";
+    public static String KEY_LOGGED= "logged";
+
 }

@@ -257,17 +257,44 @@ public class DatabaseAccess {
                     (""+s.child("password").getValue()).equals(passwo)){
                 String address = ""+s.child("address").getValue();
                 Long cap = (Long)s.child("cap").getValue();
-                String city = ""+s.child("city").getValue();
+                String location = ""+s.child("location").getValue();
                 String email = ""+s.child("email").getValue();
                 String username = ""+s.child("username").getValue();
                 String password = ""+s.child("password").getValue();
                 String id = s.getKey();
                 User u = User.create().withAddress(address).withUsername(username).withCap(cap).withEmail(email).withPassword(password)
-                            .withLocation(city).withId(id);
+                            .withLocation(location).withId(id);
                 return u;
             }
         }
         return null;
+    }
+
+    public User getUserFromId(String mId){
+        DatabaseReference users = database.child("user");
+        Task<DataSnapshot> snap = users.get();
+        while(!snap.isComplete()){};
+        for (DataSnapshot s : snap.getResult().getChildren()){
+            if((""+s.getKey()).equals(mId)){
+                String address = ""+s.child("address").getValue();
+                Long cap = (Long)s.child("cap").getValue();
+                String location = ""+s.child("location").getValue();
+                String email = ""+s.child("email").getValue();
+                String username = ""+s.child("username").getValue();
+                String password = ""+s.child("password").getValue();
+                String id = s.getKey();
+                User u = User.create().withAddress(address).withUsername(username).withCap(cap).withEmail(email).withPassword(password)
+                        .withLocation(location).withId(id);
+                return u;
+            }
+        }
+        return null;
+    }
+
+    public void  modifyUser(User user){
+        String id = user.getId();
+        database.child("user").child(id).setValue(user.withId(null));
+        user.withId(id);
     }
 
 

@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.MagicShop.model.DatabaseAccess;
+import com.example.MagicShop.model.User;
 import com.example.MagicShop.utils.PreferenceUtils;
 
 public class ModifyInformationsActivity extends AppCompatActivity {
@@ -19,6 +21,8 @@ public class ModifyInformationsActivity extends AppCompatActivity {
     private EditText mLocation;
     private EditText mAddress;
     private EditText mCap;
+    private DatabaseAccess dbA;
+    private User user;
 
     private static final String TAG_LOG = ModifyInformationsActivity.class.getName();
 
@@ -33,7 +37,6 @@ public class ModifyInformationsActivity extends AppCompatActivity {
         this.mAddress = (EditText)findViewById(R.id.address_edit_text);
         this.mLocation = (EditText)findViewById(R.id.location_edit_text);
         this.mCap = (EditText)findViewById(R.id.cap_edit_text);
-
     }
 
     public void doConfirm(View confirmButton)
@@ -41,7 +44,8 @@ public class ModifyInformationsActivity extends AppCompatActivity {
         final Intent userAreaIntent = new Intent(ModifyInformationsActivity.this,UserAreaActivity.class);
 
         //modifica dati utente e aggiornamento db
-
+        dbA = DatabaseAccess.getDb();
+        user = dbA.getUserFromId(PreferenceUtils.getId(this));
 
         final String un = this.mUsername.getText().toString();
         final String email = this.mEmail.getText().toString();
@@ -50,25 +54,23 @@ public class ModifyInformationsActivity extends AppCompatActivity {
         final String cap = this.mCap.getText().toString();
 
         if(!TextUtils.isEmpty(un)){
-            PreferenceUtils.saveUsername(un, this);
-            Log.d(TAG_LOG,"username " + un + " saved in preferences");
+            user.withUsername(un);
         }
         if(!TextUtils.isEmpty(email)){
-            PreferenceUtils.saveEmail(email, this);
-            Log.d(TAG_LOG,"email " + email + " saved in preferences");
+            user.withEmail(email);
         }
         if(!TextUtils.isEmpty(address)){
-            PreferenceUtils.saveAddress(address, this);
-            Log.d(TAG_LOG,"address " + address + " saved in preferences");
+            user.withAddress(address);
         }
         if(!TextUtils.isEmpty(location)){
-            PreferenceUtils.saveLocation(location, this);
-            Log.d(TAG_LOG,"location " + location+ " saved in preferences");
+            user.withLocation(location);
         }
+
         if(!TextUtils.isEmpty(cap)){
-            PreferenceUtils.saveCap(cap, this);
-            Log.d(TAG_LOG,"cap " + cap + " saved in preferences");
+            user.withCap(Long.parseLong(cap));
         }
+
+        dbA.modifyUser(user);
 
         startActivity(userAreaIntent);
         finish();

@@ -22,8 +22,8 @@ import java.util.Calendar;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private TextView mErrorTextView;
     private DatabaseAccess dbA;
+    private TextView mErrorTextView;
     private EditText mUsernameEditText;
     private EditText mPasswordEditText;
     private EditText mConfirmPasswordEditText;
@@ -93,14 +93,14 @@ public class RegisterActivity extends AppCompatActivity {
             resultIntent.putExtra(User.USER_DATA_EXTRA,user);
 
             // saving preferences for logged user
-            PreferenceUtils.saveUsername(usernameEdit, this);
-            PreferenceUtils.saveAddress(addressEdit, this);
-            PreferenceUtils.saveEmail(emailEdit, this);
-            PreferenceUtils.saveLocation(locationEdit, this);
-            PreferenceUtils.saveCap(capEdit, this);
+//            PreferenceUtils.saveUsername(usernameEdit, this);
+//            PreferenceUtils.saveAddress(addressEdit, this);
+//            PreferenceUtils.saveEmail(emailEdit, this);
+//            PreferenceUtils.saveLocation(locationEdit, this);
+//            PreferenceUtils.saveCap(capEdit, this);
 
             // saving in db
-
+            dbA = DatabaseAccess.getDb();
             dbA.registerUser(user);
 
 

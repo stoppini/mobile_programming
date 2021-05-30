@@ -76,9 +76,11 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void goAhead() {
-        Log.d(TAG_LOG, "preferences: " + PreferenceUtils.getUsername(this));
+        Log.e(TAG_LOG, "preferences: " + PreferenceUtils.isLogged(this));
 
-        if(PreferenceUtils.getUsername(this) != null){
+//        if(PreferenceUtils.isLogged(this)){
+//        if(PreferenceUtils.getId(this)!=null){
+        if(PreferenceUtils.isLogged(this)){
             final Intent intent = new Intent(this, MenuActivity.class);
             startActivity(intent);
             finish();

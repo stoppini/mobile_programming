@@ -2,26 +2,28 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.MagicShop">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
-
     <application
-
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:usesCleartextTraffic="true"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".AnonymousMenuActivity"></activity>
 
-        <uses-library android:name="org.apache.http.legacy" android:required="false"></uses-library>
-        <activity android:name=".ShowProductOnSaleSeller"></activity>
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <activity android:name=".ShowProductOnSaleSeller" />
         <activity android:name=".FindProducts" />
         <activity android:name=".ShowProducts" />
-        <activity android:name=".ModifyInformationsActivity"></activity>
+        <activity android:name=".ModifyInformationsActivity" />
         <activity android:name=".UserAreaActivity" />
         <activity android:name=".SummaryActivity" />
         <activity android:name=".MenuActivity" />
@@ -33,7 +35,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity android:name=".LogInActivity">
             <intent-filter>
                 <action android:name="com.example.cardmarket.action.LOGIN_ACTION" />
@@ -59,7 +60,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-
     </application>
 
 </manifest>

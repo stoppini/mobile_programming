@@ -35,6 +35,14 @@
             android:text="name"
             android:textColor="@color/black" />
 
+        <Button
+            android:id="@+id/adding_photo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="add"
+            android:textColor="@color/black" />
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

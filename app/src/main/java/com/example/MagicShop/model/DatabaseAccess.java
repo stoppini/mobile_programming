@@ -1,35 +1,40 @@
 package com.example.MagicShop.model;
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.util.Base64;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.MagicShop.utils.MagicDB;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
-import okhttp3.internal.cache.DiskLruCache;
 
 public class DatabaseAccess {
+
     private static DatabaseAccess db = null;
-    private DatabaseAccess() {}
+
+    private DatabaseAccess() {
+    }
+
     public static synchronized DatabaseAccess getDb() {
         if (db == null) {
             db = new DatabaseAccess();
@@ -39,17 +44,21 @@ public class DatabaseAccess {
 
     private DatabaseReference database = FirebaseDatabase.getInstance().getReference();
 
+    private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+
+
     public List<ProductOnSale> getAllProductsOnSale() {
         DatabaseReference ref = database.child("product_on_sale");
         List<ProductOnSale> products_on_sale = new ArrayList<>();
         Task<DataSnapshot> snap = ref.get();
-        while(!snap.isComplete()){}
+        while (!snap.isComplete()) {
+        }
 
-        for (DataSnapshot s : snap.getResult().getChildren()){
-            ProductOnSale p = new ProductOnSale(""+s.getKey(),
-                    (Long)s.child("product_id").getValue(),
-                    (Long)s.child("user_id").getValue(),
-                    (Long)s.child("price").getValue());
+        for (DataSnapshot s : snap.getResult().getChildren()) {
+            ProductOnSale p = new ProductOnSale("" + s.getKey(),
+                    (Long) s.child("product_id").getValue(),
+                    "" + s.child("user_id").getValue(),
+                    (Long) s.child("price").getValue());
             products_on_sale.add(p);
 
         }
@@ -57,45 +66,50 @@ public class DatabaseAccess {
     }
 
 
-
     public List<Product> getAllProducts() {
         DatabaseReference product = database.child("product");
         List<Product> prod = new ArrayList<>();
         Task<DataSnapshot> snap = product.get();
-        while(!snap.isComplete()){}
+        while (!snap.isComplete()) {
+        }
 
         DatabaseReference language = database.child("language_" + Locale.getDefault().getLanguage());
         Task<DataSnapshot> lan = language.get();
-        while(!lan.isComplete()){};
-        for (DataSnapshot s : lan.getResult().getChildren()){
-            long id = (Long)s.child("product_id").getValue();
-            String name = ""+s.child("name").getValue();
-            String expansion = ""+s.child("name").getValue();
-            String rarity = ""+s.child("rarity").getValue();
-            String type = ""+s.child("type").getValue();
-            String rule = ""+s.child("rule").getValue();
-            String img = ""+snap.getResult().child(""+id).child("img").getValue();
-            Product p = Product.create(id,name, expansion, rarity, type, rule, img);
+        while (!lan.isComplete()) {
+        }
+        ;
+        for (DataSnapshot s : lan.getResult().getChildren()) {
+            long id = (Long) s.child("product_id").getValue();
+            String name = "" + s.child("name").getValue();
+            String expansion = "" + s.child("name").getValue();
+            String rarity = "" + s.child("rarity").getValue();
+            String type = "" + s.child("type").getValue();
+            String rule = "" + s.child("rule").getValue();
+            String img = "" + snap.getResult().child("" + id).child("img").getValue();
+            Product p = Product.create(id, name, expansion, rarity, type, rule, img);
             prod.add(p);
         }
         return prod;
     }
 
 
-    public List<ProductOnSale> getAllProductOnSaleFromProduct(Product product){
+    public List<ProductOnSale> getAllProductOnSaleFromProduct(Product product) {
         List<ProductOnSale> products_on_sale = new ArrayList<>();
         Task<DataSnapshot> ref_prod = database.child("product").get();
-        while(!ref_prod.isComplete()){}
+        while (!ref_prod.isComplete()) {
+        }
 
         Task<DataSnapshot> ref_prod_on_sale = database.child("product_on_sale").get();
-        while(!ref_prod_on_sale.isComplete()){};
-        for (DataSnapshot s : ref_prod_on_sale.getResult().getChildren()){
+        while (!ref_prod_on_sale.isComplete()) {
+        }
+        ;
+        for (DataSnapshot s : ref_prod_on_sale.getResult().getChildren()) {
 
-            if ((""+s.child("product_id").getValue()).equals(""+product.getId())){
+            if (("" + s.child("product_id").getValue()).equals("" + product.getId())) {
                 String id = s.getKey();
-                Long price = (Long)s.child("price").getValue();
-                long prod_id = (Long)s.child("product_id").getValue();
-                long user_id = (Long)s.child("user_id").getValue();
+                Long price = (Long) s.child("price").getValue();
+                long prod_id = (Long) s.child("product_id").getValue();
+                String user_id = "" + s.child("user_id").getValue();
                 ProductOnSale p = ProductOnSale.create(id, prod_id, user_id, price);
                 products_on_sale.add(p);
             }
@@ -107,10 +121,15 @@ public class DatabaseAccess {
     public User getUsersFromProductOnSale(ProductOnSale p) {
         DatabaseReference ref = database.child("user");
         Task<DataSnapshot> snap = ref.get();
-        while(!snap.isComplete()){}
-        DataSnapshot user = snap.getResult().child(""+p.getUser_id());
-        User u = User.create().withUsername(""+user.child("username").getValue());
-        return u;
+        while (!snap.isComplete()) {
+        }
+        for (DataSnapshot s : snap.getResult().getChildren()) {
+            if (s.getKey().equals(p.getUser_id())) {
+                User u = User.create().withUsername("" + s.child("username").getValue()).withId(s.getKey());
+                return u;
+            }
+        }
+        return null;
     }
 
 
@@ -118,20 +137,23 @@ public class DatabaseAccess {
         DatabaseReference product = database.child("product");
         List<Product> prod = new ArrayList<>();
         Task<DataSnapshot> snap = product.get();
-        while(!snap.isComplete()){}
+        while (!snap.isComplete()) {
+        }
 
         DatabaseReference language = database.child("language_" + Locale.getDefault().getLanguage());
         Task<DataSnapshot> lan = language.get();
-        while(!lan.isComplete()){};
-        for (DataSnapshot s : lan.getResult().getChildren()){
-            if(Long.parseLong(""+s.child("product_id").getValue()) == (id)) {
-                long idd = (Long)s.child("product_id").getValue();
+        while (!lan.isComplete()) {
+        }
+        ;
+        for (DataSnapshot s : lan.getResult().getChildren()) {
+            if (Long.parseLong("" + s.child("product_id").getValue()) == (id)) {
+                long idd = (Long) s.child("product_id").getValue();
                 String name = "" + s.child("name").getValue();
                 String expansion = "" + s.child("name").getValue();
                 String rarity = "" + s.child("rarity").getValue();
                 String type = "" + s.child("type").getValue();
                 String rule = "" + s.child("rule").getValue();
-                String img = "" + snap.getResult().child(""+id).child("img").getValue();
+                String img = "" + snap.getResult().child("" + id).child("img").getValue();
                 return Product.create(idd, name, expansion, rarity, type, rule, img);
             }
         }
@@ -139,8 +161,28 @@ public class DatabaseAccess {
     }
 
 
+    public ProductOnSale getProductOnSaleFromId(String id) {
+        DatabaseReference product = database.child("product_on_sale");
+        List<Product> prod = new ArrayList<>();
+        Task<DataSnapshot> snap = product.get();
+        while (!snap.isComplete()) {
+        }
+
+        for (DataSnapshot s : snap.getResult().getChildren()) {
+            if (s.getKey().equals(id)) {
+                String idd = s.getKey();
+                Long product_id = (Long) s.child("product_id").getValue();
+                String user_id = "" + s.child("user_id").getValue();
+                Long price = (Long) s.child("price").getValue();
+                return ProductOnSale.create(idd, product_id, user_id, price);
+            }
+        }
+        return null;
+    }
+
+
     public List<Product> getSearchProducts(final String n, final String e,
-                                           final String r, final String t){
+                                           final String r, final String t) {
         String mExpansion = e;
         String mRarity = r;
         String mType = t;
@@ -154,18 +196,21 @@ public class DatabaseAccess {
         DatabaseReference product = database.child("product");
         List<Product> prod = new ArrayList<>();
         Task<DataSnapshot> snap = product.get();
-        while(!snap.isComplete()){}
+        while (!snap.isComplete()) {
+        }
         DatabaseReference language = database.child("language_" + Locale.getDefault().getLanguage());
         Task<DataSnapshot> lan = language.get();
-        while(!lan.isComplete()){};
-        for (DataSnapshot s : lan.getResult().getChildren()){
-            if(mRarity.equals("All")){
+        while (!lan.isComplete()) {
+        }
+        ;
+        for (DataSnapshot s : lan.getResult().getChildren()) {
+            if (mRarity.equals("All")) {
 
-                if( (""+s.child("name").getValue()).toLowerCase().contains(n.toLowerCase()) &&
-                        (""+s.child("expansion").getValue()).toLowerCase().contains(mExpansion.toLowerCase()) &&
-                        (""+s.child("type").getValue()).toLowerCase().contains(mType.toLowerCase())) {
+                if (("" + s.child("name").getValue()).toLowerCase().contains(n.toLowerCase()) &&
+                        ("" + s.child("expansion").getValue()).toLowerCase().contains(mExpansion.toLowerCase()) &&
+                        ("" + s.child("type").getValue()).toLowerCase().contains(mType.toLowerCase())) {
 
-                    long idd = (Long)s.child("product_id").getValue();
+                    long idd = (Long) s.child("product_id").getValue();
                     String name = "" + s.child("name").getValue();
                     String expansion = "" + s.child("name").getValue();
                     String rarity = "" + s.child("rarity").getValue();
@@ -176,12 +221,12 @@ public class DatabaseAccess {
                     products.add(p);
                 }
             } else {
-                if( (""+s.child("name").getValue()).toLowerCase().contains(n.toLowerCase()) &&
-                        (""+s.child("expansion").getValue()).toLowerCase().contains(mExpansion.toLowerCase()) &&
-                        (""+s.child("rarity").getValue()).toLowerCase().equals(mRarity.toLowerCase()) &&
-                        (""+s.child("type").getValue()).toLowerCase().contains(mType.toLowerCase())) {
+                if (("" + s.child("name").getValue()).toLowerCase().contains(n.toLowerCase()) &&
+                        ("" + s.child("expansion").getValue()).toLowerCase().contains(mExpansion.toLowerCase()) &&
+                        ("" + s.child("rarity").getValue()).toLowerCase().equals(mRarity.toLowerCase()) &&
+                        ("" + s.child("type").getValue()).toLowerCase().contains(mType.toLowerCase())) {
 
-                    long idd = (Long)s.child("product_id").getValue();
+                    long idd = (Long) s.child("product_id").getValue();
                     String name = "" + s.child("name").getValue();
                     String expansion = "" + s.child("name").getValue();
                     String rarity = "" + s.child("rarity").getValue();
@@ -198,47 +243,53 @@ public class DatabaseAccess {
     }
 
 
-    public List<String> getAllExpansion(){
+    public List<String> getAllExpansion() {
         HashSet<String> expansions = new HashSet<String>();
         expansions.add("All");
         DatabaseReference language = database.child("language_" + Locale.getDefault().getLanguage());
         Task<DataSnapshot> lan = language.get();
-        while(!lan.isComplete()){};
-        for (DataSnapshot s : lan.getResult().getChildren()){
-            expansions.add(""+s.child("expansion").getValue());
+        while (!lan.isComplete()) {
+        }
+        ;
+        for (DataSnapshot s : lan.getResult().getChildren()) {
+            expansions.add("" + s.child("expansion").getValue());
         }
         return new ArrayList<String>(expansions);
     }
 
 
-    public List<String> getAllTypes(){
+    public List<String> getAllTypes() {
         HashSet<String> types = new HashSet<String>();
         types.add("All");
         DatabaseReference language = database.child("language_" + Locale.getDefault().getLanguage());
         Task<DataSnapshot> lan = language.get();
-        while(!lan.isComplete()){};
-        for (DataSnapshot s : lan.getResult().getChildren()){
-            types.add(""+s.child("type").getValue());
+        while (!lan.isComplete()) {
+        }
+        ;
+        for (DataSnapshot s : lan.getResult().getChildren()) {
+            types.add("" + s.child("type").getValue());
         }
         return new ArrayList<String>(types);
     }
 
 
-    public List<String> getAllRaritys(){
+    public List<String> getAllRaritys() {
         HashSet<String> raritys = new HashSet<String>();
         raritys.add("All");
         DatabaseReference language = database.child("language_" + Locale.getDefault().getLanguage());
         Task<DataSnapshot> lan = language.get();
-        while(!lan.isComplete()){};
-        for (DataSnapshot s : lan.getResult().getChildren()){
-            raritys.add(""+s.child("rarity").getValue());
+        while (!lan.isComplete()) {
+        }
+        ;
+        for (DataSnapshot s : lan.getResult().getChildren()) {
+            raritys.add("" + s.child("rarity").getValue());
         }
         return new ArrayList<String>(raritys);
     }
 
 
-    public void sellProductFromUser(Product product, User user, Long price){
-        ProductOnSale p = ProductOnSale.create(null,product.getId(),1,price);
+    public void sellProductFromUser(Product product, User user, Long price) {
+        ProductOnSale p = ProductOnSale.create(null, product.getId(), user.getId(), price);
         database.child("product_on_sale").push().setValue(p);
     }
 
@@ -248,40 +299,21 @@ public class DatabaseAccess {
     }
 
 
-    public User logInUser(String userna, String passwo){
+    public User logInUser(String userna, String passwo) {
         DatabaseReference users = database.child("user");
         Task<DataSnapshot> snap = users.get();
-        while(!snap.isComplete()){};
-        for (DataSnapshot s : snap.getResult().getChildren()){
-            if((""+s.child("username").getValue()).equals(userna) &&
-                    (""+s.child("password").getValue()).equals(passwo)){
-                String address = ""+s.child("address").getValue();
-                Long cap = (Long)s.child("cap").getValue();
-                String location = ""+s.child("location").getValue();
-                String email = ""+s.child("email").getValue();
-                String username = ""+s.child("username").getValue();
-                String password = ""+s.child("password").getValue();
-                String id = s.getKey();
-                User u = User.create().withAddress(address).withUsername(username).withCap(cap).withEmail(email).withPassword(password)
-                            .withLocation(location).withId(id);
-                return u;
-            }
+        while (!snap.isComplete()) {
         }
-        return null;
-    }
-
-    public User getUserFromId(String mId){
-        DatabaseReference users = database.child("user");
-        Task<DataSnapshot> snap = users.get();
-        while(!snap.isComplete()){};
-        for (DataSnapshot s : snap.getResult().getChildren()){
-            if((""+s.getKey()).equals(mId)){
-                String address = ""+s.child("address").getValue();
-                Long cap = (Long)s.child("cap").getValue();
-                String location = ""+s.child("location").getValue();
-                String email = ""+s.child("email").getValue();
-                String username = ""+s.child("username").getValue();
-                String password = ""+s.child("password").getValue();
+        ;
+        for (DataSnapshot s : snap.getResult().getChildren()) {
+            if (("" + s.child("username").getValue()).equals(userna) &&
+                    ("" + s.child("password").getValue()).equals(passwo)) {
+                String address = "" + s.child("address").getValue();
+                Long cap = (Long) s.child("cap").getValue();
+                String location = "" + s.child("location").getValue();
+                String email = "" + s.child("email").getValue();
+                String username = "" + s.child("username").getValue();
+                String password = "" + s.child("password").getValue();
                 String id = s.getKey();
                 User u = User.create().withAddress(address).withUsername(username).withCap(cap).withEmail(email).withPassword(password)
                         .withLocation(location).withId(id);
@@ -291,12 +323,68 @@ public class DatabaseAccess {
         return null;
     }
 
-    public void  modifyUser(User user){
+    public User getUserFromId(String mId) {
+        DatabaseReference users = database.child("user");
+        Task<DataSnapshot> snap = users.get();
+        while (!snap.isComplete()) {
+        }
+        ;
+        for (DataSnapshot s : snap.getResult().getChildren()) {
+            if (("" + s.getKey()).equals(mId)) {
+                String address = "" + s.child("address").getValue();
+                Long cap = (Long) s.child("cap").getValue();
+                String location = "" + s.child("location").getValue();
+                String email = "" + s.child("email").getValue();
+                String username = "" + s.child("username").getValue();
+                String password = "" + s.child("password").getValue();
+                String id = s.getKey();
+                User u = User.create().withAddress(address).withUsername(username).withCap(cap).withEmail(email).withPassword(password)
+                        .withLocation(location).withId(id);
+                return u;
+            }
+        }
+        return null;
+    }
+
+    public void modifyUser(User user) {
         String id = user.getId();
         database.child("user").child(id).setValue(user.withId(null));
         user.withId(id);
     }
 
+    public void addPhotoToProductOnSale(ProductOnSale p) {
+        String id = p.getId();
+        Log.e("*ééé*é**éPPéO",""+id);
+        database.child("product_on_sale").child(id).setValue(p.withId(null));
+        p.withId(id);
+    }
+
+    public void encodeBitmapAndSaveToFirebase(Bitmap bitmap, String name, final ProductOnSale p){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        String imageEncoded = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
+        StorageReference filepath = storageReference.child("product_on_sale").child(name);
+        byte[] data = baos.toByteArray();
+
+        filepath.putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                filepath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        p.withPhoto(uri.toString());
+                        database.child("product_on_sale").child(p.getId()).child("photo").setValue(uri.toString());
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+            }
+        });
+
+    }
+}
 
 /*
     public boolean logInUser(String username, String password) {
@@ -574,4 +662,3 @@ public class DatabaseAccess {
 
 
 
-}

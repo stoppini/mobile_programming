@@ -1,6 +1,7 @@
 package com.example.MagicShop;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -60,6 +61,8 @@ public class MenuActivity extends AppCompatActivity {
 
 
     private void enterTestDatabase(){
+
+
         Log.d("DEBUG", "DB test access");
         final Intent showDatabaseIntent = new Intent(MenuActivity.this, ShowDb.class);
         startActivity(showDatabaseIntent);

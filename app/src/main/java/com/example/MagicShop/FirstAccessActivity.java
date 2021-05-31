@@ -71,9 +71,9 @@ public class FirstAccessActivity extends AppCompatActivity {
             {
                 case RESULT_OK:
                     // now using SharePreferences, quindi commenti le prossime righe
-                    final User user = data.getParcelableExtra(User.USER_DATA_EXTRA);
+                    //final User user = data.getParcelableExtra(User.USER_DATA_EXTRA);
                     final Intent mainIntent = new Intent(FirstAccessActivity.this,MenuActivity.class);
-                    mainIntent.putExtra(User.USER_DATA_EXTRA, user);
+                    //mainIntent.putExtra(User.USER_DATA_EXTRA, user);
                     startActivity(mainIntent);
                     finish();
                     break;

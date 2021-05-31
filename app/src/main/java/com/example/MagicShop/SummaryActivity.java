@@ -8,12 +8,17 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.MagicShop.model.DatabaseAccess;
 import com.example.MagicShop.model.User;
+import com.example.MagicShop.utils.PreferenceUtils;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class SummaryActivity extends AppCompatActivity {
 
+    private DatabaseAccess dbA;
     private User mUser;
     private TextView mUsername;
     private TextView mPassword;
@@ -66,8 +71,19 @@ public class SummaryActivity extends AppCompatActivity {
 
     public void doConfirm(View confirmButton)
     {
+        // saving in db
+        dbA = DatabaseAccess.getDb();
+        dbA.registerUser(mUser);
+
+        // re-loading user from db because we need his ID do be saved in preferenceUtils
+        User userFromDb = dbA.logInUser(mUser.getUsername(), mUser.getPassword());
+        PreferenceUtils.logging(true, this);
+        PreferenceUtils.saveId(userFromDb.getId(), this);
+        Log.e("debug",  "id utente appena registrato: " + PreferenceUtils.getId(this));
+
         final Intent mainIntent = new Intent(SummaryActivity.this,MenuActivity.class);
         mainIntent.putExtra(User.USER_DATA_EXTRA,this.mUser);
         startActivity(mainIntent);
+        finish();
     }
 }

@@ -1,11 +1,13 @@
 package com.example.MagicShop;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -75,15 +77,37 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void enterUserArea(){
-        Log.d("Menu Activity", "entering user area");
-        final Intent userArea = new Intent(MenuActivity.this, UserAreaActivity.class);
-        startActivity(userArea);
+        if(PreferenceUtils.isLogged(this)){
+            Log.e("Menu Activity", "entering user area");
+            final Intent userArea = new Intent(MenuActivity.this, UserAreaActivity.class);
+            startActivity(userArea);
+        }
+        else{
+            Log.e("Toast", "toast should appear on screen");
+            Context context = getApplicationContext();
+            CharSequence text = getResources().getString(R.string.user_not_logged);
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
     }
 
     private void doLogOut(){
-        Log.d("Menu Activity", "logging out");
-        final Intent userArea = new Intent(MenuActivity.this, FirstAccessActivity.class);
-        PreferenceUtils.logOut(this);
-        startActivity(userArea);
+        if(PreferenceUtils.isLogged(this)) {
+
+            Log.d("DEBUG", "Logging in");
+            final Intent userArea = new Intent(MenuActivity.this, FirstAccessActivity.class);
+            PreferenceUtils.logOut(this);
+            startActivity(userArea);
+            finish();
+        }
+        else{
+            Log.e("Toast", "toast should appear on screen");
+            Context context = getApplicationContext();
+            CharSequence text = getResources().getString(R.string.user_not_logged);
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
     }
 }

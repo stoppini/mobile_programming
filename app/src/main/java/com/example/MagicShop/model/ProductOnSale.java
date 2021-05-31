@@ -12,22 +12,22 @@ public class ProductOnSale {
 
 
     public ProductOnSale(String id, final long product_id,
-                         final String user_id, final long price) {
+                         final String user_id, final long price, final String photo) {
         this.id = id;
         this.product_id = product_id;
         this.user_id = user_id;
         this.price = price;
+        this.photo = photo;
     }
 
     public static ProductOnSale create(String id, final long product_id,
-                                       final String user_id, final long price) {
-        return new ProductOnSale(id, product_id, user_id, price);
+                                       final String user_id, final long price, final String photo) {
+        return new ProductOnSale(id, product_id, user_id, price, photo);
     }
 
     public ProductOnSale withPhoto(String photo) {
         this.photo = photo;
         return this;
-
     }
 
     public ProductOnSale withId(String id){

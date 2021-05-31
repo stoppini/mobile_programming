@@ -1,6 +1,7 @@
 package com.example.MagicShop.model;
 
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.util.Base64;
 import android.util.Log;
@@ -58,7 +59,7 @@ public class DatabaseAccess {
             ProductOnSale p = new ProductOnSale("" + s.getKey(),
                     (Long) s.child("product_id").getValue(),
                     "" + s.child("user_id").getValue(),
-                    (Long) s.child("price").getValue());
+                    (Long) s.child("price").getValue(), ""+s.child("photo"));
             products_on_sale.add(p);
 
         }
@@ -110,8 +111,11 @@ public class DatabaseAccess {
                 Long price = (Long) s.child("price").getValue();
                 long prod_id = (Long) s.child("product_id").getValue();
                 String user_id = "" + s.child("user_id").getValue();
-                ProductOnSale p = ProductOnSale.create(id, prod_id, user_id, price);
+                String photo = "" + s.child("photo").getValue();
+
+                ProductOnSale p = ProductOnSale.create(id, prod_id, user_id, price,photo);
                 products_on_sale.add(p);
+
             }
         }
         return products_on_sale;
@@ -174,7 +178,8 @@ public class DatabaseAccess {
                 Long product_id = (Long) s.child("product_id").getValue();
                 String user_id = "" + s.child("user_id").getValue();
                 Long price = (Long) s.child("price").getValue();
-                return ProductOnSale.create(idd, product_id, user_id, price);
+                String photo = ""+s.child("photo").getValue();
+                return ProductOnSale.create(idd, product_id, user_id, price,photo);
             }
         }
         return null;
@@ -289,7 +294,7 @@ public class DatabaseAccess {
 
 
     public void sellProductFromUser(Product product, User user, Long price) {
-        ProductOnSale p = ProductOnSale.create(null, product.getId(), user.getId(), price);
+        ProductOnSale p = ProductOnSale.create(null, product.getId(), user.getId(), price, null);
         database.child("product_on_sale").push().setValue(p);
     }
 
@@ -354,14 +359,14 @@ public class DatabaseAccess {
 
     public void addPhotoToProductOnSale(ProductOnSale p) {
         String id = p.getId();
-        Log.e("*ééé*é**éPPéO",""+id);
         database.child("product_on_sale").child(id).setValue(p.withId(null));
         p.withId(id);
     }
 
     public void encodeBitmapAndSaveToFirebase(Bitmap bitmap, String name, final ProductOnSale p){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        bitmap = resizeImageForImageView(bitmap);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         String imageEncoded = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
         StorageReference filepath = storageReference.child("product_on_sale").child(name);
         byte[] data = baos.toByteArray();
@@ -383,6 +388,34 @@ public class DatabaseAccess {
             }
         });
 
+    }
+
+
+    public Bitmap resizeImageForImageView(Bitmap bitmap) {
+        int scaleSize =1024;
+        Matrix matrix = new Matrix();
+        matrix.postRotate(90);
+
+        Bitmap resizedBitmap = null;
+        int originalWidth = bitmap.getWidth();
+        int originalHeight = bitmap.getHeight();
+        int newWidth = -1;
+        int newHeight = -1;
+        float multFactor = -1.0F;
+        if(originalHeight > originalWidth) {
+            newHeight = scaleSize ;
+            multFactor = (float) originalWidth/(float) originalHeight;
+            newWidth = (int) (newHeight*multFactor);
+        } else if(originalWidth > originalHeight) {
+            newWidth = scaleSize ;
+            multFactor = (float) originalHeight/ (float)originalWidth;
+            newHeight = (int) (newWidth*multFactor);
+        } else if(originalHeight == originalWidth) {
+            newHeight = scaleSize ;
+            newWidth = scaleSize ;
+        }
+        resizedBitmap = Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, false);
+        return Bitmap.createBitmap(resizedBitmap, 0, 0, resizedBitmap.getWidth(), resizedBitmap.getHeight(), matrix, true);
     }
 }
 

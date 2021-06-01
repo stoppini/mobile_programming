@@ -1,8 +1,7 @@
  package com.example.MagicShop;
 
  import android.os.Bundle;
- import android.util.Log;
- import android.view.View;
+ import android.util.Log; import android.view.View;
  import android.view.ViewGroup;
  import android.widget.BaseAdapter;
  import android.widget.ImageView;
@@ -14,9 +13,7 @@
 
  import com.example.MagicShop.model.DatabaseAccess;
  import com.example.MagicShop.model.Product;
- import com.example.MagicShop.model.ProductOnSale;
- import com.google.firebase.database.DatabaseReference;
- import com.google.firebase.database.FirebaseDatabase;
+
  import com.squareup.picasso.Picasso;
 
  import java.util.LinkedList;

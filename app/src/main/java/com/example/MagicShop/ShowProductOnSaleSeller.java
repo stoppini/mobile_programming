@@ -11,10 +11,8 @@ import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -37,7 +35,6 @@ import com.example.MagicShop.model.User;
 import com.example.MagicShop.utils.PreferenceUtils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -139,6 +136,7 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
                     }
 
                     addPhoto.setOnClickListener(new View.OnClickListener() {
+
                         @Override
                         public void onClick(View v) {
                             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -256,9 +254,12 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
     }
 
     public Bitmap resizeImageForImageView(Bitmap bitmap) {
-        int scaleSize =1024;
+
+
         Matrix matrix = new Matrix();
         matrix.postRotate(90);
+          /*
+        int scaleSize =1024;
         Bitmap resizedBitmap = null;
         int originalWidth = bitmap.getWidth();
         int originalHeight = bitmap.getHeight();
@@ -277,8 +278,8 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
             newHeight = scaleSize ;
             newWidth = scaleSize ;
         }
-        resizedBitmap = Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, false);
-        return Bitmap.createBitmap(resizedBitmap, 0, 0, resizedBitmap.getWidth(), resizedBitmap.getHeight(), matrix, true);
+        resizedBitmap = Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, false);*/
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 
     @Override

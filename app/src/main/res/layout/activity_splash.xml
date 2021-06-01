@@ -16,7 +16,6 @@
             android:src="@mipmap/ic_launcher_final_circle"
             android:layout_gravity="center"
             android:id="@+id/splash_imageview"/>
-
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

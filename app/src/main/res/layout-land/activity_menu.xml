@@ -1,21 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".AnonymousMenuActivity">
-
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/user_area_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/user_area_button_label"
+            android:layout_above="@+id/view_remote_data_button"
+            style="@style/main_button_style"/>
+
+        <Button
+            android:id="@+id/log_out_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/log_out_button_label"
+            android:layout_above="@+id/user_area_button"
+            style="@style/main_button_style"/>
 
         <Button
             android:id="@+id/view_remote_data_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/remote_data_button_label"
-            android:layout_above="@+id/view_remote_test_db"
+            android:layout_centerInParent="true"
             style="@style/main_button_style"/>
 
         <Button
@@ -23,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/test_db"
-            android:layout_centerInParent="true"
+            android:layout_below="@+id/view_remote_data_button"
             style="@style/main_button_style"/>
 
 
@@ -34,8 +46,6 @@
             android:text="@string/find_products"
             android:layout_below="@+id/view_remote_test_db"
             style="@style/main_button_style"/>
-
-
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

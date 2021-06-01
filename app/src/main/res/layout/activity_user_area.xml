@@ -15,13 +15,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/username_to_register"
-                android:layout_weight="2"/>
+                android:layout_weight="2"
+                style="@style/main_text_style"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/show_username_data"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                style="@style/main_text_style"/>
 
         </TableRow>
 
@@ -29,14 +31,52 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/password_to_register"
+                android:layout_weight="2"
+                style="@style/main_text_style"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/show_password_data"
+                android:layout_weight="1"
+                style="@style/main_text_style"/>
+
+        </TableRow>
+
+
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/email_to_register"
-                android:layout_weight="2"/>
+                android:layout_weight="2"
+                style="@style/main_text_style"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/show_email_data"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                style="@style/main_text_style"/>
+
+        </TableRow>
+
+
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/location_to_register"
+                android:layout_weight="2"
+                style="@style/main_text_style"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/show_location_data"
+                android:layout_weight="1"
+                style="@style/main_text_style"/>
 
         </TableRow>
 
@@ -45,13 +85,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/address_to_register"
-                android:layout_weight="2"/>
+                android:layout_weight="2"
+                style="@style/main_text_style"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/show_address_data"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                style="@style/main_text_style"/>
+
         </TableRow>
 
         <TableRow>
@@ -59,30 +102,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/cap_to_register"
-                android:layout_weight="2"/>
+                android:layout_weight="2"
+                style="@style/main_text_style"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/show_cap_data"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                style="@style/main_text_style"/>
+
         </TableRow>
-
-        <TableRow>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/location_to_register"
-                android:layout_weight="2"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/show_location_data"
-                android:layout_weight="1"/>
-        </TableRow>
-
-
 
         <Button
             android:layout_width="wrap_content"
@@ -90,7 +120,8 @@
             android:text="@string/modify_button_label"
             android:id="@+id/modify_button"
             android:onClick="modifyInformations"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            style="@style/main_button_style"/>
     </TableLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,15 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".ModifyInformationsActivity">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/username_to_register"/>
+            android:text="@string/username_to_register"
+            style="@style/main_text_style"/>
 
         <EditText
             android:layout_width="match_parent"
@@ -23,9 +24,10 @@
             style="@style/main_edittext_style"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/email_to_register"/>
+            android:text="@string/email_to_register"
+            style="@style/main_text_style"/>
 
         <EditText
             android:layout_width="match_parent"
@@ -34,9 +36,10 @@
             style="@style/main_edittext_style"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/address_to_register"/>
+            android:text="@string/address_to_register"
+            style="@style/main_text_style"/>
 
         <EditText
             android:layout_width="match_parent"
@@ -45,9 +48,10 @@
             style="@style/main_edittext_style"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/cap_to_register"/>
+            android:text="@string/cap_to_register"
+            style="@style/main_text_style"/>
 
         <EditText
             android:layout_width="match_parent"
@@ -56,9 +60,10 @@
             style="@style/main_edittext_style"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/location_to_register"/>
+            android:text="@string/location_to_register"
+            style="@style/main_text_style"/>
 
         <EditText
             android:layout_width="match_parent"
@@ -74,7 +79,6 @@
             android:onClick="doConfirm"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             style="@style/main_button_style"/>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

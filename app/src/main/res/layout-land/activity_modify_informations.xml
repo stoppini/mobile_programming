@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".RegisterActivity">
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,32 +17,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/username_edit_to_register"
-            style="@style/main_edittext_style"/>
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/password_to_register"
-            style="@style/main_text_style"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/password_edit_to_register"
-            style="@style/main_edittext_style"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/password_to_register"
-            style="@style/main_text_style"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/confirm_password"
+            android:id="@+id/username_edit_text"
             style="@style/main_edittext_style"/>
 
         <TextView
@@ -57,7 +29,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/email_edit_to_register"
+            android:id="@+id/email_edit_text"
             style="@style/main_edittext_style"/>
 
         <TextView
@@ -69,7 +41,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/address_edit_to_register"
+            android:id="@+id/address_edit_text"
             style="@style/main_edittext_style"/>
 
         <TextView
@@ -81,7 +53,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/cap_edit_to_register"
+            android:id="@+id/cap_edit_text"
             style="@style/main_edittext_style"/>
 
         <TextView
@@ -93,28 +65,17 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/location_edit_to_register"
+            android:id="@+id/location_edit_text"
             style="@style/main_edittext_style"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/error_message_label"
-            android:visibility="invisible"
-            android:layout_gravity="center"
-            android:textColor="@color/red"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            style="@style/main_text_style"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/register_button_label"
+            android:text="@string/confirm_button_label"
             android:layout_gravity="center"
-            android:onClick="doRegistration"
+            android:onClick="doConfirm"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             style="@style/main_button_style"/>
-
     </LinearLayout>
 
 </ScrollView>

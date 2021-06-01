@@ -9,19 +9,14 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
+        android:layout_height="match_parent">
 
         <Button
             android:id="@+id/user_area_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/user_area_button_label"
-            android:layout_centerInParent="true"
+            android:layout_above="@+id/view_remote_data_button"
             style="@style/main_button_style"/>
 
         <Button
@@ -37,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/remote_data_button_label"
-            android:layout_below="@+id/user_area_button"
+            android:layout_centerInParent="true"
             style="@style/main_button_style"/>
 
         <Button
@@ -56,8 +51,6 @@
             android:text="@string/find_products"
             android:layout_below="@+id/view_remote_test_db"
             style="@style/main_button_style"/>
-
-
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

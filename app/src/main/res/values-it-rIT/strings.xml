@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MagicShop</string>
+    <string name="register_button_label">Registrati</string>
+    <string name="username_to_register">Utente:</string>
+    <string name="birthdate_to_register">Data di Nascita:</string>
+    <string name="address_to_register">Via:</string>
+    <string name="anonymous_button_label">Anonimo</string>
+    <string name="location_to_register">Luogo:</string>
+    <string name="login_button_label">Accedi</string>
+    <string name="confirm_button_label">Conferma</string>
+    <string name="old_data_button_label">Vecchi Dati</string>
+    <string name="new_data_button_label">Nuovi Dati</string>
+    <string name="remote_data_button_label">Dati Remoti</string>
+    <string name="user_area">Area personale</string>
+    <string name="modify_button_label">Modifica</string>
+    <string name="log_out_button_label">Esci</string>
+    <string name="all">Tutto</string>
+    <string name="mandatory_field_error">Il campo %1$ è obbligatorio</string>
+    <string name="wrong_credentials_error">Credenziali errate</string>
+    <string name="different_passwords_error">Le Password devono corripondere</string>
+    <string name="all_mandatory_fields_error">Tutti i campi sono obbligatori</string>
+    <string name="no_products_on_search">Nessun prodotto corrispondete alla ricerca</string>
+    <string name="name_product">Inerisci il nome del prodotto</string>
+    <string name="expansion">Espansione</string>
+    <string name="rarity">Rarità</string>
+    <string name="type">Tipo</string>
+    <string name="search">Ricerca</string>
+    <string name="show">Mostra</string>
+</resources>

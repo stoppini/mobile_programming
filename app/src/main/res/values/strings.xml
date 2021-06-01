@@ -4,29 +4,29 @@
     <!-- MESSAGGI REGISTRAZIONE -->
     <string name="register_button_label">Register</string>
     <string name="username_to_register">Username:</string>
-    <string name="password_to_register">Password:</string>
-    <string name="email_to_register">Email:</string>
+    <string name="password_to_register" translatable="false">Password:</string>
+    <string name="email_to_register" translatable="false">Email:</string>
     <string name="birthdate_to_register">Birthdate:</string>
     <string name="location_to_register">Location:</string>
     <string name="address_to_register">Address:</string>
-    <string name="cap_to_register">CAP:</string>
+    <string name="cap_to_register" translatable="false">CAP:</string>
 
 
     modify_button_label
 
     <!-- LABELS -->
     <string name="anonymous_button_label">Anonymous</string>
-    <string name="registration_button_label">Register</string>
+    <string name="registration_button_label" translatable="false">Register</string>
     <string name="login_button_label">Log in</string>
     <string name="confirm_button_label">Confirm</string>
     <string name="old_data_button_label">Old Data</string>
     <string name="new_data_button_label">New Data</string>
     <string name="remote_data_button_label">Remote Data</string>
     <string name="user_area">User Area</string>
-    <string name="test_db">TEST DATABASE</string>
-    <string name="find_products">FIND PRODUCTS</string>
+    <string name="test_db" translatable="false">TEST DATABASE</string>
+    <string name="find_products" translatable="false">FIND PRODUCTS</string>
     <string name="modify_button_label">Modify</string>
-    <string name="user_area_button_label">User Area</string>
+    <string name="user_area_button_label" translatable="false">User Area</string>
     <string name="log_out_button_label">Log Out</string>
     <string name="all">All</string>
 

@@ -1,21 +1,16 @@
 package com.example.MagicShop;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.MagicShop.model.DatabaseAccess;
 import com.example.MagicShop.model.User;
 import com.example.MagicShop.utils.PreferenceUtils;
-
-import java.io.IOException;
 
 public class MenuActivity extends AppCompatActivity {
     private DatabaseAccess dba;

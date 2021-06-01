@@ -31,7 +31,7 @@ public class AnonymousMenuActivity extends AppCompatActivity {
 
     private void enterTestDatabase(){
         Log.d("DEBUG", "DB test access");
-        final Intent showDatabaseIntent = new Intent(AnonymousMenuActivity.this, ShowDb.class);
+        final Intent showDatabaseIntent = new Intent(AnonymousMenuActivity.this, ShowDb_test.class);
         startActivity(showDatabaseIntent);
     }
 

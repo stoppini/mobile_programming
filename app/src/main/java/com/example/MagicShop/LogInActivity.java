@@ -2,7 +2,6 @@ package com.example.MagicShop;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -15,8 +14,6 @@ import com.example.MagicShop.model.DatabaseAccess;
 import com.example.MagicShop.model.User;
 import com.example.MagicShop.utils.PreferenceUtils;
 
-import java.io.IOException;
-import java.util.Calendar;
 
 public class LogInActivity extends AppCompatActivity {
     DatabaseAccess dbA;

@@ -13,8 +13,6 @@ import com.example.MagicShop.model.DatabaseAccess;
 import com.example.MagicShop.model.User;
 import com.example.MagicShop.utils.PreferenceUtils;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class SummaryActivity extends AppCompatActivity {
 

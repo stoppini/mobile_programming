@@ -18,8 +18,6 @@ import com.example.MagicShop.model.DatabaseAccess;
 import com.example.MagicShop.model.Product;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;

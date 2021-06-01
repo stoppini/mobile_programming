@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.util.Base64;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -21,12 +20,10 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 
 
 public class DatabaseAccess {
@@ -44,7 +41,6 @@ public class DatabaseAccess {
     }
 
     private DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
 
 

@@ -2,8 +2,6 @@ package com.example.MagicShop.model;
 
 public class ProductOnSale {
 
-    //TODO bisonga farla parcializable
-
     private String id;
     private final long product_id;
     private final String user_id;

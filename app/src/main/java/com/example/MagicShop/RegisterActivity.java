@@ -6,19 +6,12 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.MagicShop.model.DatabaseAccess;
 import com.example.MagicShop.model.User;
-import com.example.MagicShop.utils.PreferenceUtils;
-
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Calendar;
 
 public class RegisterActivity extends AppCompatActivity {
 

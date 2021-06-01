@@ -25,7 +25,14 @@
     <style name="main_text_style">
         <item name="android:padding">@dimen/padding_measure</item>
         <item name="android:textColor">@color/black</item>
-        <item name="android:textAlignment">center</item>
+        <item name="android:textAlignment">textStart</item>
         <item name="android:textSize">@dimen/edittext_text_size</item>
+    </style>
+
+    <style name="main_text_style_list">
+        <item name="android:padding">@dimen/padding_measure</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:textSize">15dp</item>
     </style>
 </resources>

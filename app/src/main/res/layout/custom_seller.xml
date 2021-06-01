@@ -8,7 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/list_sellers_margin"
         android:orientation="vertical"
         >
 
@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="name"
-            android:textColor="@color/black" />
+            style="@style/main_text_style_list" />
 
         <TextView
             android:id="@+id/price_seller"
@@ -26,7 +26,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="price"
-            android:textColor="@color/black" />
+            style="@style/main_text_style_list"
+           />
 
         <Button
             android:id="@+id/adding_photo"
@@ -34,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="add"
-            android:textColor="@color/black" />
+            style="@style/main_button_style"/>
 
         <Button
             android:id="@+id/show_photo"
@@ -50,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="add"
-            android:textColor="@color/black" />
+            />
 
 
     </LinearLayout>

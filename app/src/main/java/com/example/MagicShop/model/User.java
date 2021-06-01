@@ -137,8 +137,7 @@ public class User implements Parcelable {
     }
 
     public static User create() {
-        final User user = new User();
-        return user;
+        return new User();
     }
 
 
@@ -204,11 +203,6 @@ public class User implements Parcelable {
     public long getCap() {
         return this.mCap;
     }
-
-
-//    public long getBirthDate() {
-//        return this.mBirthDate;
-//    }
 
 }
 

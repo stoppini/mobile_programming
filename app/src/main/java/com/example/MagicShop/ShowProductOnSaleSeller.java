@@ -6,11 +6,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
-
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,19 +25,25 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
-
+import com.ceylonlabs.imageviewpopup.ImagePopup;
 import com.example.MagicShop.model.DatabaseAccess;
 import com.example.MagicShop.model.Product;
 import com.example.MagicShop.model.ProductOnSale;
 import com.example.MagicShop.model.User;
 import com.example.MagicShop.utils.PreferenceUtils;
-
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -76,7 +85,6 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
 
     @Override
     protected void onStart(){
-
         super.onStart();
         mAdapter = new BaseAdapter() {
             @Override
@@ -106,35 +114,47 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
                 User seller = dbA.getUsersFromProductOnSale(product);
 
                 nameToView.setText(seller.getUsername());
+
                 if(seller.getId().equals(u.getId())){
                     final Button addPhoto = (Button) view.findViewById(R.id.adding_photo);
-                    final ImageView img = (ImageView) view.findViewById(R.id.photo);
-
-
-                    if(product.getPhoto()!=null){
-                        Log.e("asdasd",""+product.getPhoto());
-                        Picasso.get().load(""+product.getPhoto()).into(img);
+                    final Button showPhoto = (Button) view.findViewById(R.id.show_photo);
+                    if(product.getPhoto().equals("null")){
+                        showPhoto.setVisibility(View.INVISIBLE);
+                    } else {
+                        showPhoto.setVisibility(View.VISIBLE);
+                        final ImagePopup imagePopup = new ImagePopup(ShowProductOnSaleSeller.this);
+                        imagePopup.initiatePopupWithPicasso(product.getPhoto());
+                        imagePopup.setWindowHeight(800); // Optional
+                        imagePopup.setWindowWidth(800); // Optional
+                        imagePopup.setBackgroundColor(Color.BLACK);  // Optional
+                        imagePopup.setFullScreen(true); // Optional
+                        imagePopup.setHideCloseIcon(true);  // Optional
+                        imagePopup.setImageOnClickClose(true);  // Optional
+                        showPhoto.setOnClickListener(new View.OnClickListener(){
+                            @Override
+                            public void onClick(View v) {
+                                imagePopup.viewPopup();
+                            }
+                        });
                     }
+
                     addPhoto.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                            // Ensure that there's a camera activity to handle the intent
                             if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                                // Create the File where the photo should go
                                 File photoFile = null;
                                 try {
                                     photoFile = createImageFile(product.getId());
                                 } catch (IOException ex) {
-                                    // Error occurred while creating the File
                                 }
-                                // Continue only if the File was successfully created
                                 if (photoFile != null) {
                                     Uri photoURI = FileProvider.getUriForFile(ShowProductOnSaleSeller.this,
                                             ShowProductOnSaleSeller.this.getApplicationContext().getPackageName() + ".provider",
                                             photoFile);
                                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                                     startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+
                                 }
                             }
                         }
@@ -144,7 +164,6 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
                 return view;
             }
         };
-
 
         dbA = DatabaseAccess.getDb();
         p = dbA.getProductFromId((Long)getIntent().getSerializableExtra(Product.PRODUCT_LIST_EXTRA));
@@ -158,7 +177,6 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
                     showForgotDialog(context, p, u);
                 }
             });
-
         }
 
         List<ProductOnSale> products = dbA.getAllProductOnSaleFromProduct(p);
@@ -209,6 +227,59 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
     }
 
 
+    public void encodeBitmapAndSaveToFirebase(Bitmap bitmap, String name, final ProductOnSale p){
+        final StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap = resizeImageForImageView(bitmap);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        String imageEncoded = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
+        StorageReference filepath = storageReference.child("product_on_sale").child(name);
+        byte[] data = baos.toByteArray();
+
+        filepath.putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                filepath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        dbA.addPhotoToProductOnSale(p, uri.toString());
+                        onStart();
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+            }
+        });
+
+    }
+
+    public Bitmap resizeImageForImageView(Bitmap bitmap) {
+        int scaleSize =1024;
+        Matrix matrix = new Matrix();
+        matrix.postRotate(90);
+        Bitmap resizedBitmap = null;
+        int originalWidth = bitmap.getWidth();
+        int originalHeight = bitmap.getHeight();
+        int newWidth = -1;
+        int newHeight = -1;
+        float multFactor = -1.0F;
+        if(originalHeight > originalWidth) {
+            newHeight = scaleSize ;
+            multFactor = (float) originalWidth/(float) originalHeight;
+            newWidth = (int) (newHeight*multFactor);
+        } else if(originalWidth > originalHeight) {
+            newWidth = scaleSize ;
+            multFactor = (float) originalHeight/ (float)originalWidth;
+            newHeight = (int) (newWidth*multFactor);
+        } else if(originalHeight == originalWidth) {
+            newHeight = scaleSize ;
+            newWidth = scaleSize ;
+        }
+        resizedBitmap = Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, false);
+        return Bitmap.createBitmap(resizedBitmap, 0, 0, resizedBitmap.getWidth(), resizedBitmap.getHeight(), matrix, true);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -222,14 +293,13 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
                 Bitmap bitmap = null;
                 try {
                     bitmap = MediaStore.Images.Media.getBitmap(ShowProductOnSaleSeller.this.getContentResolver(), Uri.fromFile(file));
-                    dbA.encodeBitmapAndSaveToFirebase(bitmap, ""+file.getName(), prodOnSale);
+                    encodeBitmapAndSaveToFirebase(bitmap, ""+file.getName(), prodOnSale);
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }
     }
-
-
 
 }

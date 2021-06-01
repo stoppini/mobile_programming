@@ -1,25 +1,11 @@
 package com.example.MagicShop.model;
 
-import android.graphics.Bitmap;
-import android.graphics.Matrix;
-import android.net.Uri;
-import android.util.Base64;
-
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
-
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -40,9 +26,11 @@ public class DatabaseAccess {
         return db;
     }
 
-    private DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-    private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+    private final DatabaseReference database = FirebaseDatabase.getInstance().getReference();
 
+    public void addPhotoToProductOnSale (ProductOnSale p, String uri){
+        database.child("product_on_sale").child(p.getId()).child("photo").setValue(uri.toString());
+    }
 
     public List<ProductOnSale> getAllProductsOnSale() {
         DatabaseReference ref = database.child("product_on_sale");
@@ -333,15 +321,14 @@ public class DatabaseAccess {
         for (DataSnapshot s : snap.getResult().getChildren()) {
             if (("" + s.getKey()).equals(mId)) {
                 String address = "" + s.child("address").getValue();
-                Long cap = (Long) s.child("cap").getValue();
+                Long cap = (Long)s.child("cap").getValue();
                 String location = "" + s.child("location").getValue();
                 String email = "" + s.child("email").getValue();
                 String username = "" + s.child("username").getValue();
                 String password = "" + s.child("password").getValue();
                 String id = s.getKey();
-                User u = User.create().withAddress(address).withUsername(username).withCap(cap).withEmail(email).withPassword(password)
+                return User.create().withAddress(address).withUsername(username).withCap(cap).withEmail(email).withPassword(password)
                         .withLocation(location).withId(id);
-                return u;
             }
         }
         return null;
@@ -359,60 +346,8 @@ public class DatabaseAccess {
         p.withId(id);
     }
 
-    public void encodeBitmapAndSaveToFirebase(Bitmap bitmap, String name, final ProductOnSale p){
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap = resizeImageForImageView(bitmap);
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        String imageEncoded = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
-        StorageReference filepath = storageReference.child("product_on_sale").child(name);
-        byte[] data = baos.toByteArray();
-
-        filepath.putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                filepath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        p.withPhoto(uri.toString());
-                        database.child("product_on_sale").child(p.getId()).child("photo").setValue(uri.toString());
-                    }
-                });
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-            }
-        });
-
-    }
 
 
-    public Bitmap resizeImageForImageView(Bitmap bitmap) {
-        int scaleSize =1024;
-        Matrix matrix = new Matrix();
-        matrix.postRotate(90);
-
-        Bitmap resizedBitmap = null;
-        int originalWidth = bitmap.getWidth();
-        int originalHeight = bitmap.getHeight();
-        int newWidth = -1;
-        int newHeight = -1;
-        float multFactor = -1.0F;
-        if(originalHeight > originalWidth) {
-            newHeight = scaleSize ;
-            multFactor = (float) originalWidth/(float) originalHeight;
-            newWidth = (int) (newHeight*multFactor);
-        } else if(originalWidth > originalHeight) {
-            newWidth = scaleSize ;
-            multFactor = (float) originalHeight/ (float)originalWidth;
-            newHeight = (int) (newWidth*multFactor);
-        } else if(originalHeight == originalWidth) {
-            newHeight = scaleSize ;
-            newWidth = scaleSize ;
-        }
-        resizedBitmap = Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, false);
-        return Bitmap.createBitmap(resizedBitmap, 0, 0, resizedBitmap.getWidth(), resizedBitmap.getHeight(), matrix, true);
-    }
 }
 
 /*

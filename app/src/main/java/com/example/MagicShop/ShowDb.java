@@ -22,14 +22,12 @@
  import java.util.LinkedList;
  import java.util.List;
 
- public class ShowDb extends AppCompatActivity { private ListView mListView;
+ public class ShowDb extends AppCompatActivity {
+
+    private ListView mListView;
     private DatabaseAccess dbA;
     private List<Product> mProduct = new LinkedList<>();
     private ListAdapter mAdapter;
-
-
-     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-
 
 
      @Override
@@ -42,7 +40,7 @@
      protected void onStart(){
         super.onStart();
         setContentView(R.layout.simple_first_local_data);
-        mListView = (ListView)findViewById(R.id.listViewT);
+        mListView = findViewById(R.id.listViewT);
 
         mAdapter = new BaseAdapter() {
             @Override
@@ -67,7 +65,6 @@
                 final TextView ruleToView = (TextView) view.findViewById(R.id.rule);
 
                 final Product product = (Product) getItem(position);
-
                 nameToView.setText(product.getName());
                 Picasso.get().load(""+product.getImg()).into(imageToView);
                 ruleToView.setText(product.getRule());
@@ -77,21 +74,10 @@
 
         mListView.setAdapter(mAdapter);
         dbA = DatabaseAccess.getDb();
-
         List<Product> prodss  = dbA.getAllProducts();
         mProduct.clear();
         mProduct.addAll(prodss);
         mListView.setAdapter(mAdapter);
 
-
-        List<ProductOnSale> proasdfdss  = dbA.getAllProductsOnSale();
-        for (ProductOnSale p : proasdfdss){
-            Log.e("TEST", ""+p.getId());
-        }
-
-
-
     }
-
-
 }

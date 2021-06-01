@@ -40,7 +40,7 @@ public class ModifyInformationsActivity extends AppCompatActivity {
 
     public void doConfirm(View confirmButton)
     {
-        final Intent userAreaIntent = new Intent(ModifyInformationsActivity.this,UserAreaActivity.class);
+        final Intent userAreaIntent = new Intent(this,UserAreaActivity.class);
 
         //modifica dati utente e aggiornamento db
         dbA = DatabaseAccess.getDb();

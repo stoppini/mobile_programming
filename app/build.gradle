@@ -41,6 +41,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation platform('com.google.firebase:firebase-bom:28.0.1')
     implementation 'com.google.firebase:firebase-storage'
+    implementation 'com.github.chathuralakmal:AndroidImagePopup:1.2.2'
+
 }
 
 

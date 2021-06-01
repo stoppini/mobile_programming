@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -56,7 +57,6 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
     private List<ProductOnSale> mProduct = new LinkedList<>();
     private ListAdapter mAdapter;
     private Context context = this;
-    private Button addPhotoS;
     private User u;
     private Product p;
     private String currentPhotoPath;
@@ -78,8 +78,6 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
     protected void onStart(){
 
         super.onStart();
-        setContentView(R.layout.simple_first_local_data_show);
-        mListView = (ListView)findViewById(R.id.listViewT);
         mAdapter = new BaseAdapter() {
             @Override
             public int getCount() { return mProduct.size(); }
@@ -91,7 +89,7 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
 
             @Override
             public long getItemId(int position) {
-                Product product = (Product) getItem(position);
+                ProductOnSale product = (ProductOnSale) getItem(position);
                 return -1;
             }
 
@@ -110,22 +108,27 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
                 nameToView.setText(seller.getUsername());
                 if(seller.getId().equals(u.getId())){
                     final Button addPhoto = (Button) view.findViewById(R.id.adding_photo);
-                    final ImageView img = (ImageView) view.findViewById(R.id.imgT);
+                    final ImageView img = (ImageView) view.findViewById(R.id.photo);
+
+
+                    if(product.getPhoto()!=null){
+                        Log.e("asdasd",""+product.getPhoto());
+                        Picasso.get().load(""+product.getPhoto()).into(img);
+                    }
                     addPhoto.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if(product.getPhoto()!=null){
-                                Picasso.get().load(""+product.getPhoto()).into(img);
-                            }
                             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                             // Ensure that there's a camera activity to handle the intent
                             if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
                                 // Create the File where the photo should go
                                 File photoFile = null;
                                 try {
-                                    photoFile = createImageFile(product);
+                                    photoFile = createImageFile(product.getId());
                                 } catch (IOException ex) {
+                                    // Error occurred while creating the File
                                 }
+                                // Continue only if the File was successfully created
                                 if (photoFile != null) {
                                     Uri photoURI = FileProvider.getUriForFile(ShowProductOnSaleSeller.this,
                                             ShowProductOnSaleSeller.this.getApplicationContext().getPackageName() + ".provider",
@@ -148,13 +151,13 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
 
         if(PreferenceUtils.isLogged(this)){
             u = dbA.getUserFromId(PreferenceUtils.getId(this));
-            //final Button sellButton = (Button)findViewById(R.id.sell_product);
-            //sellButton.setOnClickListener(new View.OnClickListener() {
-           //     @Override
-           //     public void onClick(View v) {
-            //        showForgotDialog(context, p, u);
-            //    }
-          //  });
+            final Button sellButton = (Button)findViewById(R.id.sell_product);
+            sellButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showForgotDialog(context, p, u);
+                }
+            });
 
         }
 
@@ -190,10 +193,10 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
     }
 
 
-    private File createImageFile(ProductOnSale product) throws IOException {
+    private File createImageFile(String product) throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_id=[" + product.getId()+"]";
+        String imageFileName = "JPEG_" + timeStamp + "_id=[" + product+"]";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName,  /* prefix */

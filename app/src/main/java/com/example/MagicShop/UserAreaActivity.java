@@ -22,7 +22,7 @@ public class UserAreaActivity extends AppCompatActivity {
     private TextView mCap;
     private DatabaseAccess dbA;
     private User user;
-
+    private final int INFORMATION_MODIFIED = 1;
     private static final String TAG_LOG = UserAreaActivity.class.getName();
 
     @Override
@@ -56,6 +56,15 @@ public class UserAreaActivity extends AppCompatActivity {
 
 
     }
+
+    // tentativo di rimandare l'utente in "user area" se torna indietro da "modify information"
+//    public void onActivityResult(int requestCode, int resultCode, Intent data){
+//        super.onActivityResult(requestCode,resultCode,data);
+//        if(resultCode == INFORMATION_MODIFIED){
+//
+//        }
+//
+//    }
 
     public void modifyInformations(View modifyButton){
         // gestire la modifica nel db

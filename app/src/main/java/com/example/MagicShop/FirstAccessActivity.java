@@ -42,9 +42,9 @@ public class FirstAccessActivity extends AppCompatActivity {
 
     private void enterAsAnonymous(){
         Log.d(TAG_LOG, "Anonymous access");
-        final Intent anonymousIntent = new Intent(FirstAccessActivity.this, MenuActivity.class);
-        final User user = User.create();
-        anonymousIntent.putExtra(User.USER_DATA_EXTRA, user);
+        final Intent anonymousIntent = new Intent(FirstAccessActivity.this, AnonymousMenuActivity.class);
+//        final User user = User.create();
+//        anonymousIntent.putExtra(User.USER_DATA_EXTRA, user);
         //userModel.save(this); // non usiamo più gli extra in questo caso, ma le SharedPreferences
         startActivity(anonymousIntent);
     }
@@ -71,9 +71,9 @@ public class FirstAccessActivity extends AppCompatActivity {
             {
                 case RESULT_OK:
                     // now using SharePreferences, quindi commenti le prossime righe
-                    final User user = data.getParcelableExtra(User.USER_DATA_EXTRA);
+                    //final User user = data.getParcelableExtra(User.USER_DATA_EXTRA);
                     final Intent mainIntent = new Intent(FirstAccessActivity.this,MenuActivity.class);
-                    mainIntent.putExtra(User.USER_DATA_EXTRA, user);
+                    //mainIntent.putExtra(User.USER_DATA_EXTRA, user);
                     startActivity(mainIntent);
                     finish();
                     break;

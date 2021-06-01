@@ -47,5 +47,7 @@
     <string name="search">Search</string>
     <string name="show">Show</string>
 
+    <!-- MESSAGGI TOAST -->
+    <string name="user_not_logged">"To do this you should log in first!"</string>
 
 </resources>

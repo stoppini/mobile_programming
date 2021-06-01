@@ -75,4 +75,5 @@ public class ModifyInformationsActivity extends AppCompatActivity {
         startActivity(userAreaIntent);
         finish();
     }
+
 }

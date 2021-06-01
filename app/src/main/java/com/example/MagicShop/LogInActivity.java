@@ -54,49 +54,18 @@ public class LogInActivity extends AppCompatActivity {
         }
 
 
-        // to do gestione utenti attraverso DB
-        final String DUMMY_USERNAME = "diego";
-        final String DUMMY_PASSWORD = "password";
-
-
-        Log.e("afad",""+usernameEdit+"________________"+passwordEdit);
         dbA = DatabaseAccess.getDb();
-
-
         User userFromDb = dbA.logInUser(usernameEdit, passwordEdit);
-//        if(DUMMY_USERNAME.equals(usernameEdit) && DUMMY_PASSWORD.equals(passwordEdit))
 
 
         if(userFromDb != null){
             Log.e("debug",""+usernameEdit+" is logged "+passwordEdit);
-            //saving preferences
-            //PreferenceUtils.saveUsername(DUMMY_USERNAME, this);
-            //PreferenceUtils.savePassword(DUMMY_PASSWORD, this);
 
-
-//            PreferenceUtils.saveUsername(usernameEdit, this);
-//            PreferenceUtils.savePassword(passwordEdit, this);
-//            PreferenceUtils.saveEmail(userFromDb.getEmail(), this);
-//            PreferenceUtils.saveAddress(userFromDb.getAddress(), this);
-//            PreferenceUtils.saveLocation(userFromDb.getLocation(), this);
-//            PreferenceUtils.saveCap(Long.toString(userFromDb.getCap()), this);
             PreferenceUtils.logging(true, this);
             PreferenceUtils.saveId(userFromDb.getId(), this);
 
-
-//            Calendar cal = Calendar.getInstance();
-//            cal.set(Calendar.DAY_OF_MONTH,17);
-//            cal.set(Calendar.MONTH,6);
-//            cal.set(Calendar.YEAR,1977);
-//            final long birthDate = cal.getTimeInMillis();
-//            user = User.create().withUsername(usernameEdit).withPassword(passwordEdit).
-//                    withEmail("diego.berardi@unibs.it").withLocation("Brescia");
-        }
-
-        if(userFromDb != null)
-        {
             Intent resultIntent = new Intent();
-            resultIntent.putExtra(User.USER_DATA_EXTRA, userFromDb);
+            //resultIntent.putExtra(User.USER_DATA_EXTRA, userFromDb); i put extra non dovrebbero più servire nel log in
             setResult(RESULT_OK,resultIntent);
             finish();
         }
@@ -106,6 +75,5 @@ public class LogInActivity extends AppCompatActivity {
             this.mErrorTextView.setVisibility(View.VISIBLE);
         }
 
-        Log.e("USER_LOGGED",""+userFromDb.getUsername());
     }
 }

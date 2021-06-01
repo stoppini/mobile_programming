@@ -22,7 +22,6 @@ import java.util.Calendar;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private DatabaseAccess dbA;
     private TextView mErrorTextView;
     private EditText mUsernameEditText;
     private EditText mPasswordEditText;
@@ -79,9 +78,6 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-//        Calendar cal = Calendar.getInstance();
-//        cal.set(this.mBirthDateEditText.getYear(),this.mBirthDateEditText.getMonth(),this.mBirthDateEditText.getDayOfMonth());
-//        final long birthDateEdit = cal.getTimeInMillis();
         final User user = User.create().withUsername(usernameEdit).withPassword(passwordEdit).withEmail(emailEdit).
                 withLocation(locationEdit).withAddress(addressEdit).withCap(Long.parseLong(capEdit));
 
@@ -92,16 +88,13 @@ public class RegisterActivity extends AppCompatActivity {
             Log.d(TAG_LOG,"Send registration!");
             resultIntent.putExtra(User.USER_DATA_EXTRA,user);
 
+
             // saving preferences for logged user
 //            PreferenceUtils.saveUsername(usernameEdit, this);
 //            PreferenceUtils.saveAddress(addressEdit, this);
 //            PreferenceUtils.saveEmail(emailEdit, this);
 //            PreferenceUtils.saveLocation(locationEdit, this);
 //            PreferenceUtils.saveCap(capEdit, this);
-
-            // saving in db
-            dbA = DatabaseAccess.getDb();
-            dbA.registerUser(user);
 
 
             setResult(RESULT_OK,resultIntent);

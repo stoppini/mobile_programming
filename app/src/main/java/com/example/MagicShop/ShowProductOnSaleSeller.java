@@ -56,13 +56,14 @@ import java.util.List;
 
 
 public class ShowProductOnSaleSeller extends AppCompatActivity {
+
     private DatabaseAccess dbA;
     static final int REQUEST_IMAGE_CAPTURE = 1;
-    private TextView nameToView;
-    private TextView expansionToView;
-    private TextView rarityToView;
-    private TextView ruleToView;
-    private ImageView imgToView;
+    private TextView nameText;
+    private TextView expansionText;
+    private TextView rarityText;
+    private TextView ruleText;
+    private ImageView imageCard;
     private ListView mListView;
     private List<ProductOnSale> listProductOnSale = new LinkedList<>();
     private ListAdapter mAdapter;
@@ -74,12 +75,20 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_product_on_sale_seller);
-        mListView = (ListView)findViewById(R.id.listViewShowUsers);
-        nameToView = (TextView)findViewById(R.id.nameView);
-        expansionToView = (TextView)findViewById(R.id.expansionView);
-        rarityToView = (TextView)findViewById(R.id.rarityView);
-        ruleToView = (TextView)findViewById(R.id.ruleView);
-        imgToView = (ImageView) findViewById(R.id.imgView);
+        if (getResources().getBoolean(R.bool.dual_pane)){
+            mListView = (ListView)findViewById(R.id.fragment_seller_area).findViewById(R.id.list_seller_final);
+            nameText = (TextView)findViewById(R.id.fragment_detail_card).findViewById(R.id.name_view);
+            expansionText = (TextView)findViewById(R.id.fragment_detail_card).findViewById(R.id.expansion_view);
+            rarityText = (TextView)findViewById(R.id.fragment_detail_card).findViewById(R.id.rarity_view);
+            ruleText = (TextView)findViewById(R.id.fragment_detail_card).findViewById(R.id.rule_view);
+            imageCard = (ImageView) findViewById(R.id.fragment_detail_card).findViewById(R.id.image_view);
+        }else{
+            nameText = (TextView)findViewById(R.id.fragment_detail_card).findViewById(R.id.name_view);
+            expansionText = (TextView)findViewById(R.id.fragment_detail_card).findViewById(R.id.expansion_view);
+            rarityText = (TextView)findViewById(R.id.fragment_detail_card).findViewById(R.id.rarity_view);
+            ruleText = (TextView)findViewById(R.id.fragment_detail_card).findViewById(R.id.rule_view);
+            imageCard = (ImageView) findViewById(R.id.fragment_detail_card).findViewById(R.id.image_view);
+        }
     }
 
     @Override
@@ -186,7 +195,7 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
             }
         };
 
-        final Button sellButton = (Button)findViewById(R.id.sell_product);
+        final Button sellButton = (Button)findViewById(R.id.fragment_detail_card).findViewById(R.id.sell_product);
 
         dbA = DatabaseAccess.getDb();
         product = dbA.getProductFromId((Long)getIntent().getSerializableExtra(Product.PRODUCT_LIST_EXTRA));
@@ -205,12 +214,14 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
         List<ProductOnSale> products = dbA.getAllProductOnSaleFromProduct(product);
         listProductOnSale.clear();
         listProductOnSale.addAll(products);
-        mListView.setAdapter(mAdapter);
-        nameToView.setText(product.getName());
-        expansionToView.setText(product.getExpansion());
-        rarityToView.setText(product.getRarity());
-        ruleToView.setText(product.getRule());
-        Picasso.get().load(""+product.getImg()).into(imgToView);
+        if(getResources().getBoolean(R.bool.dual_pane)) {
+            mListView.setAdapter(mAdapter);
+        }
+        nameText.setText(product.getName());
+        expansionText.setText(product.getExpansion());
+        rarityText.setText(product.getRarity());
+        ruleText.setText(product.getRule());
+        Picasso.get().load(""+product.getImg()).into(imageCard);
     }
 
 
@@ -344,5 +355,4 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
             }
         }
     }
-
 }

@@ -76,7 +76,7 @@ public class ShowProducts extends AppCompatActivity {
                 Product product = (Product) mAdapter.getItem(position);
 
                 final Intent showProductOnSaleIntent = new Intent(
-                        ShowProducts.this,FragmentTest.class);
+                        ShowProducts.this,ShowProductOnSaleSeller.class);
                 showProductOnSaleIntent.putExtra(Product.PRODUCT_LIST_EXTRA, product.getId());
                 startActivity(showProductOnSaleIntent);
                 Log.println(Log.DEBUG,"DB",product.getName());

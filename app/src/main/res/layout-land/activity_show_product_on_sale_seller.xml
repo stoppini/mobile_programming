@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <fragment
-            android:id="@+id/detail_card"
+            android:id="@+id/fragment_detail_card"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -15,7 +15,7 @@
 
         </fragment>
         <fragment
-            android:id="@+id/seller_area"
+            android:id="@+id/fragment_seller_area"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"

@@ -5,97 +5,82 @@
     android:layout_height="match_parent"
     tools:context=".FragmentDetailcard">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-       >
+        android:orientation="vertical">
         <LinearLayout
             android:id="@+id/linear_base"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_weight="1">
             <ImageView
                 android:id="@+id/image_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
-            <TableLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
+                android:orientation="vertical"
                 android:layout_weight="1">
-                <TableRow
+                <TextView
+                    android:id="@+id/name_text"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:id="@+id/name_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="Name"/>
-                    <TextView
-                        android:id="@+id/name_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="Nome Carta"/>
-                </TableRow>
-                <TableRow
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Name"/>
+                <TextView
+                    android:id="@+id/name_view"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:id="@+id/expansion_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="Espansione"/>
-                    <TextView
-                        android:id="@+id/expansion_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="Espansione Carta"/>
-                </TableRow>
-                <TableRow
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Nome Carta"/>
+                <TextView
+                    android:id="@+id/expansion_text"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:id="@+id/rarity_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="Rarita"/>
-                    <TextView
-                        android:id="@+id/rarity_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="Rarita Carta"/>
-                </TableRow>
-                <TableRow
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Espansione"/>
+                <TextView
+                    android:id="@+id/expansion_view"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:id="@+id/rule_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="Rule"/>
-                    <TextView
-                        android:id="@+id/rule_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="Rule Carta"/>
-                </TableRow>
-            </TableLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Espansione Carta"/>
+                <TextView
+                    android:id="@+id/rarity_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Rarita"/>
+                <TextView
+                    android:id="@+id/rarity_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Rarita Carta"/>
+                <TextView
+                    android:id="@+id/rule_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Rule"/>
+                <TextView
+                    android:id="@+id/rule_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Rule Carta"/>
+            </LinearLayout>
         </LinearLayout>
-
         <Button
             android:id="@+id/sell_product"
+            android:layout_weight="5"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@+id/linear_base"
             style="@style/main_button_style"
             android:text="@string/sell"/>
-    </RelativeLayout>
+    </LinearLayout>
 </FrameLayout>

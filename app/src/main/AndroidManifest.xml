@@ -20,6 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
+        <activity android:name=".FragmentTest"></activity>
         <activity android:name=".History"></activity>
         <activity android:name=".AnonymousMenuActivity" />
 

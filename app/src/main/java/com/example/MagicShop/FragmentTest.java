@@ -1,8 +1,12 @@
 package com.example.MagicShop;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,7 +19,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -25,13 +28,6 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
-import androidx.fragment.app.DialogFragment;
 
 import com.ceylonlabs.imageviewpopup.ImagePopup;
 import com.example.MagicShop.model.DatabaseAccess;
@@ -49,25 +45,20 @@ import com.squareup.picasso.Picasso;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+public class FragmentTest extends AppCompatActivity {
 
-
-
-public class ShowProductOnSaleSeller extends AppCompatActivity {
     private DatabaseAccess dbA;
     static final int REQUEST_IMAGE_CAPTURE = 1;
-    private TextView nameToView;
-    private TextView expansionToView;
-    private TextView rarityToView;
-    private TextView ruleToView;
-    private ImageView imgToView;
+    private TextView nameText;
+    private TextView expansionText;
+    private TextView rarityText;
+    private TextView ruleText;
+    private ImageView imageCard;
     private ListView mListView;
     private List<ProductOnSale> listProductOnSale = new LinkedList<>();
     private ListAdapter mAdapter;
@@ -78,13 +69,13 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_product_on_sale_seller);
-        mListView = (ListView)findViewById(R.id.listViewShowUsers);
-        nameToView = (TextView)findViewById(R.id.nameView);
-        expansionToView = (TextView)findViewById(R.id.expansionView);
-        rarityToView = (TextView)findViewById(R.id.rarityView);
-        ruleToView = (TextView)findViewById(R.id.ruleView);
-        imgToView = (ImageView) findViewById(R.id.imgView);
+        setContentView(R.layout.activity_fragment_test);
+        mListView = (ListView)findViewById(R.id.fragment_seller_area).findViewById(R.id.list_seller_final);
+        nameText = (TextView)findViewById(R.id.fragment_detail_card).findViewById(R.id.name_view);
+        expansionText = (TextView)findViewById(R.id.fragment_detail_card).findViewById(R.id.expansion_view);
+        rarityText = (TextView)findViewById(R.id.fragment_detail_card).findViewById(R.id.rarity_view);
+        ruleText = (TextView)findViewById(R.id.fragment_detail_card).findViewById(R.id.rule_view);
+        imageCard = (ImageView) findViewById(R.id.fragment_detail_card).findViewById(R.id.image_view);
     }
 
     @Override
@@ -132,22 +123,14 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
                 if(productOnSale.getPhoto().equals("null")){
                 } else {
                     showPhoto.setVisibility(View.VISIBLE);
-                    final ImagePopup imagePopup = new ImagePopup(ShowProductOnSaleSeller.this);
+                    final ImagePopup imagePopup = new ImagePopup(FragmentTest.this);
                     imagePopup.initiatePopupWithPicasso(productOnSale.getPhoto());
-
+                    imagePopup.setWindowHeight(800); // Optional
+                    imagePopup.setWindowWidth(800); // Optional
                     imagePopup.setBackgroundColor(Color.BLACK);  // Optional
-                    imagePopup.setFullScreen(false); // Optional
+                    imagePopup.setFullScreen(true); // Optional
                     imagePopup.setHideCloseIcon(true);  // Optional
-                    imagePopup.setImageOnClickClose(false);  // Optional
-                    imagePopup.setHideCloseIcon(true);
-                    imagePopup.setLayoutOnTouchListener(new View.OnTouchListener() {
-                        @Override
-                        public boolean onTouch(View v, MotionEvent event) {
-                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(productOnSale.getPhoto()));
-                            startActivity(browserIntent);
-                            return false;
-                        }
-                    });
+                    imagePopup.setImageOnClickClose(true);  // Optional
                     showPhoto.setOnClickListener(new View.OnClickListener(){
                         @Override
                         public void onClick(View v) {
@@ -172,8 +155,8 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
                                     } catch (IOException ex) {
                                     }
                                     if (photoFile != null) {
-                                        Uri photoURI = FileProvider.getUriForFile(ShowProductOnSaleSeller.this,
-                                                ShowProductOnSaleSeller.this.getApplicationContext().getPackageName() + ".provider",
+                                        Uri photoURI = FileProvider.getUriForFile(FragmentTest.this,
+                                                FragmentTest.this.getApplicationContext().getPackageName() + ".provider",
                                                 photoFile);
                                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                                         startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
@@ -189,7 +172,7 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 // QUANDO COMPRI
-                                showShopDialog(ShowProductOnSaleSeller.this, productOnSale, userLogged);
+                                showShopDialog(FragmentTest.this, productOnSale, userLogged);
                             }
                         });
 
@@ -199,7 +182,7 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
             }
         };
 
-        final Button sellButton = (Button)findViewById(R.id.sell_product);
+        final Button sellButton = (Button)findViewById(R.id.fragment_detail_card).findViewById(R.id.sell_product);
 
         dbA = DatabaseAccess.getDb();
         product = dbA.getProductFromId((Long)getIntent().getSerializableExtra(Product.PRODUCT_LIST_EXTRA));
@@ -210,7 +193,7 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
             sellButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showSellDialog(ShowProductOnSaleSeller.this, product, userLogged);
+                    showSellDialog(FragmentTest.this, product, userLogged);
                 }
             });
         }
@@ -219,11 +202,11 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
         listProductOnSale.clear();
         listProductOnSale.addAll(products);
         mListView.setAdapter(mAdapter);
-        nameToView.setText(product.getName());
-        expansionToView.setText(product.getExpansion());
-        rarityToView.setText(product.getRarity());
-        ruleToView.setText(product.getRule());
-        Picasso.get().load(""+product.getImg()).into(imgToView);
+        nameText.setText(product.getName());
+        expansionText.setText(product.getExpansion());
+        rarityText.setText(product.getRarity());
+        ruleText.setText(product.getRule());
+        Picasso.get().load(""+product.getImg()).into(imageCard);
     }
 
 
@@ -250,30 +233,18 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
     private void showSellDialog(Context c, Product p, User u) {
         final EditText taskEditText = new EditText(c);
         AlertDialog dialog = new AlertDialog.Builder(c)
-                .setTitle(getString(R.string.title_price)+"\n"+p.getName())
-                .setMessage((getString(R.string.message_price)))
+                .setTitle("Sell the product "+p.getName())
+                .setMessage("Enter the amount in Euro")
                 .setView(taskEditText)
-                .setPositiveButton(getString(R.string.sell_price), new DialogInterface.OnClickListener() {
+                .setPositiveButton("Sell", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Long price = null;
-                        try{
-                            price = Long.valueOf(String.valueOf(taskEditText.getText()));
-                            if(price != 0){
-                                dbA.sellProductFromUser(p, u, price);
-                                onStart();
-                            } else {
-                                Toast.makeText(getApplicationContext(), getString(R.string.error_price) , Toast.LENGTH_SHORT).show();
-                                showSellDialog(c,p,u);
-                            }
-
-                        } catch (Exception ex){
-                            Toast.makeText(getApplicationContext(), getString(R.string.error_price), Toast.LENGTH_SHORT).show();
-                            showSellDialog(c,p,u);
-                        }
+                        Long price = Long.valueOf(String.valueOf(taskEditText.getText()));
+                        dbA.sellProductFromUser(p, u, price);
+                        onStart();
                     }
                 })
-                .setNegativeButton(getString(R.string.undo_price), null)
+                .setNegativeButton("Undo", null)
                 .create();
         dialog.show();
     }
@@ -360,7 +331,7 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
                 prodOnSale = dbA.getProductOnSaleFromId(productOnSaleID);
                 Bitmap bitmap = null;
                 try {
-                    bitmap = MediaStore.Images.Media.getBitmap(ShowProductOnSaleSeller.this.getContentResolver(), Uri.fromFile(file));
+                    bitmap = MediaStore.Images.Media.getBitmap(FragmentTest.this.getContentResolver(), Uri.fromFile(file));
                     encodeBitmapAndSaveToFirebase(bitmap, ""+file.getName(), prodOnSale);
 
                 } catch (IOException e) {
@@ -369,5 +340,4 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
             }
         }
     }
-
 }

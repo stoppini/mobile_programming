@@ -7,20 +7,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <fragment
-            android:id="@+id/detail_card"
+            android:id="@+id/fragment_detail_card"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             class="com.example.MagicShop.FragmentDetailcard">
-
-        </fragment>
-        <fragment
-            android:id="@+id/seller_area"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            class="com.example.MagicShop.FragmentSellerCards">
-
         </fragment>
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-feature
         android:name="android.hardware.camera.autofocus"
         android:required="false" />
@@ -19,7 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".AnonymousMenuActivity"></activity>
+        <activity android:name=".FragmentTest"></activity>
+        <activity android:name=".AnonymousMenuActivity" />
 
         <uses-library
             android:name="org.apache.http.legacy"

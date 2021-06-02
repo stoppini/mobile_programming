@@ -1,5 +1,9 @@
 package com.example.MagicShop.model;
 
+import android.content.res.Resources;
+import android.util.Log;
+
+import com.example.MagicShop.R;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
@@ -175,7 +179,6 @@ public class DatabaseAccess {
 
     public Product getProductFromId(Long id) {
         DatabaseReference product = database.child("product");
-        List<Product> prod = new ArrayList<>();
         Task<DataSnapshot> snap = product.get();
         while (!snap.isComplete()) {
         }
@@ -228,10 +231,10 @@ public class DatabaseAccess {
         String mRarity = r;
         String mType = t;
         List<Product> products = new ArrayList<>();
-        if (mExpansion.equals("All")) {
+        if (mExpansion.equals("All") || (mExpansion.equals("Tutto")) ) {
             mExpansion = "";
         }
-        if (mType.equals("All")) {
+        if (mType.equals("All") || (mType.equals("Tutto"))) {
             mType = "";
         }
         DatabaseReference product = database.child("product");
@@ -245,7 +248,7 @@ public class DatabaseAccess {
         }
         ;
         for (DataSnapshot s : lan.getResult().getChildren()) {
-            if (mRarity.equals("All")) {
+            if (mRarity.equals("All") || mRarity.equals("Tutto")) {
 
                 if (("" + s.child("name").getValue()).toLowerCase().contains(n.toLowerCase()) &&
                         ("" + s.child("expansion").getValue()).toLowerCase().contains(mExpansion.toLowerCase()) &&
@@ -284,9 +287,9 @@ public class DatabaseAccess {
     }
 
 
-    public List<String> getAllExpansion() {
+    public List<String> getAllExpansion(String a) {
         HashSet<String> expansions = new HashSet<String>();
-        expansions.add("All");
+        expansions.add(a);
         DatabaseReference language = database.child("language_" + Locale.getDefault().getLanguage());
         Task<DataSnapshot> lan = language.get();
         while (!lan.isComplete()) {
@@ -299,9 +302,9 @@ public class DatabaseAccess {
     }
 
 
-    public List<String> getAllTypes() {
+    public List<String> getAllTypes(String a) {
         HashSet<String> types = new HashSet<String>();
-        types.add("All");
+        types.add(a);
         DatabaseReference language = database.child("language_" + Locale.getDefault().getLanguage());
         Task<DataSnapshot> lan = language.get();
         while (!lan.isComplete()) {
@@ -314,9 +317,9 @@ public class DatabaseAccess {
     }
 
 
-    public List<String> getAllRaritys() {
+    public List<String> getAllRaritys(String a) {
         HashSet<String> raritys = new HashSet<String>();
-        raritys.add("All");
+        raritys.add(a);
         DatabaseReference language = database.child("language_" + Locale.getDefault().getLanguage());
         Task<DataSnapshot> lan = language.get();
         while (!lan.isComplete()) {

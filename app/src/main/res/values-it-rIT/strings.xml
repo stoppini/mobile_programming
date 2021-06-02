@@ -37,4 +37,14 @@
     <string name="confirm">"Conferma"</string>
     <string name="abort">"Annulla"</string>
 
+
+    <string name="title_price">"Vendere il prodotto "</string>
+    <string name="message_price">"Inserisci l'importo in euro"</string>
+    <string name="sell_price">"VENDI"</string>
+    <string name="undo_price">"ANNULLA"</string>
+    <string name="error_price">"Inserisci un importo corretto."</string>
+
+
+
+
 </resources>

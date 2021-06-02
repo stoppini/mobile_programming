@@ -34,6 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/password_edit_to_register"
+            android:inputType="textPassword"
             style="@style/main_edittext_style"/>
 
         <TextView
@@ -46,6 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/confirm_password"
+            android:inputType="textPassword"
             style="@style/main_edittext_style"/>
 
         <TextView

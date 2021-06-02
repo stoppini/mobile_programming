@@ -12,7 +12,6 @@
     <string name="cap_to_register" translatable="false">CAP:</string>
 
 
-    modify_button_label
 
     <!-- LABELS -->
     <string name="anonymous_button_label">Anonymous</string>
@@ -53,6 +52,19 @@
     <string name="confirm">"Confirm"</string>
     <string name="abort">"Abort"</string>
     <string name="confirm_shop_product">"Do you want to shot this product?"</string>
+    <string name="title_price">"Sell the product "</string>
+    <string name="message_price">"Enter the amount in Euro"</string>
+    <string name="sell_price">"SELL"</string>
+    <string name="undo_price">"UNDO"</string>
+    <string name="error_price">"Insert correct import."</string>
+
+
+
+
+
+
+
+
 
     <string name="sell">Sell</string>
     <!-- TODO: Remove or change this placeholder text -->

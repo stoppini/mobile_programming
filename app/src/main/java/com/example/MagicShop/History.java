@@ -18,24 +18,15 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.ceylonlabs.imageviewpopup.ImagePopup;
 import com.example.MagicShop.model.DatabaseAccess;
 import com.example.MagicShop.model.HistoryRecord;
 import com.example.MagicShop.model.Product;
-import com.example.MagicShop.model.ProductOnSale;
 import com.example.MagicShop.model.User;
 import com.example.MagicShop.utils.PreferenceUtils;
-import com.google.firebase.database.DataSnapshot;
-import com.squareup.picasso.Picasso;
 
-import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.TimeZone;
 
 public class History extends AppCompatActivity {
 
@@ -131,7 +122,6 @@ public class History extends AppCompatActivity {
         };
 
         dbA = DatabaseAccess.getDb();
-        Log.e("DEBUG","id="+PreferenceUtils.getId(this));
         User userLogged = dbA.getUserFromId(PreferenceUtils.getId(this));
 
         List<HistoryRecord> sell = dbA.getHistorySell(userLogged);

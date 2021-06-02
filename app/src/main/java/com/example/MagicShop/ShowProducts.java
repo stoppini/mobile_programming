@@ -79,7 +79,6 @@ public class ShowProducts extends AppCompatActivity {
                         ShowProducts.this,ShowProductOnSaleSeller.class);
                 showProductOnSaleIntent.putExtra(Product.PRODUCT_LIST_EXTRA, product.getId());
                 startActivity(showProductOnSaleIntent);
-                Log.println(Log.DEBUG,"DB",product.getName());
             }
         });
 

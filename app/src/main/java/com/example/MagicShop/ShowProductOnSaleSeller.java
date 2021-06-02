@@ -15,6 +15,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -24,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -47,6 +49,9 @@ import com.squareup.picasso.Picasso;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
@@ -138,12 +143,20 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
                     showPhoto.setVisibility(View.VISIBLE);
                     final ImagePopup imagePopup = new ImagePopup(ShowProductOnSaleSeller.this);
                     imagePopup.initiatePopupWithPicasso(productOnSale.getPhoto());
-                    imagePopup.setWindowHeight(800); // Optional
-                    imagePopup.setWindowWidth(800); // Optional
+
                     imagePopup.setBackgroundColor(Color.BLACK);  // Optional
-                    imagePopup.setFullScreen(true); // Optional
+                    imagePopup.setFullScreen(false); // Optional
                     imagePopup.setHideCloseIcon(true);  // Optional
-                    imagePopup.setImageOnClickClose(true);  // Optional
+                    imagePopup.setImageOnClickClose(false);  // Optional
+                    imagePopup.setHideCloseIcon(true);
+                    imagePopup.setLayoutOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(productOnSale.getPhoto()));
+                            startActivity(browserIntent);
+                            return false;
+                        }
+                    });
                     showPhoto.setOnClickListener(new View.OnClickListener(){
                         @Override
                         public void onClick(View v) {
@@ -248,18 +261,30 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
     private void showSellDialog(Context c, Product p, User u) {
         final EditText taskEditText = new EditText(c);
         AlertDialog dialog = new AlertDialog.Builder(c)
-                .setTitle("Sell the product "+p.getName())
-                .setMessage("Enter the amount in Euro")
+                .setTitle(getString(R.string.title_price)+"\n"+p.getName())
+                .setMessage((getString(R.string.message_price)))
                 .setView(taskEditText)
-                .setPositiveButton("Sell", new DialogInterface.OnClickListener() {
+                .setPositiveButton(getString(R.string.sell_price), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Long price = Long.valueOf(String.valueOf(taskEditText.getText()));
-                        dbA.sellProductFromUser(p, u, price);
-                        onStart();
+                        Long price = null;
+                        try{
+                            price = Long.valueOf(String.valueOf(taskEditText.getText()));
+                            if(price != 0){
+                                dbA.sellProductFromUser(p, u, price);
+                                onStart();
+                            } else {
+                                Toast.makeText(getApplicationContext(), getString(R.string.error_price) , Toast.LENGTH_SHORT).show();
+                                showSellDialog(c,p,u);
+                            }
+
+                        } catch (Exception ex){
+                            Toast.makeText(getApplicationContext(), getString(R.string.error_price), Toast.LENGTH_SHORT).show();
+                            showSellDialog(c,p,u);
+                        }
                     }
                 })
-                .setNegativeButton("Undo", null)
+                .setNegativeButton(getString(R.string.undo_price), null)
                 .create();
         dialog.show();
     }

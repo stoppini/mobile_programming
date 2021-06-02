@@ -1,19 +1,23 @@
 package com.example.MagicShop.model;
 
+import java.util.Date;
+
 public class HistoryRecord {
 
     private long product_id;
     private long price;
     private UserHistory user;
+    private long date;
 
-    public HistoryRecord(long product_id, long price, UserHistory user){
+    public HistoryRecord(long product_id, long price, long date, UserHistory user){
         this.product_id = product_id;
         this.price = price;
         this.user = user;
+        this.date = date;
     }
 
-    public static HistoryRecord create(long product_id, long price, UserHistory user){
-        return new HistoryRecord(product_id, price, user);
+    public static HistoryRecord create(long product_id, long price, long date, UserHistory user){
+        return new HistoryRecord(product_id, price,date, user);
     }
 
     public long getProduct_id() {
@@ -38,6 +42,14 @@ public class HistoryRecord {
 
     public void setUser(UserHistory user) {
         this.user = user;
+    }
+
+    public long getDate() {
+        return date;
+    }
+
+    public void setDate(long date) {
+        this.date = date;
     }
 
     public static class UserHistory{

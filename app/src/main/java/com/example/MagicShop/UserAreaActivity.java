@@ -74,4 +74,12 @@ public class UserAreaActivity extends AppCompatActivity {
         finish();
     }
 
+
+    public void showHistory(View modifyButton){
+        final Intent mainIntent = new Intent(UserAreaActivity.this,
+                History.class);
+        startActivity(mainIntent);
+        finish();
+    }
+
 }

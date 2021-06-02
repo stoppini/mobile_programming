@@ -122,6 +122,15 @@
             android:onClick="modifyInformations"
             android:layout_gravity="center"
             style="@style/main_button_style"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/history"
+            android:id="@+id/history_button"
+            android:onClick="showHistory"
+            android:layout_gravity="center"
+            style="@style/main_button_style"/>
     </TableLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

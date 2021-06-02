@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="add"
+            android:text="add photo"
             style="@style/main_button_style"/>
 
         <Button
@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="show"
+            android:text="show photo"
             android:textColor="@color/black" />
 
         <ImageView
@@ -50,9 +50,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="add"
             />
 
+        <Button
+            android:id="@+id/shop_product"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="shop_product"
+            android:textColor="@color/black" />
 
     </LinearLayout>
 

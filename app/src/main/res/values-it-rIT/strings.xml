@@ -27,4 +27,13 @@
     <string name="type">Tipo</string>
     <string name="search">Ricerca</string>
     <string name="show">Mostra</string>
+
+
+
+
+
+    <string name="confirm_shop_product">"Vuoi procedere all'acquisto di questo prodotto?"</string>
+    <string name="confirm">"Conferma"</string>
+    <string name="abort">"Annulla"</string>
+
 </resources>

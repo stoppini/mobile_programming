@@ -2,6 +2,7 @@ package com.example.MagicShop;
 
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -27,6 +29,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+import androidx.fragment.app.DialogFragment;
+
 import com.ceylonlabs.imageviewpopup.ImagePopup;
 import com.example.MagicShop.model.DatabaseAccess;
 import com.example.MagicShop.model.Product;
@@ -62,9 +66,8 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
     private ListView mListView;
     private List<ProductOnSale> mProduct = new LinkedList<>();
     private ListAdapter mAdapter;
-    private Context context = this;
-    private User u;
-    private Product p;
+    private User user;
+    private Product product;
     private String currentPhotoPath;
 
     @Override
@@ -106,90 +109,135 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
 
                 final TextView nameToView = (TextView) view.findViewById(R.id.name_seller);
                 final TextView priceToView = (TextView) view.findViewById(R.id.price_seller);
+                final Button addPhoto = (Button) view.findViewById(R.id.adding_photo);
+                final Button showPhoto = (Button) view.findViewById(R.id.show_photo);
+                final Button shopProductOnSale = (Button) view.findViewById(R.id.shop_product);
 
-                final ProductOnSale product = (ProductOnSale) getItem(position);
+                addPhoto.setVisibility(View.INVISIBLE);
+                showPhoto.setVisibility(View.INVISIBLE);
+                shopProductOnSale.setVisibility(View.INVISIBLE);
+
+
+                ProductOnSale product = (ProductOnSale) getItem(position);
+
                 User seller = dbA.getUsersFromProductOnSale(product);
 
                 nameToView.setText(seller.getUsername());
+                priceToView.setText(""+product.getPrice());
 
-                if(seller.getId().equals(u.getId())){
-                    final Button addPhoto = (Button) view.findViewById(R.id.adding_photo);
-                    final Button showPhoto = (Button) view.findViewById(R.id.show_photo);
-                    if(product.getPhoto().equals("null")){
-                        showPhoto.setVisibility(View.INVISIBLE);
-                    } else {
-                        showPhoto.setVisibility(View.VISIBLE);
-                        final ImagePopup imagePopup = new ImagePopup(ShowProductOnSaleSeller.this);
-                        imagePopup.initiatePopupWithPicasso(product.getPhoto());
-                        imagePopup.setWindowHeight(800); // Optional
-                        imagePopup.setWindowWidth(800); // Optional
-                        imagePopup.setBackgroundColor(Color.BLACK);  // Optional
-                        imagePopup.setFullScreen(true); // Optional
-                        imagePopup.setHideCloseIcon(true);  // Optional
-                        imagePopup.setImageOnClickClose(true);  // Optional
-                        showPhoto.setOnClickListener(new View.OnClickListener(){
-                            @Override
-                            public void onClick(View v) {
-                                imagePopup.viewPopup();
-                            }
-                        });
-                    }
-
-                    addPhoto.setOnClickListener(new View.OnClickListener() {
-
+                if(product.getPhoto().equals("null")){
+                } else {
+                    showPhoto.setVisibility(View.VISIBLE);
+                    final ImagePopup imagePopup = new ImagePopup(ShowProductOnSaleSeller.this);
+                    imagePopup.initiatePopupWithPicasso(product.getPhoto());
+                    imagePopup.setWindowHeight(800); // Optional
+                    imagePopup.setWindowWidth(800); // Optional
+                    imagePopup.setBackgroundColor(Color.BLACK);  // Optional
+                    imagePopup.setFullScreen(true); // Optional
+                    imagePopup.setHideCloseIcon(true);  // Optional
+                    imagePopup.setImageOnClickClose(true);  // Optional
+                    showPhoto.setOnClickListener(new View.OnClickListener(){
                         @Override
                         public void onClick(View v) {
-                            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                                File photoFile = null;
-                                try {
-                                    photoFile = createImageFile(product.getId());
-                                } catch (IOException ex) {
-                                }
-                                if (photoFile != null) {
-                                    Uri photoURI = FileProvider.getUriForFile(ShowProductOnSaleSeller.this,
-                                            ShowProductOnSaleSeller.this.getApplicationContext().getPackageName() + ".provider",
-                                            photoFile);
-                                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-
-                                }
-                            }
+                            imagePopup.viewPopup();
                         }
                     });
                 }
-                priceToView.setText(""+product.getPrice());
+
+                if(user != null){
+                    Log.e("DEBUG","sono loggato con "+user.getUsername());
+                    if (user.getId().equals(seller.getId())){
+                        Log.e("DEBUG","sono il venditore con "+user.getUsername());
+                        //SEI IL VENDITORE
+                        addPhoto.setVisibility(View.VISIBLE);
+                        addPhoto.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                                    File photoFile = null;
+                                    try {
+                                        photoFile = createImageFile(product.getId());
+                                    } catch (IOException ex) {
+                                    }
+                                    if (photoFile != null) {
+                                        Uri photoURI = FileProvider.getUriForFile(ShowProductOnSaleSeller.this,
+                                                ShowProductOnSaleSeller.this.getApplicationContext().getPackageName() + ".provider",
+                                                photoFile);
+                                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                                        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+
+                                    }
+                                }
+                            }
+                        });
+                    } else {
+                        //NON SEI IL VENDITORE PUO COMPRARE
+                        shopProductOnSale.setVisibility(View.VISIBLE);
+                        shopProductOnSale.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                //TODO QUANDO COMPRI
+                                Log.e("PREEEMO","dasdssdas");
+                                showShopDialog(ShowProductOnSaleSeller.this, product, user);
+                            }
+                        });
+
+                    }
+                }
                 return view;
             }
         };
 
-        dbA = DatabaseAccess.getDb();
-        p = dbA.getProductFromId((Long)getIntent().getSerializableExtra(Product.PRODUCT_LIST_EXTRA));
+        final Button sellButton = (Button)findViewById(R.id.sell_product);
 
-        if(PreferenceUtils.isLogged(this)){
-            u = dbA.getUserFromId(PreferenceUtils.getId(this));
-            final Button sellButton = (Button)findViewById(R.id.sell_product);
+        dbA = DatabaseAccess.getDb();
+        product = dbA.getProductFromId((Long)getIntent().getSerializableExtra(Product.PRODUCT_LIST_EXTRA));
+
+        if(PreferenceUtils.getId(this)!=null){
+            user = dbA.getUserFromId(PreferenceUtils.getId(this));
+            sellButton.setVisibility(View.VISIBLE);
             sellButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showForgotDialog(context, p, u);
+                    showSellDialog(ShowProductOnSaleSeller.this, product, user);
                 }
             });
         }
 
-        List<ProductOnSale> products = dbA.getAllProductOnSaleFromProduct(p);
+        List<ProductOnSale> products = dbA.getAllProductOnSaleFromProduct(product);
         mProduct.clear();
         mProduct.addAll(products);
         mListView.setAdapter(mAdapter);
-        nameToView.setText(p.getName());
-        expansionToView.setText(p.getExpansion());
-        rarityToView.setText(p.getRarity());
-        ruleToView.setText(p.getRule());
-        Picasso.get().load(""+p.getImg()).into(imgToView);
+        nameToView.setText(product.getName());
+        expansionToView.setText(product.getExpansion());
+        rarityToView.setText(product.getRarity());
+        ruleToView.setText(product.getRule());
+        Picasso.get().load(""+product.getImg()).into(imgToView);
     }
 
 
-    private void showForgotDialog(Context c, Product p, User u) {
+    public void showShopDialog(Context c, ProductOnSale p, User u) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(c);
+        builder.setMessage(R.string.confirm_shop_product)
+                .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dbA.shopProduct(p,u);
+                        // FIRE ZE MISSILES!
+                        onStart();
+                    }
+                })
+                .setNegativeButton(R.string.abort, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                    }
+                });
+        // Create the AlertDialog object and return it
+        builder.create();
+        builder.show();
+    }
+
+    private void showSellDialog(Context c, Product p, User u) {
         final EditText taskEditText = new EditText(c);
         AlertDialog dialog = new AlertDialog.Builder(c)
                 .setTitle("Sell the product "+p.getName())
@@ -254,8 +302,6 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
     }
 
     public Bitmap resizeImageForImageView(Bitmap bitmap) {
-
-
         Matrix matrix = new Matrix();
         matrix.postRotate(90);
           /*

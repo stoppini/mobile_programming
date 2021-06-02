@@ -1,5 +1,8 @@
 package com.example.MagicShop.model;
 
+import android.util.Log;
+
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
@@ -31,6 +34,38 @@ public class DatabaseAccess {
     public void addPhotoToProductOnSale (ProductOnSale p, String uri){
         database.child("product_on_sale").child(p.getId()).child("photo").setValue(uri.toString());
     }
+
+    public void shopProduct(ProductOnSale productOnSale, User user){
+        //DataSnapshot userRef = database.child("user").child(user.getId()).get().getResult();
+
+        Task<DataSnapshot> productTask = database.child("product_on_sale").child(productOnSale.getId()).get();
+        while (!productTask.isComplete()) {}
+        DataSnapshot productRef = productTask.getResult();
+        Log.e("PRODREF",""+productRef.getValue());
+        User seller = getUserFromId(productOnSale.getUser_id());
+
+        HistoryRecord.UserHistory hSeller = HistoryRecord.UserHistory.create(
+                seller.getUsername(), seller.getEmail(), seller.getLocation(), seller.getAddress(),seller.getCap());
+
+        HistoryRecord hRecordSeller = HistoryRecord.create((Long)productRef.child("product_id").getValue(),
+                (Long)productRef.child("price").getValue(), hSeller);
+
+
+        HistoryRecord.UserHistory hBuyer = HistoryRecord.UserHistory.create(
+                user.getUsername(), user.getEmail(), user.getLocation(), user.getAddress(),user.getCap());
+
+        HistoryRecord hRecordBuyer = HistoryRecord.create((Long)productRef.child("product_id").getValue(),
+                (Long)productRef.child("price").getValue(), hBuyer);
+
+
+        database.child("user").child(user.getId()).child("history_shop").push().setValue(hRecordSeller);
+
+        database.child("user").child(productOnSale.getUser_id()).child("history_sell").push().setValue(hRecordBuyer);
+
+        database.child("product_on_sale").child(productOnSale.getId()).removeValue();
+
+    }
+
 
     public List<ProductOnSale> getAllProductsOnSale() {
         DatabaseReference ref = database.child("product_on_sale");

@@ -80,7 +80,6 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
         rarityToView = (TextView)findViewById(R.id.rarityView);
         ruleToView = (TextView)findViewById(R.id.ruleView);
         imgToView = (ImageView) findViewById(R.id.imgView);
-
     }
 
     @Override

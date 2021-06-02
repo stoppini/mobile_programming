@@ -6,4 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".FragmentTest">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <fragment
+            android:id="@+id/fragment_detail_card"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            class="com.example.MagicShop.FragmentDetailcard">
+
+        </fragment>
+        <fragment
+            android:id="@+id/fragment_seller_area"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            class="com.example.MagicShop.FragmentSellerCards">
+
+        </fragment>
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

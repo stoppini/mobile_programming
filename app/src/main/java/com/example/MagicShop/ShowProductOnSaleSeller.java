@@ -64,9 +64,9 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
     private TextView ruleToView;
     private ImageView imgToView;
     private ListView mListView;
-    private List<ProductOnSale> mProduct = new LinkedList<>();
+    private List<ProductOnSale> listProductOnSale = new LinkedList<>();
     private ListAdapter mAdapter;
-    private User user;
+    private User userLogged;
     private Product product;
     private String currentPhotoPath;
 
@@ -88,11 +88,11 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
         super.onStart();
         mAdapter = new BaseAdapter() {
             @Override
-            public int getCount() { return mProduct.size(); }
+            public int getCount() { return listProductOnSale.size(); }
 
             @Override
             public Object getItem(int position) {
-                return mProduct.get(position);
+                return listProductOnSale.get(position);
             }
 
             @Override
@@ -109,7 +109,7 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
 
                 final TextView nameToView = (TextView) view.findViewById(R.id.name_seller);
                 final TextView priceToView = (TextView) view.findViewById(R.id.price_seller);
-                final Button addPhoto = (Button) view.findViewById(R.id.adding_photo);
+                final Button addPhoto = (Button) view.findViewById(R.id.add_photo);
                 final Button showPhoto = (Button) view.findViewById(R.id.show_photo);
                 final Button shopProductOnSale = (Button) view.findViewById(R.id.shop_product);
 
@@ -118,18 +118,18 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
                 shopProductOnSale.setVisibility(View.INVISIBLE);
 
 
-                ProductOnSale product = (ProductOnSale) getItem(position);
+                ProductOnSale productOnSale = (ProductOnSale) getItem(position);
 
-                User seller = dbA.getUsersFromProductOnSale(product);
+                User seller = dbA.getUsersFromProductOnSale(productOnSale);
 
                 nameToView.setText(seller.getUsername());
-                priceToView.setText(""+product.getPrice());
+                priceToView.setText(""+productOnSale.getPrice());
 
-                if(product.getPhoto().equals("null")){
+                if(productOnSale.getPhoto().equals("null")){
                 } else {
                     showPhoto.setVisibility(View.VISIBLE);
                     final ImagePopup imagePopup = new ImagePopup(ShowProductOnSaleSeller.this);
-                    imagePopup.initiatePopupWithPicasso(product.getPhoto());
+                    imagePopup.initiatePopupWithPicasso(productOnSale.getPhoto());
                     imagePopup.setWindowHeight(800); // Optional
                     imagePopup.setWindowWidth(800); // Optional
                     imagePopup.setBackgroundColor(Color.BLACK);  // Optional
@@ -144,10 +144,9 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
                     });
                 }
 
-                if(user != null){
-                    Log.e("DEBUG","sono loggato con "+user.getUsername());
-                    if (user.getId().equals(seller.getId())){
-                        Log.e("DEBUG","sono il venditore con "+user.getUsername());
+                if(userLogged != null){
+                    //SEI LOGGATO
+                    if (userLogged.getId().equals(seller.getId())){
                         //SEI IL VENDITORE
                         addPhoto.setVisibility(View.VISIBLE);
                         addPhoto.setOnClickListener(new View.OnClickListener() {
@@ -157,7 +156,7 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
                                 if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
                                     File photoFile = null;
                                     try {
-                                        photoFile = createImageFile(product.getId());
+                                        photoFile = createImageFile(productOnSale.getId());
                                     } catch (IOException ex) {
                                     }
                                     if (photoFile != null) {
@@ -177,9 +176,8 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
                         shopProductOnSale.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                //TODO QUANDO COMPRI
-                                Log.e("PREEEMO","dasdssdas");
-                                showShopDialog(ShowProductOnSaleSeller.this, product, user);
+                                // QUANDO COMPRI
+                                showShopDialog(ShowProductOnSaleSeller.this, productOnSale, userLogged);
                             }
                         });
 
@@ -195,19 +193,19 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
         product = dbA.getProductFromId((Long)getIntent().getSerializableExtra(Product.PRODUCT_LIST_EXTRA));
 
         if(PreferenceUtils.getId(this)!=null){
-            user = dbA.getUserFromId(PreferenceUtils.getId(this));
+            userLogged = dbA.getUserFromId(PreferenceUtils.getId(this));
             sellButton.setVisibility(View.VISIBLE);
             sellButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showSellDialog(ShowProductOnSaleSeller.this, product, user);
+                    showSellDialog(ShowProductOnSaleSeller.this, product, userLogged);
                 }
             });
         }
 
         List<ProductOnSale> products = dbA.getAllProductOnSaleFromProduct(product);
-        mProduct.clear();
-        mProduct.addAll(products);
+        listProductOnSale.clear();
+        listProductOnSale.addAll(products);
         mListView.setAdapter(mAdapter);
         nameToView.setText(product.getName());
         expansionToView.setText(product.getExpansion());
@@ -271,7 +269,6 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
         currentPhotoPath = image.getAbsolutePath();
         return image;
     }
-
 
     public void encodeBitmapAndSaveToFirebase(Bitmap bitmap, String name, final ProductOnSale p){
         final StorageReference storageReference = FirebaseStorage.getInstance().getReference();

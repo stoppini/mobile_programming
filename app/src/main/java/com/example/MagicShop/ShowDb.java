@@ -1,7 +1,7 @@
  package com.example.MagicShop;
 
  import android.os.Bundle;
- import android.util.Log; import android.view.View;
+ import android.view.View;
  import android.view.ViewGroup;
  import android.widget.BaseAdapter;
  import android.widget.ImageView;
@@ -36,7 +36,7 @@
     @Override
      protected void onStart(){
         super.onStart();
-        setContentView(R.layout.simple_first_local_data);
+        setContentView(R.layout.simple_first_local_data_show);
         mListView = findViewById(R.id.listViewT);
 
         mAdapter = new BaseAdapter() {
@@ -55,16 +55,16 @@
             @Override
             public View getView(int position, View view, ViewGroup parent) {
                 if(view == null){
-                    view = getLayoutInflater().inflate(R.layout.custom_list_item, null);
+                    view = getLayoutInflater().inflate(R.layout.list_item_img_and_text, null);
                 }
                 final TextView nameToView = (TextView) view.findViewById(R.id.nameT);
                 final ImageView imageToView = (ImageView)view.findViewById(R.id.imgT);
-                final TextView ruleToView = (TextView) view.findViewById(R.id.rule);
+                //final TextView ruleToView = (TextView) view.findViewById(R.id.rule);
 
                 final Product product = (Product) getItem(position);
                 nameToView.setText(product.getName());
                 Picasso.get().load(""+product.getImg()).into(imageToView);
-                ruleToView.setText(product.getRule());
+                //ruleToView.setText(product.getRule());
                 return view;
             }
         };

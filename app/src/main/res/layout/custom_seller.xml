@@ -5,55 +5,72 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/list_sellers_margin"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/name_seller"
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="name"
-            style="@style/main_text_style_list" />
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/name_seller"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="name"
+                android:layout_weight="1"
+                style="@style/main_text_style_list" />
 
-        <TextView
-            android:id="@+id/price_seller"
+            <TextView
+                android:id="@+id/price_seller"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="price"
+                android:layout_weight="1"
+                style="@style/main_text_style_list"
+               />
+        </TableRow>
+
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="price"
-            style="@style/main_text_style_list"
-           />
+            android:layout_height="match_parent">
+            <Button
+                android:id="@+id/adding_photo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:text="Buy"
+                android:layout_weight="1"
+                style="@style/main_button_style"/>
 
-        <Button
-            android:id="@+id/adding_photo"
+            <Button
+                android:id="@+id/show_photo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:text="show Photo"
+                android:layout_weight="1"
+                style="@style/main_button_style" />
+            <Button
+                android:id="@+id/add_photo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:text="Add Photo"
+                android:layout_weight="1"
+                style="@style/main_button_style" />
+        </TableRow>
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="add"
-            style="@style/main_button_style"/>
-
-        <Button
-            android:id="@+id/show_photo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="show"
-            android:textColor="@color/black" />
-
-        <ImageView
-            android:id="@+id/photo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="add"
-            />
-
-
-    </LinearLayout>
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="photo"
+                />
+        </TableRow>
+    </TableLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

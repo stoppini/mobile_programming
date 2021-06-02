@@ -11,7 +11,7 @@ public class PreferenceUtils {
 
     public static boolean isLogged(Context context){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getBoolean(Constants.KEY_LOGGED, true);
+        return prefs.getBoolean(Constants.KEY_LOGGED, false );
     }
     public static void logging(boolean log, Context context){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);

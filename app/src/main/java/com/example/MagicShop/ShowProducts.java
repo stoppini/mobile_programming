@@ -54,7 +54,7 @@ public class ShowProducts extends AppCompatActivity {
             @Override
             public View getView(int position, View view, ViewGroup parent) {
                 if(view == null){
-                    view = getLayoutInflater().inflate(R.layout.custom_list_item_show, null);
+                    view = getLayoutInflater().inflate(R.layout.list_item_img_and_text, null);
                 }
                 final TextView nameToView = (TextView) view.findViewById(R.id.nameT);
                 final ImageView imageToView = (ImageView)view.findViewById(R.id.imgT);

@@ -11,4 +11,14 @@
     <color name="grey">#BBBBBB</color>
     <color name="light_grey">#EEEEEE</color>
     <color name="red">#D81B60</color>
+
+    <!--New palette-->
+    <color name="primaryColor">#32697f</color>
+    <color name="primaryLightColor">#6297ae</color>
+    <color name="primaryDarkColor">#003e53</color>
+    <color name="secondaryColor">#c9704f</color>
+    <color name="secondaryLightColor">#ff9f7c</color>
+    <color name="secondaryDarkColor">#944325</color>
+    <color name="primaryTextColor">#ffffff</color>
+    <color name="secondaryTextColor">#000000</color>
 </resources>

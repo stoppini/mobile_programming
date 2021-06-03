@@ -4,7 +4,7 @@
         <item name="android:layout_marginBottom">@dimen/button_margin_bottom</item>
         <item name="android:padding">@dimen/padding_measure</item>
         <item name="android:background">@drawable/button_bg</item>
-        <item name="android:textColor">@drawable/button_text_color</item>
+        <item name="android:textColor">@color/secondaryTextColor</item>
     </style>
 
     <style name="main_edittext_style">

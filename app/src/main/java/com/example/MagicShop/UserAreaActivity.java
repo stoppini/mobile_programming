@@ -82,4 +82,12 @@ public class UserAreaActivity extends AppCompatActivity {
         finish();
     }
 
+    // accedo ai prodotti che sto vendendo
+    public void seeMyProducts(View modifyButton){
+        final Intent productsIntent = new Intent(UserAreaActivity.this,
+                MyProductsActivity.class);
+        startActivity(productsIntent);
+        finish();
+    }
+
 }

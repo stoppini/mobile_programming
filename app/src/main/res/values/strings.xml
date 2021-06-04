@@ -12,7 +12,6 @@
     <string name="cap_to_register" translatable="false">CAP:</string>
 
 
-
     <!-- LABELS -->
     <string name="anonymous_button_label">Anonymous</string>
     <string name="registration_button_label" translatable="false">Register</string>
@@ -29,6 +28,7 @@
     <string name="log_out_button_label">Log Out</string>
     <string name="all">All</string>
     <string name="history">History</string>
+    <string name="my_products">My Products</string>
 
     <!-- MESSAGGI D'ERRORE -->
     <string name="mandatory_field_error">The field %1$s is mandatory</string>
@@ -57,13 +57,6 @@
     <string name="sell_price">"SELL"</string>
     <string name="undo_price">"UNDO"</string>
     <string name="error_price">"Insert correct import."</string>
-
-
-
-
-
-
-
 
 
     <string name="sell">Sell</string>

@@ -131,6 +131,15 @@
             android:onClick="showHistory"
             android:layout_gravity="center"
             style="@style/main_button_style"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/my_products"
+            android:id="@+id/my_products_button"
+            android:onClick="seeMyProducts"
+            android:layout_gravity="center"
+            style="@style/main_button_style"/>
     </TableLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -400,6 +400,25 @@ public class DatabaseAccess {
         p.withId(id);
     }
 
+    public List<Long> getProductsSellingIdsFromUserId(String id) {
+        List<Long> ids = new ArrayList<Long>();
+        DatabaseReference product = database.child("product_on_sale");
+        List<Product> prod = new ArrayList<>();
+        Task<DataSnapshot> snap = product.get();
+        while (!snap.isComplete()) {
+        }
+
+        for (DataSnapshot s : snap.getResult().getChildren()) {
+            //Log.e("debug", "DEBUGGGG" + String.valueOf(s.child("user_id").getValue()));
+            if (s.child("user_id").getValue().equals(id)) {
+                Long product_id = (Long) s.child("product_id").getValue();
+                ids.add(product_id);
+            }
+        }
+        Log.e("DIEGO DEBUG", String.valueOf(ids));
+        return ids;
+    }
+
 
 
 }

@@ -443,10 +443,15 @@ public class DatabaseAccess {
 
 
     public void modifyPriceFromId(String id, Long price) {
-        Log.e("DIEGO DEBUG", String.valueOf(id));
+        //Log.e("DIEGO DEBUG", String.valueOf(id));
         database.child("product_on_sale").child(id).child("price").setValue(price);
     }
 
+    public void eliminateProductOnSaleFromDb(String id){
+        DatabaseReference users = database.child("product_on_sale");
+        Log.e("DIEGO DEBUG", "product on sale id to be removed: " + id);
+        database.child("product_on_sale").child(id).removeValue();
+    }
 }
 
 

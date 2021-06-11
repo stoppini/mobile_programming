@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:text="@string/eliminate_product"
             android:id="@+id/eliminate_button"
-            android:onClick="eliminateProduct"
+            android:onClick="eliminateProductOnSale"
             android:layout_gravity="center"
             style="@style/main_button_style"/>
 

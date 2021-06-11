@@ -52,8 +52,12 @@ public class ProductAreaActivity extends AppCompatActivity {
     }
 
 
-    public void eliminateProduct(View eliminateButton){
-
+    public void eliminateProductOnSale(View eliminateButton){
+        final Intent mainIntent = new Intent(ProductAreaActivity.this,
+                UserAreaActivity.class);
+        dbA.eliminateProductOnSaleFromDb(productOnSale.getId());
+        startActivity(mainIntent);
+        finish();
     }
 
 }

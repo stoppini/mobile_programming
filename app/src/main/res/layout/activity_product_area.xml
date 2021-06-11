@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProductAreaActivity">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/card_name"
+                android:layout_weight="2"
+                style="@style/main_text_style"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/card_name"
+                android:layout_weight="1"
+                style="@style/main_text_style"/>
+
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/card_price"
+                android:layout_weight="2"
+                style="@style/main_text_style"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/card_price"
+                android:layout_weight="1"
+                style="@style/main_text_style"/>
+
+        </TableRow>
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/modify_price"
+            android:id="@+id/modify_button"
+            android:onClick="modifyPrice"
+            android:layout_gravity="center"
+            style="@style/main_button_style"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/eliminate_product"
+            android:id="@+id/eliminate_button"
+            android:onClick="eliminateProduct"
+            android:layout_gravity="center"
+            style="@style/main_button_style"/>
+
+    </TableLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

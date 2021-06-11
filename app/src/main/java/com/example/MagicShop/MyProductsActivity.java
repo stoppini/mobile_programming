@@ -37,8 +37,6 @@ public class MyProductsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_products);
         mListView = (ListView)findViewById(R.id.listViewT);
 
-
-
         mAdapter = new BaseAdapter() {
             @Override
             public int getCount() { return mProduct.size(); }
@@ -71,17 +69,18 @@ public class MyProductsActivity extends AppCompatActivity {
         };
 
         mListView.setAdapter(mAdapter);
-
-        // da modificare, l'utente deve aver la possibilità di modificare i parametri dell'oggetto in vendita
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Product product = (Product) mAdapter.getItem(position);
+                Log.e("Products list debug", "product id: " + product.getId() + " product name: " + product.getName());
 
                 final Intent showProductOnSaleIntent = new Intent(
-                        MyProductsActivity.this,ShowProductOnSaleSeller.class);
+                        MyProductsActivity.this,ProductAreaActivity.class);
                 showProductOnSaleIntent.putExtra(Product.PRODUCT_LIST_EXTRA, product.getId());
+                showProductOnSaleIntent.putExtra("card_Id", product.getId());
+                showProductOnSaleIntent.putExtra("card_name", product.getName());
                 startActivity(showProductOnSaleIntent);
             }
         });

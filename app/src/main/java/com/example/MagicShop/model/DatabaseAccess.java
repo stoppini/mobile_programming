@@ -224,6 +224,28 @@ public class DatabaseAccess {
         return null;
     }
 
+    public ProductOnSale getProductOnSaleFromProductId(Long id) {
+        DatabaseReference product = database.child("product_on_sale");
+        List<Product> prod = new ArrayList<>();
+        Task<DataSnapshot> snap = product.get();
+        while (!snap.isComplete()) {
+        }
+
+        for (DataSnapshot s : snap.getResult().getChildren()) {
+            if (Long.parseLong("" + s.child("product_id").getValue()) == (id)) {
+                String idd = s.getKey();
+                Long product_id = (Long) s.child("product_id").getValue();
+                String user_id = "" + s.child("user_id").getValue();
+                Long price = (Long) s.child("price").getValue();
+                Log.e("my product debug", "product id: " + product_id + " product price: "+ price);
+                String photo = ""+s.child("photo").getValue();
+                return ProductOnSale.create(idd, product_id, user_id, price,photo);
+            }
+        }
+        return null;
+    }
+
+
 
     public List<Product> getSearchProducts(final String n, final String e,
                                            final String r, final String t) {
@@ -420,6 +442,10 @@ public class DatabaseAccess {
     }
 
 
+    public void modifyPriceFromId(String id, Long price) {
+        Log.e("DIEGO DEBUG", String.valueOf(id));
+        database.child("product_on_sale").child(id).child("price").setValue(price);
+    }
 
 }
 

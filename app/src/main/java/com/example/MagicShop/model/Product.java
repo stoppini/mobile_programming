@@ -55,4 +55,5 @@ public class Product implements Serializable {
     public String getImg() {
         return img;
     }
+
 }

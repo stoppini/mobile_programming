@@ -11,6 +11,12 @@
     <string name="address_to_register">Address:</string>
     <string name="cap_to_register" translatable="false">CAP:</string>
 
+    <!-- MESSAGGI MODIFICA CARTA -->
+    <string name="card_name">Name</string>
+    <string name="card_price">Price</string>
+    <string name="modify_card">Modify selling product</string>
+    <string name="modify_price">Modify price</string>
+    <string name="eliminate_product">Eliminate product</string>
 
     <!-- LABELS -->
     <string name="anonymous_button_label">Anonymous</string>

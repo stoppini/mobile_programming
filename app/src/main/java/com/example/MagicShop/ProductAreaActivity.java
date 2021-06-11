@@ -19,6 +19,7 @@ public class ProductAreaActivity extends AppCompatActivity {
     private TextView cardName;
     private DatabaseAccess dbA;
     private Long cardId;
+    private String userId;
     private ProductOnSale productOnSale;
     private final int INFORMATION_MODIFIED = 1;
     private static final String TAG_LOG = UserAreaActivity.class.getName();
@@ -30,8 +31,9 @@ public class ProductAreaActivity extends AppCompatActivity {
 
         dbA = DatabaseAccess.getDb();
         cardId = getIntent().getExtras().getLong("card_Id");
+        userId = getIntent().getExtras().getString("user_id");
 
-        productOnSale = dbA.getProductOnSaleFromProductId(cardId);
+        productOnSale = dbA.getProductOnSaleFromProductId(cardId, userId);
 
 
         this.price = (TextView)findViewById(R.id.card_price);
@@ -47,6 +49,7 @@ public class ProductAreaActivity extends AppCompatActivity {
         final Intent mainIntent = new Intent(ProductAreaActivity.this,
                 ModifyPriceActivity.class);
         mainIntent.putExtra("prod_on_sale_id", productOnSale.getId());
+        mainIntent.putExtra("user_id", productOnSale.getUser_id());
         startActivity(mainIntent);
         finish();
     }
@@ -55,7 +58,7 @@ public class ProductAreaActivity extends AppCompatActivity {
     public void eliminateProductOnSale(View eliminateButton){
         final Intent mainIntent = new Intent(ProductAreaActivity.this,
                 UserAreaActivity.class);
-        dbA.eliminateProductOnSaleFromDb(productOnSale.getId());
+        dbA.eliminateProductOnSaleFromDb(productOnSale.getId(), productOnSale.getUser_id());
         startActivity(mainIntent);
         finish();
     }

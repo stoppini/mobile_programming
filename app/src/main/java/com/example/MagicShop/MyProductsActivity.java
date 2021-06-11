@@ -80,6 +80,7 @@ public class MyProductsActivity extends AppCompatActivity {
                         MyProductsActivity.this,ProductAreaActivity.class);
                 showProductOnSaleIntent.putExtra(Product.PRODUCT_LIST_EXTRA, product.getId());
                 showProductOnSaleIntent.putExtra("card_Id", product.getId());
+                showProductOnSaleIntent.putExtra("user_id", getIntent().getExtras().getString("user_id"));
                 showProductOnSaleIntent.putExtra("card_name", product.getName());
                 startActivity(showProductOnSaleIntent);
             }

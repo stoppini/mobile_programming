@@ -224,15 +224,17 @@ public class DatabaseAccess {
         return null;
     }
 
-    public ProductOnSale getProductOnSaleFromProductId(Long id) {
+    public ProductOnSale getProductOnSaleFromProductId(Long id, String userId) {
         DatabaseReference product = database.child("product_on_sale");
         List<Product> prod = new ArrayList<>();
         Task<DataSnapshot> snap = product.get();
         while (!snap.isComplete()) {
         }
+        Log.e("diego debug", "user id: " + userId);
 
         for (DataSnapshot s : snap.getResult().getChildren()) {
-            if (Long.parseLong("" + s.child("product_id").getValue()) == (id)) {
+            Log.e("diego debug", "user id: " + s.child("user_id"));
+            if (Long.parseLong("" + s.child("product_id").getValue()) == (id) && s.child("user_id").getValue().equals(userId)) {
                 String idd = s.getKey();
                 Long product_id = (Long) s.child("product_id").getValue();
                 String user_id = "" + s.child("user_id").getValue();
@@ -442,14 +444,42 @@ public class DatabaseAccess {
     }
 
 
-    public void modifyPriceFromId(String id, Long price) {
-        //Log.e("DIEGO DEBUG", String.valueOf(id));
+    public void modifyPriceFromId(String id, String userId, Long price) {
+//        Log.e("DIEGO DEBUG", "product id:" + id + " user id: " + userId);
+//        boolean found = false;
+//        DatabaseReference users = database.child("product_on_sale");
+//        Task<DataSnapshot> snap = users.get();
+//        while (!snap.isComplete()) {
+//        }
+//        ;
+//        for (DataSnapshot s : snap.getResult().getChildren()) {
+//            if(s.child(userId).equals(userId) && s.getKey().equals(id)){
+//                found=true;
+//            }
+//        }
+//        if(found){
+//            users.child(id).child("price").setValue(price);
+//        }
+//
+        //naive implementation
         database.child("product_on_sale").child(id).child("price").setValue(price);
     }
 
-    public void eliminateProductOnSaleFromDb(String id){
-        DatabaseReference users = database.child("product_on_sale");
-        Log.e("DIEGO DEBUG", "product on sale id to be removed: " + id);
+    public void eliminateProductOnSaleFromDb(String id, String userId){
+//        Log.e("DIEGO DEBUG", "product id:" + id + "user id: " + userId);
+//
+//        DatabaseReference users = database.child("product_on_sale");
+//        Task<DataSnapshot> snap = users.get();
+//        while (!snap.isComplete()) {
+//        }
+//        ;
+//        for (DataSnapshot s : snap.getResult().getChildren()) {
+//            if(s.child(userId).equals(userId) && s.getKey().equals(id)){
+//                users.child(id).removeValue();
+//            }
+//        }
+
+        //naive implementation
         database.child("product_on_sale").child(id).removeValue();
     }
 }

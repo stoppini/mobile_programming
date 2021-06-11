@@ -17,7 +17,6 @@ public class ModifyPriceActivity extends AppCompatActivity {
 
     private EditText price;
     private DatabaseAccess dbA;
-    private User user;
 
     private static final String TAG_LOG = ModifyInformationsActivity.class.getName();
 
@@ -38,7 +37,8 @@ public class ModifyPriceActivity extends AppCompatActivity {
         //modifica dati utente e aggiornamento db
         dbA = DatabaseAccess.getDb();
         String productOnSaleId = getIntent().getExtras().getString("prod_on_sale_id");
-        dbA.modifyPriceFromId(productOnSaleId, Long.parseLong(price.getText().toString()));
+        String userId = getIntent().getExtras().getString("user_id");
+        dbA.modifyPriceFromId(productOnSaleId, userId, Long.parseLong(price.getText().toString()));
 
         startActivity(userAreaIntent);
         finish();

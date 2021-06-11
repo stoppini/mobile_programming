@@ -86,6 +86,7 @@ public class UserAreaActivity extends AppCompatActivity {
     public void seeMyProducts(View modifyButton){
         final Intent productsIntent = new Intent(UserAreaActivity.this,
                 MyProductsActivity.class);
+        productsIntent.putExtra("user_id", user.getId());
         startActivity(productsIntent);
         finish();
     }

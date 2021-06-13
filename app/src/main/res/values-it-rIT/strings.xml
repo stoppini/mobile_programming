@@ -46,7 +46,13 @@
     <string name="message_price">"Inserisci l'importo in euro"</string>
     <string name="sell_price">"VENDI"</string>
     <string name="undo_price">"ANNULLA"</string>
+    <string name="modify_price_toast">"MODIFICA"</string>
     <string name="error_price">"Inserisci un importo corretto."</string>
+    <string name="title_modify_price">"Modifica il prezzo di vendita del prodotto "</string>
+    <string name="remove_from_on_sale">"Togliere dalla vendita il prodotto  "</string>
+    <string name="remove_price">"ELIMINA"</string>
+    <string name="no_products">Non hai prodotti in vendita.</string>
+
 
 
 

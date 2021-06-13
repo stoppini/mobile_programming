@@ -38,7 +38,7 @@ public class ModifyPriceActivity extends AppCompatActivity {
         dbA = DatabaseAccess.getDb();
         String productOnSaleId = getIntent().getExtras().getString("prod_on_sale_id");
         String userId = getIntent().getExtras().getString("user_id");
-        dbA.modifyPriceFromId(productOnSaleId, userId, Long.parseLong(price.getText().toString()));
+        //dbA.modifyPriceFromId(productOnSaleId, userId, Long.parseLong(price.getText().toString()));
 
         startActivity(userAreaIntent);
         finish();

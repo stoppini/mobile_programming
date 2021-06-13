@@ -42,6 +42,7 @@
     <string name="different_passwords_error">The passwords should be the same</string>
     <string name="all_mandatory_fields_error">All the fields are mandatory</string>
     <string name="no_products_on_search">No products find with this search</string>
+    <string name="no_products">No products on sale for you.</string>
 
 
     <!-- FIND PRODUCTS  -->
@@ -61,8 +62,15 @@
     <string name="title_price">"Sell the product "</string>
     <string name="message_price">"Enter the amount in Euro"</string>
     <string name="sell_price">"SELL"</string>
+    <string name="modify_price_toast">"MODIFY"</string>
     <string name="undo_price">"UNDO"</string>
+    <string name="remove_price">"REMOVE"</string>
     <string name="error_price">"Insert correct import."</string>
+
+    <string name="title_modify_price">"Modify the price for product "</string>
+    <string name="remove_from_on_sale">"Remove from sale the product "</string>
+
+
 
 
     <string name="sell">Sell</string>

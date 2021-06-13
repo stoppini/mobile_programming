@@ -92,9 +92,7 @@ public class MyProductsActivity extends AppCompatActivity {
 
     @Override
     protected void onStart(){
-
         super.onStart();
-
         List<Product> products = new ArrayList<>();
         // List<Long> ids = (List<Long>) getIntent().getSerializableExtra(Product.PRODUCT_LIST_EXTRA);
         dbA = DatabaseAccess.getDb();

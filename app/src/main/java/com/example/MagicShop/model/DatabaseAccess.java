@@ -1,13 +1,26 @@
 package com.example.MagicShop.model;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.res.Resources;
+import android.os.Build;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+
+import com.example.MagicShop.MenuActivity;
 import com.example.MagicShop.R;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,6 +44,52 @@ public class DatabaseAccess {
     }
 
     private final DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+
+    /*public void addNotificationEvent(User u, Context context){
+        DatabaseReference reference = database.child("user").child(u.getId()).child("history_sell");
+        Log.e("user id", ""+u.getId());
+
+
+        reference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                notification(context);
+                Log.e("user id", "notificaaaa£");
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Log.e("user id", "noticambiato");
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void notification(Context context){
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"My notification");
+        builder.setContentTitle("My Title");
+        builder.setContentText("Hello from Easy");
+        builder.setSmallIcon(R.drawable.ic_launcher_background);
+        builder.setAutoCancel(true);
+        NotificationManagerCompat compat = NotificationManagerCompat.from(context);
+        compat.notify(1,builder.build());
+    }*/
+
 
     public void addPhotoToProductOnSale (ProductOnSale p, String uri){
         database.child("product_on_sale").child(p.getId()).child("photo").setValue(uri.toString());
@@ -425,7 +484,7 @@ public class DatabaseAccess {
     }
 
     public List<Long> getProductsSellingIdsFromUserId(String id) {
-        List<Long> ids = new ArrayList<Long>();
+            List<Long> ids = new ArrayList<Long>();
         DatabaseReference product = database.child("product_on_sale");
         List<Product> prod = new ArrayList<>();
         Task<DataSnapshot> snap = product.get();
@@ -444,7 +503,7 @@ public class DatabaseAccess {
     }
 
 
-    public void modifyPriceFromId(String id, String userId, Long price) {
+    public void modifyPriceFromId(String id, Long price) {
 //        Log.e("DIEGO DEBUG", "product id:" + id + " user id: " + userId);
 //        boolean found = false;
 //        DatabaseReference users = database.child("product_on_sale");
@@ -465,7 +524,7 @@ public class DatabaseAccess {
         database.child("product_on_sale").child(id).child("price").setValue(price);
     }
 
-    public void eliminateProductOnSaleFromDb(String id, String userId){
+    public void eliminateProductOnSaleFromDb(String id){
 //        Log.e("DIEGO DEBUG", "product id:" + id + "user id: " + userId);
 //
 //        DatabaseReference users = database.child("product_on_sale");

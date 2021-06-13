@@ -6,10 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.MagicShop.model.DatabaseAccess;
 import com.example.MagicShop.model.User;
 import com.example.MagicShop.utils.PreferenceUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserAreaActivity extends AppCompatActivity {
 
@@ -84,11 +88,17 @@ public class UserAreaActivity extends AppCompatActivity {
 
     // accedo ai prodotti che sto vendendo
     public void seeMyProducts(View modifyButton){
-        final Intent productsIntent = new Intent(UserAreaActivity.this,
-                MyProductsActivity.class);
-        productsIntent.putExtra("user_id", user.getId());
-        startActivity(productsIntent);
-        finish();
+        List<Long> ids = dbA.getProductsSellingIdsFromUserId(user.getId());
+        if (ids.size() > 0){
+            final Intent productsIntent = new Intent(UserAreaActivity.this,
+                    MyProductsActivity.class);
+            productsIntent.putExtra("user_id", user.getId());
+            startActivity(productsIntent);
+            finish();
+        } else {
+            Toast.makeText(getApplicationContext(), getString(R.string.no_products), Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 }

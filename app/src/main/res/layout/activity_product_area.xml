@@ -50,7 +50,6 @@
             android:layout_height="wrap_content"
             android:text="@string/modify_price"
             android:id="@+id/modify_button"
-            android:onClick="modifyPrice"
             android:layout_gravity="center"
             style="@style/main_button_style"/>
 
@@ -59,7 +58,6 @@
             android:layout_height="wrap_content"
             android:text="@string/eliminate_product"
             android:id="@+id/eliminate_button"
-            android:onClick="eliminateProductOnSale"
             android:layout_gravity="center"
             style="@style/main_button_style"/>
 

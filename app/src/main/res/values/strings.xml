@@ -64,8 +64,14 @@
     <string name="undo_price">"UNDO"</string>
     <string name="error_price">"Insert correct import."</string>
 
-
+    <!-- FRAGMENST -->
     <string name="sell">Sell</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="buy">Buy</string>
+    <string name="show_photo">Show Photo</string>
+    <string name="add_photo">Add Photo</string>
+    <string name="card_detail">Cards detail</string>
+    <string name="user">User</string>
+    <string name="price">Price</string>
+
+
 </resources>

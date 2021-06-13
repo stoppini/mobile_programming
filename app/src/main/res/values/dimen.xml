@@ -8,4 +8,5 @@
     <dimen name="button_stroke_width">1dp</dimen>
     <dimen name="edittext_text_size">20dp</dimen>
     <dimen name="list_sellers_margin">16dp</dimen>
+    <dimen name="buttons_buy_show_add_photo">10dp</dimen>
 </resources>

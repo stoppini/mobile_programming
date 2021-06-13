@@ -29,6 +29,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.ceylonlabs.imageviewpopup.ImagePopup;
 import com.example.MagicShop.model.DatabaseAccess;
@@ -54,11 +57,12 @@ import java.util.List;
 
 
 
-public class ShowProductOnSaleSeller extends AppCompatActivity {
+public class ShowProductOnSaleSeller extends AppCompatActivity implements OnNavigationListener {
 
     private DatabaseAccess dbA;
     static final int REQUEST_IMAGE_CAPTURE = 1;
-    private TextView nameText;
+    private String currentPhotoPath;
+   /* private TextView nameText;
     private TextView expansionText;
     private TextView rarityText;
     private TextView ruleText;
@@ -68,171 +72,217 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
     private ListAdapter mAdapter;
     private User userLogged;
     private Product product;
-    private String currentPhotoPath;
+   */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_product_on_sale_seller);
+        dbA = DatabaseAccess.getDb();
         if (getResources().getBoolean(R.bool.dual_pane)){
-            mListView = (ListView)findViewById(R.id.fragment_seller_area).findViewById(R.id.list_seller_final);
-            nameText = (TextView)findViewById(R.id.fragment_detail_card).findViewById(R.id.name_view);
-            expansionText = (TextView)findViewById(R.id.fragment_detail_card).findViewById(R.id.expansion_view);
-            rarityText = (TextView)findViewById(R.id.fragment_detail_card).findViewById(R.id.rarity_view);
-            ruleText = (TextView)findViewById(R.id.fragment_detail_card).findViewById(R.id.rule_view);
-            imageCard = (ImageView) findViewById(R.id.fragment_detail_card).findViewById(R.id.image_view);
+            FragmentManager manager = getSupportFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+
+            Fragment fragment = new FragmentDetailcard();
+            transaction.replace(R.id.fragment_detail_card, fragment);
+
+            Fragment seller = new FragmentSellerCards();
+            transaction.replace(R.id.fragment_seller_area, seller);
+
+            transaction.addToBackStack(null);
+            transaction.commit();
         }else{
-            nameText = (TextView)findViewById(R.id.fragment_detail_card).findViewById(R.id.name_view);
-            expansionText = (TextView)findViewById(R.id.fragment_detail_card).findViewById(R.id.expansion_view);
-            rarityText = (TextView)findViewById(R.id.fragment_detail_card).findViewById(R.id.rarity_view);
-            ruleText = (TextView)findViewById(R.id.fragment_detail_card).findViewById(R.id.rule_view);
-            imageCard = (ImageView) findViewById(R.id.fragment_detail_card).findViewById(R.id.image_view);
+            Fragment fragment = new FragmentDetailcard();
+            FragmentManager manager = getSupportFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            transaction.replace(R.id.fragment_main, fragment);
+            transaction.commit();
         }
+    }
+
+
+    /*  @Override
+        protected void onStart(){
+            super.onStart();
+
+            mAdapter = new BaseAdapter() {
+                @Override
+                public int getCount() { return listProductOnSale.size(); }
+
+                @Override
+                public Object getItem(int position) {
+                    return listProductOnSale.get(position);
+                }
+
+                @Override
+                public long getItemId(int position) {
+                    ProductOnSale product = (ProductOnSale) getItem(position);
+                    return -1;
+                }
+
+                @Override
+                public View getView(int position, View view, ViewGroup parent) {
+                    if(view == null){
+                        view = getLayoutInflater().inflate(R.layout.custom_seller, null);
+                    }
+
+                    final TextView nameToView = (TextView) view.findViewById(R.id.name_seller);
+                    final TextView priceToView = (TextView) view.findViewById(R.id.price_seller);
+                    final Button addPhoto = (Button) view.findViewById(R.id.add_photo);
+                    final Button showPhoto = (Button) view.findViewById(R.id.show_photo);
+                    final Button shopProductOnSale = (Button) view.findViewById(R.id.shop_product);
+
+                    addPhoto.setVisibility(View.INVISIBLE);
+                    showPhoto.setVisibility(View.INVISIBLE);
+                    shopProductOnSale.setVisibility(View.INVISIBLE);
+
+
+                    ProductOnSale productOnSale = (ProductOnSale) getItem(position);
+
+                    User seller = dbA.getUsersFromProductOnSale(productOnSale);
+
+                    nameToView.setText(seller.getUsername());
+                    priceToView.setText(""+productOnSale.getPrice());
+
+                    if(productOnSale.getPhoto().equals("null")){
+                    } else {
+                        showPhoto.setVisibility(View.VISIBLE);
+                        final ImagePopup imagePopup = new ImagePopup(ShowProductOnSaleSeller.this);
+                        imagePopup.initiatePopupWithPicasso(productOnSale.getPhoto());
+
+                        imagePopup.setBackgroundColor(Color.BLACK);  // Optional
+                        imagePopup.setFullScreen(false); // Optional
+                        imagePopup.setHideCloseIcon(true);  // Optional
+                        imagePopup.setImageOnClickClose(false);  // Optional
+                        imagePopup.setHideCloseIcon(true);
+                        imagePopup.setLayoutOnTouchListener(new View.OnTouchListener() {
+                            @Override
+                            public boolean onTouch(View v, MotionEvent event) {
+                                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(productOnSale.getPhoto()));
+                                startActivity(browserIntent);
+                                return false;
+                            }
+                        });
+                        showPhoto.setOnClickListener(new View.OnClickListener(){
+                            @Override
+                            public void onClick(View v) {
+                                imagePopup.viewPopup();
+                            }
+                        });
+                    }
+
+                    if(userLogged != null){
+                        //SEI LOGGATO
+                        if (userLogged.getId().equals(seller.getId())){
+                            //SEI IL VENDITORE
+                            addPhoto.setVisibility(View.VISIBLE);
+                            addPhoto.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                    if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                                        File photoFile = null;
+                                        try {
+                                            photoFile = createImageFile(productOnSale.getId());
+                                        } catch (IOException ex) {
+                                        }
+                                        if (photoFile != null) {
+                                            Uri photoURI = FileProvider.getUriForFile(ShowProductOnSaleSeller.this,
+                                                    ShowProductOnSaleSeller.this.getApplicationContext().getPackageName() + ".provider",
+                                                    photoFile);
+                                            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                                            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+
+                                        }
+                                    }
+                                }
+                            });
+                        } else {
+                            //NON SEI IL VENDITORE PUO COMPRARE
+                            shopProductOnSale.setVisibility(View.VISIBLE);
+                            shopProductOnSale.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    // QUANDO COMPRI
+                                    showShopDialog(ShowProductOnSaleSeller.this, productOnSale, userLogged);
+                                }
+                            });
+
+                        }
+                    }
+                    return view;
+                }
+            };
+
+            final Button sellButton = (Button)findViewById(R.id.fragment_detail_card).findViewById(R.id.sell_product);
+
+            if (!getResources().getBoolean(R.bool.dual_pane)){
+                //Abilito il bottonne con l'evento per passare all'activity con il singolo fragment
+                final Button gotoBuy = (Button)findViewById(R.id.fragment_detail_card).findViewById(R.id.buy_product_detail);
+                gotoBuy.setVisibility(View.VISIBLE);
+                gotoBuy.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Fragment fragment = new FragmentSellerCards();
+                        FragmentManager manager = getSupportFragmentManager();
+                        FragmentTransaction transaction = manager.beginTransaction();
+                        transaction.replace(R.id.fragment_detail_card, fragment);
+                        transaction.commit();
+                    }
+                });
+            }else{
+                final Button gotoBuy = (Button)findViewById(R.id.fragment_detail_card).findViewById(R.id.buy_product_detail);
+                gotoBuy.setVisibility(View.GONE);
+                final Button gotoDetails = (Button)findViewById(R.id.fragment_seller_area).findViewById(R.id.goto_detail_card);
+                gotoDetails.setVisibility(View.GONE);
+            }
+
+            dbA = DatabaseAccess.getDb();
+            product = dbA.getProductFromId((Long)getIntent().getSerializableExtra(Product.PRODUCT_LIST_EXTRA));
+
+            if(PreferenceUtils.getId(this)!=null){
+                userLogged = dbA.getUserFromId(PreferenceUtils.getId(this));
+                sellButton.setVisibility(View.VISIBLE);
+                sellButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showSellDialog(ShowProductOnSaleSeller.this, product, userLogged);
+                    }
+                });
+            }
+
+            List<ProductOnSale> products = dbA.getAllProductOnSaleFromProduct(product);
+            listProductOnSale.clear();
+            listProductOnSale.addAll(products);
+            if(getResources().getBoolean(R.bool.dual_pane)) {
+                mListView.setAdapter(mAdapter);
+            }
+            nameText.setText(product.getName());
+            expansionText.setText(product.getExpansion());
+            rarityText.setText(product.getRarity());
+            ruleText.setText(product.getRule());
+            Picasso.get().load(""+product.getImg()).into(imageCard);
+        }
+    */
+    @Override
+    public void onButtonDetails() {
+        Fragment fragment = new FragmentDetailcard();
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.fragment_main, fragment);
+        transaction.commit();
     }
 
     @Override
-    protected void onStart(){
-        super.onStart();
-        mAdapter = new BaseAdapter() {
-            @Override
-            public int getCount() { return listProductOnSale.size(); }
-
-            @Override
-            public Object getItem(int position) {
-                return listProductOnSale.get(position);
-            }
-
-            @Override
-            public long getItemId(int position) {
-                ProductOnSale product = (ProductOnSale) getItem(position);
-                return -1;
-            }
-
-            @Override
-            public View getView(int position, View view, ViewGroup parent) {
-                if(view == null){
-                    view = getLayoutInflater().inflate(R.layout.custom_seller, null);
-                }
-
-                final TextView nameToView = (TextView) view.findViewById(R.id.name_seller);
-                final TextView priceToView = (TextView) view.findViewById(R.id.price_seller);
-                final Button addPhoto = (Button) view.findViewById(R.id.add_photo);
-                final Button showPhoto = (Button) view.findViewById(R.id.show_photo);
-                final Button shopProductOnSale = (Button) view.findViewById(R.id.shop_product);
-
-                addPhoto.setVisibility(View.INVISIBLE);
-                showPhoto.setVisibility(View.INVISIBLE);
-                shopProductOnSale.setVisibility(View.INVISIBLE);
-
-
-                ProductOnSale productOnSale = (ProductOnSale) getItem(position);
-
-                User seller = dbA.getUsersFromProductOnSale(productOnSale);
-
-                nameToView.setText(seller.getUsername());
-                priceToView.setText(""+productOnSale.getPrice());
-
-                if(productOnSale.getPhoto().equals("null")){
-                } else {
-                    showPhoto.setVisibility(View.VISIBLE);
-                    final ImagePopup imagePopup = new ImagePopup(ShowProductOnSaleSeller.this);
-                    imagePopup.initiatePopupWithPicasso(productOnSale.getPhoto());
-
-                    imagePopup.setBackgroundColor(Color.BLACK);  // Optional
-                    imagePopup.setFullScreen(false); // Optional
-                    imagePopup.setHideCloseIcon(true);  // Optional
-                    imagePopup.setImageOnClickClose(false);  // Optional
-                    imagePopup.setHideCloseIcon(true);
-                    imagePopup.setLayoutOnTouchListener(new View.OnTouchListener() {
-                        @Override
-                        public boolean onTouch(View v, MotionEvent event) {
-                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(productOnSale.getPhoto()));
-                            startActivity(browserIntent);
-                            return false;
-                        }
-                    });
-                    showPhoto.setOnClickListener(new View.OnClickListener(){
-                        @Override
-                        public void onClick(View v) {
-                            imagePopup.viewPopup();
-                        }
-                    });
-                }
-
-                if(userLogged != null){
-                    //SEI LOGGATO
-                    if (userLogged.getId().equals(seller.getId())){
-                        //SEI IL VENDITORE
-                        addPhoto.setVisibility(View.VISIBLE);
-                        addPhoto.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                                    File photoFile = null;
-                                    try {
-                                        photoFile = createImageFile(productOnSale.getId());
-                                    } catch (IOException ex) {
-                                    }
-                                    if (photoFile != null) {
-                                        Uri photoURI = FileProvider.getUriForFile(ShowProductOnSaleSeller.this,
-                                                ShowProductOnSaleSeller.this.getApplicationContext().getPackageName() + ".provider",
-                                                photoFile);
-                                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                                        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-
-                                    }
-                                }
-                            }
-                        });
-                    } else {
-                        //NON SEI IL VENDITORE PUO COMPRARE
-                        shopProductOnSale.setVisibility(View.VISIBLE);
-                        shopProductOnSale.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                // QUANDO COMPRI
-                                showShopDialog(ShowProductOnSaleSeller.this, productOnSale, userLogged);
-                            }
-                        });
-
-                    }
-                }
-                return view;
-            }
-        };
-
-        final Button sellButton = (Button)findViewById(R.id.fragment_detail_card).findViewById(R.id.sell_product);
-
-        dbA = DatabaseAccess.getDb();
-        product = dbA.getProductFromId((Long)getIntent().getSerializableExtra(Product.PRODUCT_LIST_EXTRA));
-
-        if(PreferenceUtils.getId(this)!=null){
-            userLogged = dbA.getUserFromId(PreferenceUtils.getId(this));
-            sellButton.setVisibility(View.VISIBLE);
-            sellButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showSellDialog(ShowProductOnSaleSeller.this, product, userLogged);
-                }
-            });
-        }
-
-        List<ProductOnSale> products = dbA.getAllProductOnSaleFromProduct(product);
-        listProductOnSale.clear();
-        listProductOnSale.addAll(products);
-        if(getResources().getBoolean(R.bool.dual_pane)) {
-            mListView.setAdapter(mAdapter);
-        }
-        nameText.setText(product.getName());
-        expansionText.setText(product.getExpansion());
-        rarityText.setText(product.getRarity());
-        ruleText.setText(product.getRule());
-        Picasso.get().load(""+product.getImg()).into(imageCard);
+    public void onButtonSeller() {
+        Fragment fragment = new FragmentSellerCards();
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.fragment_main, fragment);
+        transaction.commit();
     }
 
-
-    public void showShopDialog(Context c, ProductOnSale p, User u) {
+    /*public void showShopDialog(Context c, ProductOnSale p, User u) {
         AlertDialog.Builder builder = new AlertDialog.Builder(c);
         builder.setMessage(R.string.confirm_shop_product)
                 .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
@@ -290,15 +340,15 @@ public class ShowProductOnSaleSeller extends AppCompatActivity {
         String imageFileName = "JPEG_" + timeStamp + "_id=[" + product+"]";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
+                imageFileName,  *//* prefix *//*
+                ".jpg",         *//* suffix *//*
+                storageDir      *//* directory *//*
         );
         // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = image.getAbsolutePath();
         return image;
     }
-
+*/
     public void encodeBitmapAndSaveToFirebase(Bitmap bitmap, String name, final ProductOnSale p){
         final StorageReference storageReference = FirebaseStorage.getInstance().getReference();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

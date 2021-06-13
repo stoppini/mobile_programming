@@ -34,29 +34,33 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <Button
+                android:layout_marginTop="@dimen/buttons_buy_show_add_photo"
                 android:id="@+id/shop_product"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:text="Buy"
+                android:text="@string/buy"
                 android:layout_weight="1"
                 style="@style/main_button_style"/>
 
             <Button
+                android:layout_marginTop="@dimen/buttons_buy_show_add_photo"
                 android:id="@+id/show_photo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:text="show Photo"
+                android:text="@string/show_photo"
                 android:layout_weight="1"
                 style="@style/main_button_style" />
             <Button
+                android:layout_marginTop="@dimen/buttons_buy_show_add_photo"
                 android:id="@+id/add_photo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:text="Add Photo"
+                android:text="@string/add_photo"
                 android:layout_weight="1"
                 style="@style/main_button_style" />
         </TableRow>

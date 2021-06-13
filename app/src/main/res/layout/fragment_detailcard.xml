@@ -75,6 +75,15 @@
             </LinearLayout>
         </LinearLayout>
         <Button
+            android:id="@+id/buy_product_detail"
+            android:layout_weight="5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/linear_base"
+            android:visibility="invisible"
+            style="@style/main_button_style"
+            android:text="@string/buy"/>
+        <Button
             android:id="@+id/sell_product"
             android:layout_weight="5"
             android:layout_width="match_parent"
@@ -82,5 +91,6 @@
             android:layout_below="@+id/linear_base"
             style="@style/main_button_style"
             android:text="@string/sell"/>
+
     </LinearLayout>
 </FrameLayout>

@@ -9,13 +9,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <fragment
-            android:id="@+id/fragment_detail_card"
+        <FrameLayout
+            android:id="@+id/fragment_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            class="com.example.MagicShop.FragmentDetailcard">
-        </fragment>
+            android:layout_weight="1">
+        </FrameLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

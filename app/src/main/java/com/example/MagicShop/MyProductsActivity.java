@@ -89,7 +89,6 @@ public class MyProductsActivity extends AppCompatActivity {
                 startActivity(showProductOnSaleIntent);
             }
         });
-
     }
 
 

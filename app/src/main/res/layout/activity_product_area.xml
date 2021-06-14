@@ -60,6 +60,22 @@
             android:id="@+id/eliminate_button"
             android:layout_gravity="center"
             style="@style/main_button_style"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_photo"
+            android:id="@+id/add_photo"
+            android:layout_gravity="center"
+            style="@style/main_button_style"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/show_photo"
+            android:id="@+id/show_photo"
+            android:layout_gravity="center"
+            style="@style/main_button_style"/>
+
+
 
     </TableLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

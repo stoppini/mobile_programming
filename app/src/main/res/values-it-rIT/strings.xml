@@ -32,6 +32,7 @@
 
 
     <string name="card_price">Prezzo</string>
+    <string name="card_name">Nome</string>
     <string name="modify_card">Modifica prodotto in vendita</string>
 
 

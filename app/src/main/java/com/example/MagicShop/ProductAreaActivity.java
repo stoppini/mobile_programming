@@ -20,12 +20,14 @@ import com.example.MagicShop.model.ProductOnSale;
 import com.example.MagicShop.model.User;
 import com.example.MagicShop.utils.PreferenceUtils;
 
+import java.text.DecimalFormat;
+
 public class ProductAreaActivity extends AppCompatActivity {
 
     private TextView price;
     private TextView cardName;
     private DatabaseAccess dbA;
-    private Long cardId;
+    private String productOnSaleId;
     private String userId;
     private ProductOnSale productOnSale;
     private Button modifyPrice;
@@ -39,9 +41,8 @@ public class ProductAreaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_product_area);
 
         dbA = DatabaseAccess.getDb();
-        cardId = getIntent().getExtras().getLong("card_Id");
-        userId = getIntent().getExtras().getString("user_id");
-
+        productOnSaleId = getIntent().getExtras().getString("product_on_sale_id");
+        userId = PreferenceUtils.getId(this);
 
         this.cardName = (TextView)findViewById(R.id.card_name);
         this.price = (TextView)findViewById(R.id.card_price);
@@ -54,8 +55,7 @@ public class ProductAreaActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        productOnSale = dbA.getProductOnSaleFromProductId(cardId, userId);
-        dbA.getProductFromId(productOnSale.getProduct_id()).getName();
+        productOnSale = dbA.getProductOnSaleFromId(productOnSaleId);
         String nameProduct = dbA.getProductFromId(productOnSale.getProduct_id()).getName();
         cardName.setText(nameProduct);
 
@@ -84,10 +84,12 @@ public class ProductAreaActivity extends AppCompatActivity {
                 .setPositiveButton(getString(R.string.modify_price_toast), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Long price = null;
+                        Float price = null;
                         try{
-                            price = Long.valueOf(String.valueOf(taskEditText.getText()));
-                            if(price != 0){
+                            price = Float.parseFloat(String.valueOf(taskEditText.getText()));
+                            DecimalFormat df = new DecimalFormat("#.##");
+                            price = Float.parseFloat(df.format(price));
+                            if(price >= 0.01){
                                 dbA.modifyPriceFromId(p.getId(), price);
                                 onStart();
                             } else {
@@ -126,16 +128,6 @@ public class ProductAreaActivity extends AppCompatActivity {
     }
 
 
-
-/*
-    public void modifyPrice(View modifyButton){
-        final Intent mainIntent = new Intent(ProductAreaActivity.this,
-                ModifyPriceActivity.class);
-        mainIntent.putExtra("prod_on_sale_id", productOnSale.getId());
-        mainIntent.putExtra("user_id", productOnSale.getUser_id());
-        startActivity(mainIntent);
-        finish();
-    }*/
 
 
     public void eliminateProductOnSale(View eliminateButton){

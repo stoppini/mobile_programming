@@ -5,12 +5,12 @@ public class ProductOnSale {
     private String id;
     private final long product_id;
     private final String user_id;
-    private final long price;
+    private final float price;
     private String photo;
 
 
     public ProductOnSale(String id, final long product_id,
-                         final String user_id, final long price, final String photo) {
+                         final String user_id, final float price, final String photo) {
         this.id = id;
         this.product_id = product_id;
         this.user_id = user_id;
@@ -19,7 +19,7 @@ public class ProductOnSale {
     }
 
     public static ProductOnSale create(String id, final long product_id,
-                                       final String user_id, final long price, final String photo) {
+                                       final String user_id, final float price, final String photo) {
         return new ProductOnSale(id, product_id, user_id, price, photo);
     }
 
@@ -42,5 +42,5 @@ public class ProductOnSale {
 
     public String getUser_id() {return user_id; }
 
-    public long getPrice() {return price; }
+    public float getPrice() {return price; }
 }

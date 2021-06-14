@@ -163,7 +163,7 @@ public class DatabaseAccess {
             ProductOnSale p = new ProductOnSale("" + s.getKey(),
                     (Long) s.child("product_id").getValue(),
                     "" + s.child("user_id").getValue(),
-                    (Long) s.child("price").getValue(), ""+s.child("photo"));
+                    (Float) s.child("price").getValue(), ""+s.child("photo"));
             products_on_sale.add(p);
 
         }
@@ -207,7 +207,7 @@ public class DatabaseAccess {
         for (DataSnapshot s : ref_prod_on_sale.getResult().getChildren()) {
             if (("" + s.child("product_id").getValue()).equals("" + product.getId())) {
                 String id = s.getKey();
-                Long price = (Long) s.child("price").getValue();
+                float price = Float.parseFloat(""+s.child("price").getValue());
                 long prod_id = (Long) s.child("product_id").getValue();
                 String user_id = "" + s.child("user_id").getValue();
                 String photo = "" + s.child("photo").getValue();
@@ -251,7 +251,7 @@ public class DatabaseAccess {
             if (Long.parseLong("" + s.child("product_id").getValue()) == (id)) {
                 long idd = (Long) s.child("product_id").getValue();
                 String name = "" + s.child("name").getValue();
-                String expansion = "" + s.child("name").getValue();
+                String expansion = "" + s.child("expansion").getValue();
                 String rarity = "" + s.child("rarity").getValue();
                 String type = "" + s.child("type").getValue();
                 String rule = "" + s.child("rule").getValue();
@@ -275,7 +275,7 @@ public class DatabaseAccess {
                 String idd = s.getKey();
                 Long product_id = (Long) s.child("product_id").getValue();
                 String user_id = "" + s.child("user_id").getValue();
-                Long price = (Long) s.child("price").getValue();
+                float price = Float.parseFloat(""+s.child("price").getValue());
                 String photo = ""+s.child("photo").getValue();
                 return ProductOnSale.create(idd, product_id, user_id, price,photo);
             }
@@ -297,7 +297,7 @@ public class DatabaseAccess {
                 String idd = s.getKey();
                 Long product_id = (Long) s.child("product_id").getValue();
                 String user_id = "" + s.child("user_id").getValue();
-                Long price = (Long) s.child("price").getValue();
+                float price = Float.parseFloat(""+s.child("price").getValue());
                 Log.e("my product debug", "product id: " + product_id + " product price: "+ price);
                 String photo = ""+s.child("photo").getValue();
                 return ProductOnSale.create(idd, product_id, user_id, price,photo);
@@ -415,7 +415,7 @@ public class DatabaseAccess {
     }
 
 
-    public void sellProductFromUser(Product product, User user, Long price) {
+    public void sellProductFromUser(Product product, User user, float price) {
         ProductOnSale p = ProductOnSale.create(null, product.getId(), user.getId(), price, null);
         database.child("product_on_sale").push().setValue(p);
     }
@@ -502,8 +502,24 @@ public class DatabaseAccess {
         return ids;
     }
 
+    public List<String> getAllProductsOnSaleFromUserId(String userId){
+        List<String> ids = new ArrayList<String>();
+        DatabaseReference product = database.child("product_on_sale");
+        Task<DataSnapshot> snap = product.get();
+        while (!snap.isComplete()) {
+        }
+        for (DataSnapshot s : snap.getResult().getChildren()) {
+            if (s.child("user_id").getValue().equals(userId)) {
+                String product_on_sale_id = (String) s.getKey();
+                ids.add(product_on_sale_id);
+            }
+        }
+        return ids;
+    }
 
-    public void modifyPriceFromId(String id, Long price) {
+
+
+    public void modifyPriceFromId(String id, float price) {
 //        Log.e("DIEGO DEBUG", "product id:" + id + " user id: " + userId);
 //        boolean found = false;
 //        DatabaseReference users = database.child("product_on_sale");

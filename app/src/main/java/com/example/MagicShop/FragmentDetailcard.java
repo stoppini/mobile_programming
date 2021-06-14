@@ -27,6 +27,7 @@ import com.example.MagicShop.model.User;
 import com.example.MagicShop.utils.PreferenceUtils;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -107,10 +108,12 @@ public class FragmentDetailcard extends Fragment {
                 .setPositiveButton(getString(R.string.sell_price), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Long price = null;
+                        Float price = null;
                         try{
-                            price = Long.valueOf(String.valueOf(taskEditText.getText()));
-                            if(price != 0){
+                            price = Float.parseFloat(String.valueOf(taskEditText.getText()));
+                            DecimalFormat df = new DecimalFormat("#.##");
+                            price = Float.parseFloat(df.format(price));
+                            if(price >= 0.01){
                                 dbA.sellProductFromUser(p, u, price);
                                 onStart();
                             } else {

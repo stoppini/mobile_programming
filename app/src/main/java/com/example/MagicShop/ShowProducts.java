@@ -58,9 +58,17 @@ public class ShowProducts extends AppCompatActivity {
                 final TextView nameToView = (TextView) view.findViewById(R.id.nameT);
                 final ImageView imageToView = (ImageView)view.findViewById(R.id.imgT);
 
+                final TextView rarityToView = (TextView) view.findViewById(R.id.rarityT);
+                final TextView priceToView = (TextView) view.findViewById(R.id.price_product_2);
+                final TextView expansionToView = (TextView) view.findViewById(R.id.expansionT);
+
                 final Product product = (Product) getItem(position);
 
-                nameToView.setText(product.getName());
+
+                nameToView.setText(getString(R.string.card_name)+": "+product.getName());
+                expansionToView.setText(getString(R.string.expansion)+": "+product.getExpansion());
+                rarityToView.setText(getString(R.string.rarity)+": "+product.getRarity());
+                priceToView.setText("");
                 Picasso.get().load(""+product.getImg()).into(imageToView);
                 return view;
             }

@@ -21,10 +21,10 @@ public class FirstAccessActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_access);
 
-        final Button anonymousBtn = (Button)findViewById(R.id.anonymous_button);
+        final Button anonymousBtn = (Button)findViewById(R.id.find_products);
         anonymousBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { enterAsAnonymous(); }
+            public void onClick(View v) { findProducts(); }
         });
 
         final Button registrationBtn = (Button)findViewById(R.id.register_button);
@@ -40,13 +40,10 @@ public class FirstAccessActivity extends AppCompatActivity {
         });
     }
 
-    private void enterAsAnonymous(){
-        Log.d(TAG_LOG, "Anonymous access");
-        final Intent anonymousIntent = new Intent(FirstAccessActivity.this, AnonymousMenuActivity.class);
-//        final User user = User.create();
-//        anonymousIntent.putExtra(User.USER_DATA_EXTRA, user);
-        //userModel.save(this); // non usiamo più gli extra in questo caso, ma le SharedPreferences
-        startActivity(anonymousIntent);
+    private void findProducts(){
+        Log.d("DEBUG", "Find Products");
+        final Intent findProducts = new Intent(FirstAccessActivity.this, FindProducts.class);
+        startActivity(findProducts);
     }
 
     private void doRegistration(){

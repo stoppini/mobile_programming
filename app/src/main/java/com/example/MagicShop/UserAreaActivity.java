@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,6 +13,7 @@ import com.example.MagicShop.model.DatabaseAccess;
 import com.example.MagicShop.model.User;
 import com.example.MagicShop.utils.PreferenceUtils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,11 +90,12 @@ public class UserAreaActivity extends AppCompatActivity {
 
     // accedo ai prodotti che sto vendendo
     public void seeMyProducts(View modifyButton){
-        List<Long> ids = dbA.getProductsSellingIdsFromUserId(user.getId());
+        //List<Long> ids = dbA.getProductsSellingIdsFromUserId(user.getId());
+        List<String> ids = dbA.getAllProductsOnSaleFromUserId(user.getId());
         if (ids.size() > 0){
             final Intent productsIntent = new Intent(UserAreaActivity.this,
                     MyProductsActivity.class);
-            productsIntent.putExtra("user_id", user.getId());
+            productsIntent.putExtra("ids", (Serializable) ids);
             startActivity(productsIntent);
             finish();
         } else {

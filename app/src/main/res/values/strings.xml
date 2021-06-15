@@ -43,6 +43,14 @@
     <string name="all_mandatory_fields_error">All the fields are mandatory</string>
     <string name="no_products_on_search">No products find with this search</string>
     <string name="no_products">No products on sale for you.</string>
+    <string name="cap_error">Insert a 5 numbers CAP</string>
+    <string name="mail_error">Insert a valid email address</string>
+    <string name="existing_user_error">A user with this username already exist</string>
+    <string name="existing_email_error">A user with this email address already exist</string>
+    <string name="codice_fiscale_error">Insert a valid fiscal code</string> <!-- non so come si dice in inglese codice fiscale-->
+
+
+
 
 
     <!-- FIND PRODUCTS  -->

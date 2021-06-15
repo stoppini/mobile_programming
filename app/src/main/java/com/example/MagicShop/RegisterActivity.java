@@ -5,16 +5,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.MagicShop.model.DatabaseAccess;
 import com.example.MagicShop.model.User;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    DatabaseAccess dbA;
     private TextView mErrorTextView;
     private EditText mUsernameEditText;
     private EditText mPasswordEditText;
@@ -62,7 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        //checking passwords are the same
+        //checking passwords
         if(!(passwordEdit.equals(confirmPasswordEdit)))
         {
             final String differentPasswords = getResources().getString(R.string.different_passwords_error);
@@ -71,8 +74,50 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+        //checking cap
+        if(capEdit.length()==5){
+            if(!isNumeric(capEdit)){
+                final String numericCap = getResources().getString(R.string.cap_error);
+                this.mErrorTextView.setText(numericCap);
+                this.mErrorTextView.setVisibility(View.VISIBLE);
+                return;
+            }
+        }else{
+            final String lengthCap = getResources().getString(R.string.cap_error);
+            this.mErrorTextView.setText(lengthCap);
+            this.mErrorTextView.setVisibility(View.VISIBLE);
+            return;
+        }
+
+        //checking email
+        if(!Patterns.EMAIL_ADDRESS.matcher(emailEdit).matches()){
+            final String mailError = getResources().getString(R.string.mail_error);
+            this.mErrorTextView.setText(mailError);
+            this.mErrorTextView.setVisibility(View.VISIBLE);
+            return;
+        }
+
+
+        dbA = DatabaseAccess.getDb();
+        //checking user already exists
+        if(dbA.existingUser(usernameEdit)){
+            final String userAlreadyExists = getResources().getString(R.string.existing_user_error);
+            this.mErrorTextView.setText(userAlreadyExists);
+            this.mErrorTextView.setVisibility(View.VISIBLE);
+            return;
+        }
+
+        if(dbA.existingEmail(emailEdit)){
+            final String mailAlreadyExists = getResources().getString(R.string.existing_email_error);
+            this.mErrorTextView.setText(mailAlreadyExists);
+            this.mErrorTextView.setVisibility(View.VISIBLE);
+            return;
+        }
+
+
         final User user = User.create().withUsername(usernameEdit).withPassword(passwordEdit).withEmail(emailEdit).
                 withLocation(locationEdit).withAddress(addressEdit).withCap(Long.parseLong(capEdit));
+
 
         Intent resultIntent = new Intent();
 
@@ -99,4 +144,15 @@ public class RegisterActivity extends AppCompatActivity {
             finish();
         }
     }
+
+    public static boolean isNumeric(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
+    }
+
+
 }

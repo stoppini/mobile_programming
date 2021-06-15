@@ -557,6 +557,32 @@ public class DatabaseAccess {
         //naive implementation
         database.child("product_on_sale").child(id).removeValue();
     }
+
+    public boolean existingUser(String un){
+        DatabaseReference users = database.child("user");
+        Task<DataSnapshot> snap = users.get();
+        while (!snap.isComplete()) {
+        }
+        for (DataSnapshot s : snap.getResult().getChildren()) {
+            if (s.child("username").getValue().equals(un)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean existingEmail(String email){
+        DatabaseReference users = database.child("user");
+        Task<DataSnapshot> snap = users.get();
+        while (!snap.isComplete()) {
+        }
+        for (DataSnapshot s : snap.getResult().getChildren()) {
+            if (s.child("email").getValue().equals(email)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 

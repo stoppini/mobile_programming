@@ -223,7 +223,11 @@ public class FragmentSellerCards extends Fragment {
         builder.setMessage(R.string.confirm_shop_product)
                 .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        Toast.makeText(getActivity(), R.string.success_product_buy,
+                                Toast.LENGTH_SHORT).show();
                         dbA.shopProduct(p,u);
+
+
                         // FIRE ZE MISSILES!
                         onStart();
                     }

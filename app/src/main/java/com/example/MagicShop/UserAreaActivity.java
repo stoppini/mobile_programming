@@ -97,7 +97,7 @@ public class UserAreaActivity extends AppCompatActivity {
                     MyProductsActivity.class);
             productsIntent.putExtra("ids", (Serializable) ids);
             startActivity(productsIntent);
-            finish();
+            //finish();
         } else {
             Toast.makeText(getApplicationContext(), getString(R.string.no_products), Toast.LENGTH_SHORT).show();
         }

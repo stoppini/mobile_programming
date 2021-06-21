@@ -194,9 +194,9 @@ public class ProductAreaActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dbA.eliminateProductOnSaleFromDb(productOnSale.getId());
-                        final Intent mainIntent = new Intent(ProductAreaActivity.this,
-                                UserAreaActivity.class);
-                        startActivity(mainIntent);
+                        //final Intent mainIntent = new Intent(ProductAreaActivity.this,
+                        //       UserAreaActivity.class);
+                        //startActivity(mainIntent);
                         finish();
                     }
                 })

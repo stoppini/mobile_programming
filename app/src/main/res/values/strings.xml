@@ -42,6 +42,7 @@
     <string name="different_passwords_error">The passwords should be the same</string>
     <string name="all_mandatory_fields_error">All the fields are mandatory</string>
     <string name="no_products_on_search">No products find with this search</string>
+    <string name="success_product_buy">Purchase completed for the product.</string>
     <string name="no_products">No products on sale for you.</string>
     <string name="cap_error">Insert a 5 numbers CAP</string>
     <string name="mail_error">Insert a valid email address</string>
@@ -66,7 +67,7 @@
 
     <string name="confirm">"Confirm"</string>
     <string name="abort">"Abort"</string>
-    <string name="confirm_shop_product">"Do you want to shot this product?"</string>
+    <string name="confirm_shop_product">"Do you want to shop this product?"</string>
     <string name="title_price">"Sell the product "</string>
     <string name="message_price">"Enter the amount in Euro"</string>
     <string name="sell_price">"SELL"</string>

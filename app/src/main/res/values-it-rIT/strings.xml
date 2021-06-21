@@ -29,6 +29,8 @@
     <string name="show">Mostra</string>
     <string name="history">Storico</string>
     <string name="my_products">I miei prodotti</string>
+    <string name="success_product_buy">Acquisto completato per il prodotto.</string>
+
 
 
     <string name="card_price">Prezzo</string>

@@ -87,6 +87,7 @@ public class MyProductsActivity extends AppCompatActivity {
                 //showProductOnSaleIntent.putExtra("user_id", getIntent().getExtras().getString("user_id"));
                 //showProductOnSaleIntent.putExtra("card_name", product.getName());
                 startActivity(showProductOnSaleIntent);
+                finish();
             }
         });
     }

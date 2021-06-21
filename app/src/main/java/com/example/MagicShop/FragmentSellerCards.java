@@ -162,8 +162,8 @@ public class FragmentSellerCards extends Fragment {
                                                 photoFile);
                                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                                         Log.e("DEBUG",photoFile.getAbsolutePath());
-                                        getActivity().startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-
+                                        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                                        //listener.onAddImage(takePictureIntent,REQUEST_IMAGE_CAPTURE);
                                     }
                                 }
                             }

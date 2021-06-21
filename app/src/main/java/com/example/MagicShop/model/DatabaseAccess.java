@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Build;
+import android.util.JsonReader;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.MagicShop.History;
 import com.example.MagicShop.MenuActivity;
 import com.example.MagicShop.R;
 import com.google.android.gms.tasks.Task;
@@ -22,11 +24,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
+
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 
 public class DatabaseAccess {
@@ -130,9 +135,16 @@ public class DatabaseAccess {
         List<HistoryRecord> history = new ArrayList<>();
         Task<DataSnapshot> productTask = database.child("user").child(user.getId()).child("history_sell").get();
         while (!productTask.isComplete()) {}
-
         for (DataSnapshot s : productTask.getResult().getChildren()) {
-            HistoryRecord record = new Gson().fromJson(s.getValue().toString(), HistoryRecord.class);
+            HistoryRecord.UserHistory userH = new HistoryRecord.UserHistory(
+                    ""+s.child("user").child("mUserName").getValue(),
+                    ""+s.child("user").child("mEmail").getValue(),
+                    ""+s.child("user").child("mLocation").getValue(),
+                    ""+s.child("user").child("mAddress").getValue(),
+                    (long)s.child("user").child("mCap").getValue());
+            HistoryRecord record = new HistoryRecord((long)s.child("product_id").getValue(),
+                    Float.parseFloat(""+s.child("price").getValue()), (long)s.child("date").getValue(),
+                    userH);
             history.add(record);
         }
         return history;
@@ -140,11 +152,20 @@ public class DatabaseAccess {
 
     public List<HistoryRecord> getHistoryShop(User user){
         List<HistoryRecord> history = new ArrayList<>();
+
         Task<DataSnapshot> productTask = database.child("user").child(user.getId()).child("history_shop").get();
         while (!productTask.isComplete()) {}
 
         for (DataSnapshot s : productTask.getResult().getChildren()) {
-            HistoryRecord record = new Gson().fromJson(s.getValue().toString(), HistoryRecord.class);
+            HistoryRecord.UserHistory userH = new HistoryRecord.UserHistory(
+                    ""+s.child("user").child("mUserName").getValue(),
+                    ""+s.child("user").child("mEmail").getValue(),
+                    ""+s.child("user").child("mLocation").getValue(),
+                    ""+s.child("user").child("mAddress").getValue(),
+                    (long)s.child("user").child("mCap").getValue());
+            HistoryRecord record = new HistoryRecord((long)s.child("product_id").getValue(),
+                    Float.parseFloat(""+s.child("price").getValue()), (long)s.child("date").getValue(),
+                    userH);
             history.add(record);
         }
         return history;
@@ -163,7 +184,7 @@ public class DatabaseAccess {
             ProductOnSale p = new ProductOnSale("" + s.getKey(),
                     (Long) s.child("product_id").getValue(),
                     "" + s.child("user_id").getValue(),
-                    (Float) s.child("price").getValue(), ""+s.child("photo"));
+                    Float.parseFloat(""+s.child("price").getValue()), ""+s.child("photo"));
             products_on_sale.add(p);
 
         }

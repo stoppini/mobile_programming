@@ -69,11 +69,14 @@ public class FragmentSellerCards extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_seller_cards, container, false);
-        Log.i("DEBUG","SEI NEL FRAGMENTS SELLER");
+        Log.i("DEBUG","Sei nel Fragments dei Seller");
         mListView = (ListView) view.findViewById(R.id.list_seller_final);
 
         view.findViewById(R.id.text_username).setVisibility(View.VISIBLE);
         view.findViewById(R.id.text_price).setVisibility(View.VISIBLE);
+
+        dbA = DatabaseAccess.getDb();
+        product = dbA.getProductFromId((Long)getActivity().getIntent().getSerializableExtra(Product.PRODUCT_LIST_EXTRA));
 
         mAdapter = new BaseAdapter() {
             @Override
@@ -98,11 +101,11 @@ public class FragmentSellerCards extends Fragment {
 
                 final TextView nameToView = (TextView) view.findViewById(R.id.name_seller);
                 final TextView priceToView = (TextView) view.findViewById(R.id.price_seller);
-                final Button addPhoto = (Button) view.findViewById(R.id.add_photo);
+                final Button editCard = (Button) view.findViewById(R.id.edit_card_details);
                 final Button showPhoto = (Button) view.findViewById(R.id.show_photo);
                 final Button shopProductOnSale = (Button) view.findViewById(R.id.shop_product);
 
-                addPhoto.setVisibility(View.INVISIBLE);
+                editCard.setVisibility(View.INVISIBLE);
                 showPhoto.setVisibility(View.INVISIBLE);
                 shopProductOnSale.setVisibility(View.INVISIBLE);
 
@@ -145,29 +148,18 @@ public class FragmentSellerCards extends Fragment {
                     //SEI LOGGATO
                     if (userLogged.getId().equals(seller.getId())){
                         //SEI IL VENDITORE
-                        addPhoto.setVisibility(View.VISIBLE);
-                        addPhoto.setOnClickListener(new View.OnClickListener() {
+                        editCard.setVisibility(View.VISIBLE);
+                        editCard.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-                                    File photoFile = null;
-                                    try {
-                                        photoFile = createImageFile(productOnSale.getId());
-                                    } catch (IOException ex) {
-                                    }
-                                    if (photoFile != null) {
-                                        Uri photoURI = FileProvider.getUriForFile(getActivity(),
-                                                getActivity().getApplicationContext().getPackageName() + ".provider",
-                                                photoFile);
-                                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                                        Log.e("DEBUG",photoFile.getAbsolutePath());
-                                        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-                                        //listener.onAddImage(takePictureIntent,REQUEST_IMAGE_CAPTURE);
-                                    }
-                                }
+                                Log.d("DEBUG", "Edit card");
+                                final Intent editcard = new Intent(getActivity(), ProductAreaActivity.class);
+                                editcard.putExtra("product_on_sale_id",""+productOnSale.getId());
+                                startActivity(editcard);
+                                getActivity().finish();
                             }
                         });
+
                     } else {
                         //NON SEI IL VENDITORE PUO COMPRARE
                         shopProductOnSale.setVisibility(View.VISIBLE);
@@ -184,9 +176,6 @@ public class FragmentSellerCards extends Fragment {
                 return view;
             }
         };
-
-        dbA = DatabaseAccess.getDb();
-        product = dbA.getProductFromId((Long)getActivity().getIntent().getSerializableExtra(Product.PRODUCT_LIST_EXTRA));
 
 
         if(PreferenceUtils.getId(getActivity().getApplicationContext())!=null) {

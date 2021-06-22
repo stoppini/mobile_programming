@@ -23,11 +23,11 @@
             style="@style/main_button_style"/>
 
         <Button
-            android:id="@+id/anonymous_button"
+            android:id="@+id/find_products"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/anonymous_button_label"
-            android:layout_above="@+id/register_button"
+            android:text="@string/find_products"
+            android:layout_below="@+id/register_button"
             style="@style/main_button_style"/>
 
         <Button
@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/login_button_label"
-            android:layout_below="@+id/register_button"
+            android:layout_above="@+id/register_button"
             style="@style/main_button_style"/>
 
     </RelativeLayout>

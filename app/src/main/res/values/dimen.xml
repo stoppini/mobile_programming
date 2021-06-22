@@ -10,4 +10,5 @@
     <dimen name="list_sellers_margin">16dp</dimen>
     <dimen name="buttons_buy_show_add_photo">10dp</dimen>
     <dimen name="list_name_margin_image">20dp</dimen>
+    <dimen name="general_margin">15dp</dimen>
 </resources>

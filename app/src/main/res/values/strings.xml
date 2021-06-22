@@ -78,8 +78,9 @@
 
     <string name="title_modify_price">"Modify the price for product "</string>
     <string name="remove_from_on_sale">"Remove from sale the product "</string>
-
-
+    <!-- HISTORY -->
+    <string name="history_bought">History of Product Bought</string>
+    <string name="history_sold">History of Product Sold</string>
 
 
 
@@ -92,6 +93,7 @@
     <string name="card_detail">Cards detail</string>
     <string name="user">User</string>
     <string name="price">Price</string>
+    <string name="euro">€</string>
 
 
 </resources>

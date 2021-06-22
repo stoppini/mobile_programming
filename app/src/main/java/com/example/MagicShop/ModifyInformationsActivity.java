@@ -40,7 +40,7 @@ public class ModifyInformationsActivity extends AppCompatActivity {
 
     public void doConfirm(View confirmButton)
     {
-        final Intent userAreaIntent = new Intent(this,UserAreaActivity.class);
+        //final Intent userAreaIntent = new Intent(this,UserAreaActivity.class);
 
         //modifica dati utente e aggiornamento db
         dbA = DatabaseAccess.getDb();
@@ -69,9 +69,17 @@ public class ModifyInformationsActivity extends AppCompatActivity {
             user.withCap(Long.parseLong(cap));
         }
 
+        Intent resultIntent = new Intent();
+        if(!TextUtils.isEmpty(cap)||!TextUtils.isEmpty(un)||!TextUtils.isEmpty(email)||
+                !TextUtils.isEmpty(address)||!TextUtils.isEmpty(location)){
+            getIntent().putExtra("user", user);
+            setResult(1,resultIntent);
+        }
+        else{
+            setResult(0,resultIntent);
+        }
         dbA.modifyUser(user);
-
-        startActivity(userAreaIntent);
+        //startActivity(userAreaIntent);
         finish();
     }
 

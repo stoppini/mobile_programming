@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +29,7 @@ public class UserAreaActivity extends AppCompatActivity {
     private DatabaseAccess dbA;
     private User user;
     private final int INFORMATION_MODIFIED = 1;
+    private static final int MODIFY_INFO_ID = 2;
     private static final String TAG_LOG = UserAreaActivity.class.getName();
 
     @Override
@@ -63,13 +65,29 @@ public class UserAreaActivity extends AppCompatActivity {
     }
 
     // tentativo di rimandare l'utente in "user area" se torna indietro da "modify information"
-//    public void onActivityResult(int requestCode, int resultCode, Intent data){
-//        super.onActivityResult(requestCode,resultCode,data);
-//        if(resultCode == INFORMATION_MODIFIED){
-//
-//        }
-//
-//    }
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode,resultCode,data);
+        Log.e("DEBUG DIEGO", "entering on activity result method");
+        if(requestCode == MODIFY_INFO_ID)
+        {
+            switch (resultCode)
+            {
+                case 1:
+                    Log.e("DEBUG DIEGO", "mail da aggiornare: "+getIntent().getExtras().getString("email"));
+                    User user = data.getParcelableExtra("user");
+                    mUsername.setText(user.getUsername());
+                    mEmail.setText(user.getEmail());
+                    mCap.setText(String.valueOf(user.getCap()));
+                    mLocation.setText(user.getLocation());
+                    mAddress.setText(user.getAddress());
+                    break;
+                case 0:
+                    break;
+            }
+        }
+
+
+    }
 
     public void modifyInformations(View modifyButton){
         // gestire la modifica nel db
@@ -77,7 +95,6 @@ public class UserAreaActivity extends AppCompatActivity {
         final Intent mainIntent = new Intent(UserAreaActivity.this,
                                                 ModifyInformationsActivity.class);
         startActivity(mainIntent);
-        finish();
     }
 
 
@@ -85,7 +102,6 @@ public class UserAreaActivity extends AppCompatActivity {
         final Intent mainIntent = new Intent(UserAreaActivity.this,
                 History.class);
         startActivity(mainIntent);
-        finish();
     }
 
     // accedo ai prodotti che sto vendendo

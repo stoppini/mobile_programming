@@ -69,6 +69,7 @@ public class FragmentDetailcard extends Fragment {
                 @Override
                 public void onClick(View v) {
                     showSellDialog(getActivity(), product, userLogged);
+                    listener= (OnNavigationListener) getActivity();
                 }
             });
         }
@@ -82,6 +83,7 @@ public class FragmentDetailcard extends Fragment {
                 public void onClick(View v) {
                     listener = (OnNavigationListener) getActivity();
                     listener.onButtonSeller();
+
                 }
             });
 
@@ -125,6 +127,8 @@ public class FragmentDetailcard extends Fragment {
                             Toast.makeText(getActivity().getApplicationContext(), getString(R.string.error_price), Toast.LENGTH_SHORT).show();
                             showSellDialog(c,p,u);
                         }
+                        //aggiorna dopo aver creato un nuovo elemento
+                        listener.newSell();
                     }
                 })
                 .setNegativeButton(getString(R.string.undo_price), null)

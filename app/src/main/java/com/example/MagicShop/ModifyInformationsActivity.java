@@ -71,7 +71,6 @@ public class ModifyInformationsActivity extends AppCompatActivity {
 
         dbA.modifyUser(user);
 
-        startActivity(userAreaIntent);
         finish();
     }
 

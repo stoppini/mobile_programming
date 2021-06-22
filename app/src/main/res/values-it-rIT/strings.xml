@@ -37,6 +37,16 @@
     <string name="card_name">Nome</string>
     <string name="modify_card">Modifica prodotto in vendita</string>
 
+    <string name="modify_price">Modificare prezzo</string>
+    <string name="eliminate_product">Elimina prodotto</string>
+    <string name="add_photo">Aggiungi Fotografia</string>
+    <string name="show_photo">Mostra Fotografia</string>
+
+    <string name="user_area_button_label">Area Utente</string>
+    <string name="find_products" >CERCA PRODOTTI</string>
+    <string name="registration_button_label">REGISTRAZIONE</string>
+
+
 
 
 

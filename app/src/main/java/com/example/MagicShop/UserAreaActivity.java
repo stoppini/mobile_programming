@@ -77,7 +77,6 @@ public class UserAreaActivity extends AppCompatActivity {
         final Intent mainIntent = new Intent(UserAreaActivity.this,
                                                 ModifyInformationsActivity.class);
         startActivity(mainIntent);
-        finish();
     }
 
 
@@ -85,7 +84,6 @@ public class UserAreaActivity extends AppCompatActivity {
         final Intent mainIntent = new Intent(UserAreaActivity.this,
                 History.class);
         startActivity(mainIntent);
-        finish();
     }
 
     // accedo ai prodotti che sto vendendo

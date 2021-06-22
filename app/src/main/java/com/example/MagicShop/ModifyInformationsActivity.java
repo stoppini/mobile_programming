@@ -72,18 +72,15 @@ public class ModifyInformationsActivity extends AppCompatActivity {
         Intent resultIntent = new Intent();
         if(!TextUtils.isEmpty(cap)||!TextUtils.isEmpty(un)||!TextUtils.isEmpty(email)||
                 !TextUtils.isEmpty(address)||!TextUtils.isEmpty(location)){
-            getIntent().putExtra("user", user);
+            resultIntent.putExtra("user", user);
             setResult(1,resultIntent);
         }
         else{
             setResult(0,resultIntent);
         }
         dbA.modifyUser(user);
-<<<<<<< HEAD
         //startActivity(userAreaIntent);
-=======
 
->>>>>>> a6b4f970f08bf9ca34c45d8632d0dc8c2399653b
         finish();
     }
 

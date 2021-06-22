@@ -73,7 +73,6 @@ public class UserAreaActivity extends AppCompatActivity {
             switch (resultCode)
             {
                 case 1:
-                    Log.e("DEBUG DIEGO", "mail da aggiornare: "+getIntent().getExtras().getString("email"));
                     User user = data.getParcelableExtra("user");
                     mUsername.setText(user.getUsername());
                     mEmail.setText(user.getEmail());
@@ -94,7 +93,7 @@ public class UserAreaActivity extends AppCompatActivity {
         // creare activity per modifica informazioni utente, simile
         final Intent mainIntent = new Intent(UserAreaActivity.this,
                                                 ModifyInformationsActivity.class);
-        startActivity(mainIntent);
+        startActivityForResult(mainIntent, MODIFY_INFO_ID);
     }
 
 

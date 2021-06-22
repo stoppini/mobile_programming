@@ -12,6 +12,9 @@ import com.example.MagicShop.model.DatabaseAccess;
 import com.example.MagicShop.model.User;
 import com.example.MagicShop.utils.PreferenceUtils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ModifyInformationsActivity extends AppCompatActivity {
 
     private UserOutOfModel mUser;
@@ -23,7 +26,6 @@ public class ModifyInformationsActivity extends AppCompatActivity {
     private DatabaseAccess dbA;
     private User user;
 
-    private static final String TAG_LOG = ModifyInformationsActivity.class.getName();
 
 
     @Override
@@ -40,6 +42,7 @@ public class ModifyInformationsActivity extends AppCompatActivity {
 
     public void doConfirm(View confirmButton)
     {
+
         //modifica dati utente e aggiornamento db
         dbA = DatabaseAccess.getDb();
         user = dbA.getUserFromId(PreferenceUtils.getId(this));
@@ -50,33 +53,28 @@ public class ModifyInformationsActivity extends AppCompatActivity {
         final String address = this.mAddress.getText().toString();
         final String cap = this.mCap.getText().toString();
 
+        Map<String, String> toModify = new HashMap<String, String>();
+
+        toModify.put("id",PreferenceUtils.getId(this));
+
         if(!TextUtils.isEmpty(un)){
-            user.withUsername(un);
+            toModify.put("username", un);
         }
         if(!TextUtils.isEmpty(email)){
-            user.withEmail(email);
+            toModify.put("email", email);
         }
         if(!TextUtils.isEmpty(address)){
-            user.withAddress(address);
+            toModify.put("address", address);
         }
         if(!TextUtils.isEmpty(location)){
-            user.withLocation(location);
+            toModify.put("location", location);
         }
 
         if(!TextUtils.isEmpty(cap)){
-            user.withCap(Long.parseLong(cap));
+            toModify.put("cap", cap);
         }
-
-        Intent resultIntent = new Intent();
-        if(!TextUtils.isEmpty(cap)||!TextUtils.isEmpty(un)||!TextUtils.isEmpty(email)||
-                !TextUtils.isEmpty(address)||!TextUtils.isEmpty(location)){
-            resultIntent.putExtra("user", user);
-            setResult(1,resultIntent);
-        }
-        else{
-            setResult(0,resultIntent);
-        }
-        dbA.modifyUser(user);
+        
+        dbA.modifyUser(toModify);
 
         finish();
     }

@@ -56,14 +56,152 @@ import java.util.List;
 
 public class FragmentSellerCards extends Fragment {
     private DatabaseAccess dbA;
-    static final int REQUEST_IMAGE_CAPTURE = 1;
     private ListView mListView;
     private List<ProductOnSale> listProductOnSale = new LinkedList<>();
     private ListAdapter mAdapter;
     private User userLogged;
     private Product product;
-    private String currentPhotoPath;
     private OnNavigationListener listener;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        View view =getView();
+        Log.i("DEBUG","Sei nel Fragments dei Seller");
+        mListView = (ListView) view.findViewById(R.id.list_seller_final);
+
+        view.findViewById(R.id.text_username).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.text_price).setVisibility(View.VISIBLE);
+
+        dbA = DatabaseAccess.getDb();
+        product = dbA.getProductFromId((Long)getActivity().getIntent().getSerializableExtra(Product.PRODUCT_LIST_EXTRA));
+
+        mAdapter = new BaseAdapter() {
+            @Override
+            public int getCount() { return listProductOnSale.size(); }
+
+            @Override
+            public Object getItem(int position) {
+                return listProductOnSale.get(position);
+            }
+
+            @Override
+            public long getItemId(int position) {
+                ProductOnSale product = (ProductOnSale) getItem(position);
+                return -1;
+            }
+
+            @Override
+            public View getView(int position, View view, ViewGroup parent) {
+                if(view == null){
+                    view = getLayoutInflater().inflate(R.layout.custom_seller, null);
+                }
+
+                final TextView nameToView = (TextView) view.findViewById(R.id.name_seller);
+                final TextView priceToView = (TextView) view.findViewById(R.id.price_seller);
+                final Button editCard = (Button) view.findViewById(R.id.edit_card_details);
+                final Button showPhoto = (Button) view.findViewById(R.id.show_photo);
+                final Button shopProductOnSale = (Button) view.findViewById(R.id.shop_product);
+
+                editCard.setVisibility(View.INVISIBLE);
+                showPhoto.setVisibility(View.INVISIBLE);
+                shopProductOnSale.setVisibility(View.INVISIBLE);
+
+
+                ProductOnSale productOnSale = (ProductOnSale) getItem(position);
+
+                User seller = dbA.getUsersFromProductOnSale(productOnSale);
+
+                nameToView.setText(seller.getUsername());
+                priceToView.setText(""+productOnSale.getPrice());
+
+                if(productOnSale.getPhoto().equals("null")){
+                } else {
+                    showPhoto.setVisibility(View.VISIBLE);
+                    final ImagePopup imagePopup = new ImagePopup(getActivity());
+                    imagePopup.initiatePopupWithPicasso(productOnSale.getPhoto());
+
+                    imagePopup.setBackgroundColor(Color.BLACK);  // Optional
+                    imagePopup.setFullScreen(false); // Optional
+                    imagePopup.setHideCloseIcon(true);  // Optional
+                    imagePopup.setImageOnClickClose(false);  // Optional
+                    imagePopup.setHideCloseIcon(true);
+                    imagePopup.setLayoutOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(productOnSale.getPhoto()));
+                            startActivity(browserIntent);
+                            return false;
+                        }
+                    });
+                    showPhoto.setOnClickListener(new View.OnClickListener(){
+                        @Override
+                        public void onClick(View v) {
+                            imagePopup.viewPopup();
+                        }
+                    });
+                }
+
+                if(userLogged != null){
+                    //SEI LOGGATO
+                    if (userLogged.getId().equals(seller.getId())){
+                        //SEI IL VENDITORE
+                        editCard.setVisibility(View.VISIBLE);
+                        editCard.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Log.d("DEBUG", "Edit card");
+                                final Intent editcard = new Intent(getActivity(), ProductAreaActivity.class);
+                                editcard.putExtra("product_on_sale_id",""+productOnSale.getId());
+                                startActivity(editcard);
+                                getActivity().finish();
+                            }
+                        });
+
+                    } else {
+                        //NON SEI IL VENDITORE PUO COMPRARE
+                        shopProductOnSale.setVisibility(View.VISIBLE);
+                        shopProductOnSale.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                // QUANDO COMPRI
+                                showShopDialog(getActivity(), productOnSale, userLogged);
+                            }
+                        });
+
+                    }
+                }
+                return view;
+            }
+        };
+
+
+        if(PreferenceUtils.getId(getActivity().getApplicationContext())!=null) {
+            userLogged = dbA.getUserFromId(PreferenceUtils.getId(getActivity().getApplicationContext()));
+        }
+
+        List<ProductOnSale> products = dbA.getAllProductOnSaleFromProduct(product);
+        listProductOnSale.clear();
+        listProductOnSale.addAll(products);
+        mListView.setAdapter(mAdapter);
+
+        if (!getResources().getBoolean(R.bool.dual_pane)) {
+            //Abilito il bottonne con l'evento per passare all'activity con il singolo fragment
+            final Button gotoDetail = (Button) view.findViewById(R.id.goto_detail_card);
+            gotoDetail.setVisibility(View.VISIBLE);
+            gotoDetail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //crea tramirte l'interfaccia la notifica di cambiare nuovamente fragmente nell'activity principale
+                    listener = (OnNavigationListener) getActivity();
+                    listener.onButtonDetails();
+                }
+            });
+        }else{
+            final Button gotoDetails = (Button) view.findViewById(R.id.goto_detail_card);
+            gotoDetails.setVisibility(View.GONE);
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -215,8 +353,6 @@ public class FragmentSellerCards extends Fragment {
                         Toast.makeText(getActivity(), R.string.success_product_buy,
                                 Toast.LENGTH_SHORT).show();
                         dbA.shopProduct(p,u);
-
-
                         // FIRE ZE MISSILES!
                         onStart();
                     }
@@ -229,75 +365,5 @@ public class FragmentSellerCards extends Fragment {
         // Create the AlertDialog object and return it
         builder.create();
         builder.show();
-    }
-
-    private File createImageFile(String product) throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_id=[" + product+"]";
-        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-        // Save a file: path for use with ACTION_VIEW intents
-        currentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
-
-    public void encodeBitmapAndSaveToFirebase(Bitmap bitmap, String name, final ProductOnSale p){
-        final StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap = resizeImageForImageView(bitmap);
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        String imageEncoded = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
-        StorageReference filepath = storageReference.child("product_on_sale").child(name);
-        byte[] data = baos.toByteArray();
-
-        filepath.putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                filepath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        dbA.addPhotoToProductOnSale(p, uri.toString());
-                        onStart();
-                    }
-                });
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-            }
-        });
-
-    }
-
-    public Bitmap resizeImageForImageView(Bitmap bitmap) {
-        Matrix matrix = new Matrix();
-        matrix.postRotate(90);
-          /*
-        int scaleSize =1024;
-        Bitmap resizedBitmap = null;
-        int originalWidth = bitmap.getWidth();
-        int originalHeight = bitmap.getHeight();
-        int newWidth = -1;
-        int newHeight = -1;
-        float multFactor = -1.0F;
-        if(originalHeight > originalWidth) {
-            newHeight = scaleSize ;
-            multFactor = (float) originalWidth/(float) originalHeight;
-            newWidth = (int) (newHeight*multFactor);
-        } else if(originalWidth > originalHeight) {
-            newWidth = scaleSize ;
-            multFactor = (float) originalHeight/ (float)originalWidth;
-            newHeight = (int) (newWidth*multFactor);
-        } else if(originalHeight == originalWidth) {
-            newHeight = scaleSize ;
-            newWidth = scaleSize ;
-        }
-        resizedBitmap = Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, false);*/
-        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 }

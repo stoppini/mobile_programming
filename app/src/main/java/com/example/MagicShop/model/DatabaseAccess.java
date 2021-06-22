@@ -507,16 +507,16 @@ public class DatabaseAccess {
             refToUser.child("username").setValue(username);
         }
         if(email != null){
-            refToUser.child("email").setValue(username);
+            refToUser.child("email").setValue(email);
         }
         if(address != null){
-            refToUser.child("address").setValue(username);
+            refToUser.child("address").setValue(address);
         }
         if(location != null){
-            refToUser.child("location").setValue(username);
+            refToUser.child("location").setValue(location);
         }
         if(cap != null){
-            refToUser.child("cap").setValue(username);
+            refToUser.child("cap").setValue(cap);
         }
     }
 

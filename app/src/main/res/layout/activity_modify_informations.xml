@@ -71,6 +71,16 @@
             android:id="@+id/location_edit_text"
             style="@style/main_edittext_style"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/error_message_label"
+            android:visibility="invisible"
+            android:layout_gravity="center"
+            android:textColor="@color/red"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            style="@style/main_text_style"/>
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -79,7 +79,11 @@ public class ModifyInformationsActivity extends AppCompatActivity {
             setResult(0,resultIntent);
         }
         dbA.modifyUser(user);
+<<<<<<< HEAD
         //startActivity(userAreaIntent);
+=======
+
+>>>>>>> a6b4f970f08bf9ca34c45d8632d0dc8c2399653b
         finish();
     }
 

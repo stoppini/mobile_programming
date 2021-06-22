@@ -56,11 +56,11 @@
                 style="@style/main_button_style" />
             <Button
                 android:layout_marginTop="@dimen/buttons_buy_show_add_photo"
-                android:id="@+id/add_photo"
+                android:id="@+id/edit_card_details"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:text="@string/add_photo"
+                android:text="@string/edit"
                 android:layout_weight="1"
                 style="@style/main_button_style" />
         </TableRow>

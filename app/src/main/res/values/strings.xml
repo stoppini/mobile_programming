@@ -20,7 +20,7 @@
 
     <!-- LABELS -->
     <string name="anonymous_button_label">Anonymous</string>
-    <string name="registration_button_label" translatable="false">Register</string>
+    <string name="registration_button_label">Register</string>
     <string name="login_button_label">Log in</string>
     <string name="confirm_button_label">Confirm</string>
     <string name="old_data_button_label">Old Data</string>
@@ -28,9 +28,9 @@
     <string name="remote_data_button_label">Remote Data</string>
     <string name="user_area">User Area</string>
     <string name="test_db" translatable="false">TEST DATABASE</string>
-    <string name="find_products" translatable="false">FIND PRODUCTS</string>
+    <string name="find_products" >FIND PRODUCTS</string>
     <string name="modify_button_label">Modify</string>
-    <string name="user_area_button_label" translatable="false">User Area</string>
+    <string name="user_area_button_label">User Area</string>
     <string name="log_out_button_label">Log Out</string>
     <string name="all">All</string>
     <string name="history">History</string>
@@ -71,9 +71,9 @@
     <string name="title_price">"Sell the product "</string>
     <string name="message_price">"Enter the amount in Euro"</string>
     <string name="sell_price">"SELL"</string>
-    <string name="modify_price_toast">"MODIFY"</string>
-    <string name="undo_price">"UNDO"</string>
-    <string name="remove_price">"REMOVE"</string>
+    <string name="modify_price_toast">"Modify"</string>
+    <string name="undo_price">"Undo"</string>
+    <string name="remove_price">"Remove"</string>
     <string name="error_price">"Insert correct import."</string>
 
     <string name="title_modify_price">"Modify the price for product "</string>
@@ -87,6 +87,7 @@
     <string name="sell">Sell</string>
     <string name="buy">Buy</string>
     <string name="show_photo">Show Photo</string>
+    <string name="edit">Edit details</string>
     <string name="add_photo">Add Photo</string>
     <string name="card_detail">Cards detail</string>
     <string name="user">User</string>

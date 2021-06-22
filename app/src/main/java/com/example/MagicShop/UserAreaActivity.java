@@ -36,57 +36,25 @@ public class UserAreaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_area);
+        this.mUsername = (TextView)findViewById(R.id.show_username_data);
+        this.mEmail = (TextView)findViewById(R.id.show_email_data);
+        this.mAddress = (TextView)findViewById(R.id.show_address_data);
+        this.mCap = (TextView)findViewById(R.id.show_cap_data);
+        this.mLocation = (TextView)findViewById(R.id.show_location_data);
+    }
 
-//        Intent data = getIntent();
-//        this.mUser = (User) data.getParcelableExtra(User.USER_DATA_EXTRA);
-//        this.mUsername = (TextView)findViewById(R.id.show_username_data);
-//        mUsername.setText(mUser.getUsername());
-//        this.mEmail = (TextView)findViewById(R.id.show_email_data);
-//        mEmail.setText(mUser.getEmail());
-//        this.mLocation = (TextView)findViewById(R.id.show_location_data);
-//        mLocation.setText(mUser.getLocation());
-
-
+    @Override
+    protected void onStart() {
+        super.onStart();
         dbA = DatabaseAccess.getDb();
         user = dbA.getUserFromId(PreferenceUtils.getId(this));
-
-        this.mUsername = (TextView)findViewById(R.id.show_username_data);
         mUsername.setText(user.getUsername());
-        this.mEmail = (TextView)findViewById(R.id.show_email_data);
         mEmail.setText(user.getEmail());
-        this.mAddress = (TextView)findViewById(R.id.show_address_data);
         mAddress.setText(user.getAddress());
-        this.mCap = (TextView)findViewById(R.id.show_cap_data);
         mCap.setText(Long.toString(user.getCap()));
-        this.mLocation = (TextView)findViewById(R.id.show_location_data);
         mLocation.setText(user.getLocation());
-
-
     }
 
-    // tentativo di rimandare l'utente in "user area" se torna indietro da "modify information"
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode,resultCode,data);
-        Log.e("DEBUG DIEGO", "entering on activity result method");
-        if(requestCode == MODIFY_INFO_ID)
-        {
-            switch (resultCode)
-            {
-                case 1:
-                    User user = data.getParcelableExtra("user");
-                    mUsername.setText(user.getUsername());
-                    mEmail.setText(user.getEmail());
-                    mCap.setText(String.valueOf(user.getCap()));
-                    mLocation.setText(user.getLocation());
-                    mAddress.setText(user.getAddress());
-                    break;
-                case 0:
-                    break;
-            }
-        }
-
-
-    }
 
     public void modifyInformations(View modifyButton){
         // gestire la modifica nel db

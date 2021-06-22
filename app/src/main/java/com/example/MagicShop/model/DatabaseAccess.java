@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Build;
+import android.text.TextUtils;
 import android.util.JsonReader;
 import android.util.Log;
 
@@ -492,10 +493,31 @@ public class DatabaseAccess {
         return null;
     }
 
-    public void modifyUser(User user) {
-        String id = user.getId();
-        database.child("user").child(id).setValue(user.withId(null));
-        user.withId(id);
+    public void modifyUser(Map<String, String> toModify) {
+        String id = toModify.get("id");
+        String username = toModify.get("username");
+        String email = toModify.get("email");
+        String address = toModify.get("address");
+        String location = toModify.get("location");
+        String cap = toModify.get("cap");
+
+        DatabaseReference refToUser = database.child("user").child(id);
+
+        if(username != null){
+            refToUser.child("username").setValue(username);
+        }
+        if(email != null){
+            refToUser.child("email").setValue(username);
+        }
+        if(address != null){
+            refToUser.child("address").setValue(username);
+        }
+        if(location != null){
+            refToUser.child("location").setValue(username);
+        }
+        if(cap != null){
+            refToUser.child("cap").setValue(username);
+        }
     }
 
     public void addPhotoToProductOnSale(ProductOnSale p) {

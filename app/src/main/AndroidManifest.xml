@@ -25,7 +25,6 @@
         <activity android:name=".ShowProductOnSaleModify" />
         <activity android:name=".MyProductsActivity" />
         <activity android:name=".History" />
-        <activity android:name=".AnonymousMenuActivity" />
 
         <uses-library
             android:name="org.apache.http.legacy"

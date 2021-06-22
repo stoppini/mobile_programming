@@ -50,11 +50,11 @@ public class MenuActivity extends AppCompatActivity {
             public void onClick(View v) { doLogOut(); }
         });
 
-        final Button anonymousBtn = (Button)findViewById(R.id.view_remote_test_db);
+/*        final Button anonymousBtn = (Button)findViewById(R.id.view_remote_test_db);
         anonymousBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { enterTestDatabase(); }
-        });
+        });*/
 
         final Button findProductsBtn = (Button)findViewById(R.id.find_products);
         findProductsBtn.setOnClickListener(new View.OnClickListener() {
@@ -64,11 +64,11 @@ public class MenuActivity extends AppCompatActivity {
     }
 
 
-    private void enterTestDatabase(){
+/*    private void enterTestDatabase(){
         Log.d("DEBUG", "DB test access");
         final Intent showDatabaseIntent = new Intent(MenuActivity.this, ShowDb.class);
         startActivity(showDatabaseIntent);
-    }
+    }*/
 
     private void findProducts(){
         Log.d("DEBUG", "Find Products");

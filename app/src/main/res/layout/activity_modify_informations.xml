@@ -80,6 +80,7 @@
             android:textColor="@color/red"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
             style="@style/main_text_style"/>
+        //
 
         <Button
             android:layout_width="wrap_content"

@@ -19,60 +19,89 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
-            <LinearLayout
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
+                android:layout_marginLeft="@dimen/list_name_margin_image"
                 android:layout_weight="1">
                 <TextView
                     android:id="@+id/name_text"
+                    android:layout_above="@id/name_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+
+                    android:textAlignment="center"
+                    android:textStyle="bold"
                     android:text="Name"/>
                 <TextView
                     android:id="@+id/name_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_above="@+id/expansion_text"
+                    android:textAlignment="center"
+                    android:textStyle="italic"
                     android:text="Nome Carta"/>
                 <TextView
                     android:id="@+id/expansion_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_above="@+id/expansion_view"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
                     android:text="Espansione"/>
                 <TextView
                     android:id="@+id/expansion_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_above="@id/rarity_text"
+                    android:textAlignment="center"
+                    android:textStyle="italic"
                     android:text="Espansione Carta"/>
                 <TextView
                     android:id="@+id/rarity_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_above="@id/rarity_view"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
                     android:text="Rarita"/>
                 <TextView
                     android:id="@+id/rarity_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_above="@id/rule_text"
+                    android:textAlignment="center"
+                    android:textStyle="italic"
                     android:text="Rarita Carta"/>
                 <TextView
                     android:id="@+id/rule_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_centerInParent="true"
+
+                    android:textAlignment="center"
+                    android:textStyle="bold"
                     android:text="Rule"/>
-                <TextView
-                    android:id="@+id/rule_view"
-                    android:layout_width="match_parent"
+                <ScrollView
+                    android:id="@+id/SCROLLER_ID"
+                    android:layout_below="@id/rule_text"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Rule Carta"/>
-            </LinearLayout>
+                    android:scrollbars="vertical"
+                    android:fillViewport="true">
+                    <TextView
+                        android:id="@+id/rule_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:textStyle="italic"
+                        android:scrollbars = "vertical"
+                        android:text="Rule Carta"/>
+                </ScrollView>
+
+            </RelativeLayout>
         </LinearLayout>
         <Button
             android:id="@+id/buy_product_detail"

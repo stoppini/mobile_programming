@@ -3,7 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TableLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -28,24 +32,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/password_to_register"
-                android:layout_weight="2"
-                style="@style/main_text_style"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/show_password_data"
-                android:layout_weight="1"
-                style="@style/main_text_style"/>
-
-        </TableRow>
-
-
-        <TableRow>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="@string/email_to_register"
                 android:layout_weight="2"
                 style="@style/main_text_style"/>
@@ -58,7 +44,6 @@
                 style="@style/main_text_style"/>
 
         </TableRow>
-
 
         <TableRow>
             <TextView
@@ -110,15 +95,35 @@
                 style="@style/main_text_style"/>
 
         </TableRow>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/modify_button_label"
+                android:id="@+id/modify_button"
+                android:onClick="modifyInformations"
+                android:layout_gravity="center"
+                style="@style/main_button_style"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/modify_button_label"
-            android:id="@+id/modify_button"
-            android:onClick="modifyInformations"
-            android:layout_gravity="center"
-            style="@style/main_button_style"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/history"
+                android:id="@+id/history_button"
+                android:onClick="showHistory"
+                android:layout_gravity="center"
+                style="@style/main_button_style"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/my_products"
+                android:id="@+id/my_products_button"
+                android:onClick="seeMyProducts"
+                android:layout_gravity="center"
+                style="@style/main_button_style"/>
     </TableLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

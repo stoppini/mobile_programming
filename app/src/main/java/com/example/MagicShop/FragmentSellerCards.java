@@ -293,6 +293,7 @@ public class FragmentSellerCards extends Fragment {
                                 Log.d("DEBUG", "Edit card");
                                 final Intent editcard = new Intent(getActivity(), ProductAreaActivity.class);
                                 editcard.putExtra("product_on_sale_id",""+productOnSale.getId());
+
                                 startActivity(editcard);
                                 getActivity().finish();
                             }

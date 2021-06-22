@@ -516,7 +516,7 @@ public class DatabaseAccess {
             refToUser.child("location").setValue(location);
         }
         if(cap != null){
-            refToUser.child("cap").setValue(cap);
+            refToUser.child("cap").setValue(Long.parseLong(cap));
         }
     }
 

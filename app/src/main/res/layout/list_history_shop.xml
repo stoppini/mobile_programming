@@ -11,13 +11,29 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/name_seller"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="name"
-            style="@style/main_text_style_list"/>
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/name_seller_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="@string/seller_buyer"
+                style="@style/main_text_style_list"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/name_seller"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="name"
+                style="@style/main_text_style_list"
+                android:layout_weight="1"/>
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -38,18 +54,34 @@
                 style="@style/main_text_style_list"
                 android:layout_weight="1"/>
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/main_text_style_list"
                 android:text="@string/euro"
-                android:layout_weight="1"/>
+               />
         </LinearLayout>
-        <TextView
-            android:id="@+id/time_sell"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="date time sold"
-            style="@style/main_text_style_list"/>
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/time_sell_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/date_text"
+                style="@style/main_text_style_list"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/time_sell"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="date time sold"
+                style="@style/main_text_style_list"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
 
     </LinearLayout>
 

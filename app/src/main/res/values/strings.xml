@@ -81,6 +81,8 @@
     <!-- HISTORY -->
     <string name="history_bought">History of Product Bought</string>
     <string name="history_sold">History of Product Sold</string>
+    <string name="seller_buyer">Seller / Buyer</string>
+    <string name="date_text">Date</string>
 
 
 

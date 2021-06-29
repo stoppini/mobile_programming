@@ -70,7 +70,7 @@
     <string name="confirm_shop_product">"Do you want to shop this product?"</string>
     <string name="title_price">"Sell the product "</string>
     <string name="message_price">"Enter the amount in Euro"</string>
-    <string name="sell_price">"SELL"</string>
+    <string name="sell_price">Sell</string>
     <string name="modify_price_toast">"Modify"</string>
     <string name="undo_price">"Undo"</string>
     <string name="remove_price">"Remove"</string>
@@ -82,7 +82,7 @@
     <string name="history_bought">History of Product Bought</string>
     <string name="history_sold">History of Product Sold</string>
     <string name="seller_buyer">Seller / Buyer</string>
-    <string name="date_text">Date</string>
+    <string name="date_text">Date of transaction</string>
 
 
 
@@ -95,7 +95,7 @@
     <string name="card_detail">Cards detail</string>
     <string name="user">User</string>
     <string name="price">Price</string>
-    <string name="euro">€</string>
+    <string name="euro" translatable="false">€</string>
 
 
 </resources>

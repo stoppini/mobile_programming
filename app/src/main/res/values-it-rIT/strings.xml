@@ -44,7 +44,7 @@
 
     <string name="user_area_button_label">Area Utente</string>
     <string name="find_products" >CERCA PRODOTTI</string>
-    <string name="registration_button_label">REGISTRAZIONE</string>
+    <string name="registration_button_label">Registrati</string>
 
 
 
@@ -57,17 +57,30 @@
 
     <string name="title_price">"Vendere il prodotto "</string>
     <string name="message_price">"Inserisci l'importo in euro"</string>
-    <string name="sell_price">"VENDI"</string>
-    <string name="undo_price">"ANNULLA"</string>
-    <string name="modify_price_toast">"MODIFICA"</string>
+    <string name="sell_price">Vendi</string>
+    <string name="undo_price">Annulla</string>
+    <string name="modify_price_toast">Modifica</string>
     <string name="error_price">"Inserisci un importo corretto."</string>
     <string name="title_modify_price">"Modifica il prezzo di vendita del prodotto "</string>
     <string name="remove_from_on_sale">"Togliere dalla vendita il prodotto  "</string>
-    <string name="remove_price">"ELIMINA"</string>
+    <string name="remove_price">Elimina</string>
     <string name="no_products">Non hai prodotti in vendita.</string>
-
-
-
+    <string name="cap_error">Inserisci 5 numeri relativi al CAP</string>
+    <string name="mail_error">Inserisci un email corretta</string>
+    <string name="existing_user_error">Un utente con questo username è gia presente</string>
+    <string name="existing_email_error">Un utenete con questa email è gia presente</string>
+    <string name="codice_fiscale_error">Inserisci un Codice fiscale corretto</string>
+    <string name="user_not_logged">Per fare questo devi essere registrato</string>
+    <string name="history_bought">Storico dei Prodotti Acquistati</string>
+    <string name="history_sold">Storico dei Prodotti Venduti</string>
+    <string name="seller_buyer">Compratore / venditore</string>
+    <string name="date_text">Data della transazione</string>
+    <string name="sell">Vendi</string>
+    <string name="buy">Compra</string>
+    <string name="edit">Modifica</string>
+    <string name="price">Prezzo</string>
+    <string name="user">Utente</string>
+    <string name="card_detail">Dettagli Carta</string>
 
 
 </resources>

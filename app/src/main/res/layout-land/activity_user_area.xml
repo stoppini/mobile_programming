@@ -3,100 +3,115 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <TableLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <TableRow>
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/username_to_register"
-                android:layout_weight="2"
-                style="@style/main_text_style"/>
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/username_to_register"
+                    android:layout_weight="2"
+                    style="@style/main_text_style"/>
 
-            <TextView
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/show_username_data"
+                    android:layout_weight="1"
+                    style="@style/main_text_style"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/show_username_data"
-                android:layout_weight="1"
-                style="@style/main_text_style"/>
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/email_to_register"
+                    android:layout_weight="2"
+                    style="@style/main_text_style"/>
 
-        </TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/show_email_data"
+                    android:layout_weight="1"
+                    style="@style/main_text_style"/>
 
-        <TableRow>
-            <TextView
-                android:layout_width="wrap_content"
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/email_to_register"
-                android:layout_weight="2"
-                style="@style/main_text_style"/>
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/location_to_register"
+                    android:layout_weight="2"
+                    style="@style/main_text_style"/>
 
-            <TextView
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/show_location_data"
+                    android:layout_weight="1"
+                    style="@style/main_text_style"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/show_email_data"
-                android:layout_weight="1"
-                style="@style/main_text_style"/>
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/address_to_register"
+                    android:layout_weight="2"
+                    style="@style/main_text_style"/>
 
-        </TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/show_address_data"
+                    android:layout_weight="1"
+                    style="@style/main_text_style"/>
 
-        <TableRow>
-            <TextView
-                android:layout_width="wrap_content"
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/location_to_register"
-                android:layout_weight="2"
-                style="@style/main_text_style"/>
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cap_to_register"
+                    android:layout_weight="2"
+                    style="@style/main_text_style"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/show_location_data"
-                android:layout_weight="1"
-                style="@style/main_text_style"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/show_cap_data"
+                    android:layout_weight="1"
+                    style="@style/main_text_style"/>
 
-        </TableRow>
-
-        <TableRow>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/address_to_register"
-                android:layout_weight="2"
-                style="@style/main_text_style"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/show_address_data"
-                android:layout_weight="1"
-                style="@style/main_text_style"/>
-
-        </TableRow>
-
-        <TableRow>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/cap_to_register"
-                android:layout_weight="2"
-                style="@style/main_text_style"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/show_cap_data"
-                android:layout_weight="1"
-                style="@style/main_text_style"/>
-
-        </TableRow>
+            </LinearLayout>
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/modify_button_label"
                 android:id="@+id/modify_button"
@@ -106,7 +121,7 @@
 
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/history"
                 android:id="@+id/history_button"
@@ -115,15 +130,14 @@
                 style="@style/main_button_style"/>
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/my_products"
                 android:id="@+id/my_products_button"
                 android:onClick="seeMyProducts"
                 android:layout_gravity="center"
                 style="@style/main_button_style"/>
-    </TableLayout>
-
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

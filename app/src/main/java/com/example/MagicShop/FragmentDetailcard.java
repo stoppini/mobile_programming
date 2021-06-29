@@ -59,6 +59,11 @@ public class FragmentDetailcard extends Fragment {
 
         final Button sellButton = (Button) view.findViewById(R.id.sell_product);
 
+        if (!PreferenceUtils.isLogged(getContext())){
+            sellButton.setVisibility(View.GONE);
+        }
+
+
         dbA = DatabaseAccess.getDb();
         product = dbA.getProductFromId((Long)getActivity().getIntent().getSerializableExtra(Product.PRODUCT_LIST_EXTRA));
 

@@ -50,10 +50,6 @@
     <string name="existing_email_error">A user with this email address already exist</string>
     <string name="codice_fiscale_error">Insert a valid fiscal code</string> <!-- non so come si dice in inglese codice fiscale-->
 
-
-
-
-
     <!-- FIND PRODUCTS  -->
     <string name="name_product">Insert name product here</string>
     <string name="expansion">Expansion</string>
@@ -64,7 +60,6 @@
 
     <!-- MESSAGGI TOAST -->
     <string name="user_not_logged">"To do this you should log in first!"</string>
-
     <string name="confirm">"Confirm"</string>
     <string name="abort">"Abort"</string>
     <string name="confirm_shop_product">"Do you want to shop this product?"</string>
@@ -75,7 +70,6 @@
     <string name="undo_price">"Undo"</string>
     <string name="remove_price">"Remove"</string>
     <string name="error_price">"Insert correct import."</string>
-
     <string name="title_modify_price">"Modify the price for product "</string>
     <string name="remove_from_on_sale">"Remove from sale the product "</string>
     <!-- HISTORY -->
@@ -83,8 +77,6 @@
     <string name="history_sold">History of Product Sold</string>
     <string name="seller_buyer">Seller / Buyer</string>
     <string name="date_text">Date of transaction</string>
-
-
 
     <!-- FRAGMENST -->
     <string name="sell">Sell</string>
@@ -96,6 +88,4 @@
     <string name="user">User</string>
     <string name="price">Price</string>
     <string name="euro" translatable="false">€</string>
-
-
 </resources>

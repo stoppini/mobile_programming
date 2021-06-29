@@ -30,31 +30,19 @@
     <string name="history">Storico</string>
     <string name="my_products">I miei prodotti</string>
     <string name="success_product_buy">Acquisto completato per il prodotto.</string>
-
-
-
     <string name="card_price">Prezzo</string>
     <string name="card_name">Nome</string>
     <string name="modify_card">Modifica prodotto in vendita</string>
-
     <string name="modify_price">Modificare prezzo</string>
     <string name="eliminate_product">Elimina prodotto</string>
     <string name="add_photo">Aggiungi Fotografia</string>
     <string name="show_photo">Mostra Fotografia</string>
-
     <string name="user_area_button_label">Area Utente</string>
     <string name="find_products" >CERCA PRODOTTI</string>
     <string name="registration_button_label">Registrati</string>
-
-
-
-
-
     <string name="confirm_shop_product">"Vuoi procedere all'acquisto di questo prodotto?"</string>
     <string name="confirm">"Conferma"</string>
     <string name="abort">"Annulla"</string>
-
-
     <string name="title_price">"Vendere il prodotto "</string>
     <string name="message_price">"Inserisci l'importo in euro"</string>
     <string name="sell_price">Vendi</string>
@@ -81,6 +69,4 @@
     <string name="price">Prezzo</string>
     <string name="user">Utente</string>
     <string name="card_detail">Dettagli Carta</string>
-
-
 </resources>

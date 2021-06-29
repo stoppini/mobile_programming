@@ -18,7 +18,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_final_circle"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Magic">
+        android:theme="@style/Theme.Magic"
+        >
         <activity android:name=".ProductAreaActivity" />
         <activity android:name=".FragmentDetailCardToModify" />
         <activity android:name=".ShowProductOnSaleModify" />
